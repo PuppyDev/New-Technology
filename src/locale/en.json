@@ -1,0 +1,7 @@
+{
+    "AUTH": {
+        "LOGIN": "Login",
+        "REGISTER": "Register"
+    },
+    "SEARCH": "Search"
+}

@@ -1,0 +1,18 @@
+import 'antd/dist/antd.css'
+import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+import App from './App'
+import { store } from './app/store'
+import './assets/styles/index.scss'
+import ErrorBoundary from './hoc/ErrorBoundary'
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+	<ErrorBoundary>
+		<BrowserRouter>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</BrowserRouter>
+	</ErrorBoundary>
+)
