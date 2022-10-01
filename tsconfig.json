@@ -25,7 +25,7 @@
 		"paths": {
 			"@/components/*": ["./components/*"],
 			"@/common/*": ["./components/common/*"],
-			"@/apiClient/*": ["./apiClient/*"],
+			"@/api/*": ["./api/*"],
 			"@/models/*": ["./models/*"],
 			"@/layout/*": ["./components/layout/*"],
 			"@/Home/*": ["./features/Home/*"],
