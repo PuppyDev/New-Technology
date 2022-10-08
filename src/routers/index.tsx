@@ -9,7 +9,7 @@ const index = () => {
 			<Route path="/direct/inbox" element={<>Inbox Page</>} />
 			<Route path="/explore/" element={<>Explore Page</>} />
 			<Route path="/accounts/edit/" element={<>account edit Page</>} />
-			
+
 			<Route path="*" element={<>Error page</>} />
 		</Routes>
 	)
