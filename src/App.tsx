@@ -1,11 +1,7 @@
-import { Button } from 'antd'
+import Router from './routers'
 
 function App() {
-	return (
-		<Button type="dashed" danger>
-			Dashed
-		</Button>
-	)
+	return <Router></Router>
 }
 
 export default App

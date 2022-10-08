@@ -1,3 +1,5 @@
+import { ReactElement, ReactNode } from 'react'
+
 export interface PaginationParams {
 	page: number
 	size: number
@@ -13,4 +15,7 @@ export interface ResponseObject<T> {
 	data: T
 	errorCode: number
 	message: string
+}
+export interface LayoutProps {
+	children: ReactNode
 }

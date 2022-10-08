@@ -1,6 +1,74 @@
 @mixin common-box-shadow {
-    box-shadow: rgba(60, 64, 67, 0.15) 0px 4px 8px 4px;
+	box-shadow: rgba(60, 64, 67, 0.15) 0px 4px 8px 4px;
 }
 @mixin border-container {
-    border: 1.2px solid rgba(0, 0, 0, 0.1);
+	border: 1.2px solid rgba(0, 0, 0, 0.1);
+}
+
+@mixin flex-center-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@mixin flex-start-center {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+@mixin flex-row-between {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@mixin grid {
+	width: 100%;
+	display: block;
+	padding: 0;
+}
+
+@mixin grid-wide {
+	@include grid;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+/** Responsive breakpoint*/
+
+// Extra small devices (portrait phones, less than 576px): xs
+@mixin small-mobile {
+	@media (max-width: 575.98px) {
+		@content;
+	}
+}
+
+// Small devices (landscape phones, 576px and up): sm
+@mixin mobile {
+	@media (min-width: 576px) and (max-width: 767.98px) {
+		@content;
+	}
+}
+
+// Medium devices (tablets, 768px and up): md
+@mixin tablet {
+	@media (min-width: 768px) and (max-width: 991.98px) {
+		@content;
+	}
+}
+
+// Large devices (desktops, 992px and up): lg
+@mixin desktop {
+	@media (min-width: 992px) and (max-width: 1199.98px) {
+		@content;
+	}
+}
+
+// Extra large devices (large desktops, 1200px and up) : xl
+@mixin large-desktop {
+	@media (min-width: 1200px) {
+		@content;
+	}
 }
