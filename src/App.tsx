@@ -1,12 +1,7 @@
-import { MainLayout } from '@/layout/MainLayout'
 import Router from './routers'
 
 function App() {
-	return (
-		<MainLayout>
-			<Router></Router>
-		</MainLayout>
-	)
+	return <Router></Router>
 }
 
 export default App

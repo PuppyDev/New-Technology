@@ -38,6 +38,6 @@
 			"@/hooks/*": ["./hooks/*"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.tsx", "i18n.js"],
+	"include": ["**/*.ts", "**/*.tsx", "i18n.js", "src/features/Chat/containers/ChatContainer.module.scss"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

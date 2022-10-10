@@ -1,10 +1,12 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
+import chatSlice from './../features/Chat/slices/ChatSlice'
 
 import global from './globalSlice'
 
 export const store = configureStore({
 	reducer: {
 		global,
+		chatSlice,
 	},
 })
 

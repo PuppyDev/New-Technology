@@ -1,0 +1,175 @@
+.ListConversation {
+	@include flex-column;
+	height: 100%;
+	overflow: hidden;
+	justify-content: flex-end;
+
+	&__topContent {
+		height: 60px;
+		border-bottom: 1px solid $ig-elevated-separator;
+
+		@include flex-center-between;
+		padding: 0px 25px;
+	}
+	&__profile {
+		@include flex-start-center;
+		gap: 12px;
+		padding: 8px 20px;
+		transition: background 0.3s;
+		cursor: pointer;
+
+		p {
+			font-size: 14px;
+			color: black !important;
+
+			&:first-child {
+				font-weight: 600;
+				font-size: 16px;
+			}
+
+			&:last-child {
+				color: #8e8e8e;
+				font-size: 12px;
+				font-weight: 400;
+			}
+		}
+
+		.item__content {
+			@include flex-column-center;
+			gap: 5px;
+			flex: 1 1 0;
+		}
+	}
+
+	&__action {
+		font-size: 22px;
+		@include flex-center-center;
+		gap: 16px;
+
+		svg {
+			cursor: pointer;
+		}
+	}
+
+	.mainContent {
+		width: 100%;
+		padding: 5px 20px;
+		display: flex;
+		flex-direction: column-reverse;
+		flex: 1 1 0;
+		overflow-y: scroll;
+
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: #666;
+			border-radius: 16px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: #ddd;
+			border-radius: 16px;
+		}
+	}
+
+	.sendInput {
+		padding: 20px;
+		height: 80px;
+		user-select: none;
+
+		.input {
+			padding: 10px 0;
+			border-radius: 20px;
+			// overflow: hidden;
+
+			&:hover,
+			&:focus {
+				border: 1px solid #d9d9d9;
+				box-shadow: unset;
+			}
+		}
+
+		.icon {
+			padding-right: 10px;
+			padding-left: 20px;
+			font-size: 20px;
+		}
+
+		.actions {
+			cursor: pointer;
+			margin-right: 20px;
+			color: $ig-primary-button;
+			font-size: 14px;
+			font-weight: $font-weight-system-semibold;
+			background-color: white;
+		}
+
+		.emojiPicker {
+			position: relative;
+		}
+
+		// .emojiPicker {
+		// 	position: absolute;
+		// 	transform: translateY(-101%);
+		// 	background-color: white;
+		// 	top: 0;
+		// 	z-index: 10;
+		// }
+	}
+}
+
+.blockMessage {
+	display: flex;
+	align-items: flex-end;
+	gap: 5px;
+}
+
+.timeConversation {
+	font-size: 12px;
+	text-align: center;
+	margin: 12px 0 24px 0;
+	color: $--ig-secondary-text;
+}
+
+@mixin commanText {
+	display: flex;
+	flex-direction: column;
+
+	span {
+		@include flex-column-center;
+		border-radius: 22px;
+		box-sizing: border-box;
+		max-width: 236px;
+
+		min-height: 44px;
+		overflow: hidden;
+		z-index: 1;
+		padding: 16px;
+
+		@include border-container;
+		margin-top: 5px;
+		font-size: 14px;
+		line-height: 18px;
+
+		color: $ig-primary-text;
+		display: inline-block;
+	}
+}
+
+.friendMessage {
+	@include commanText;
+	align-items: flex-start;
+}
+
+.ownerMessage {
+	@include commanText;
+	justify-content: flex-end;
+	align-items: flex-end;
+
+	span {
+		background-color: $ig-highlight-background;
+		border-color: $ig-highlight-background;
+	}
+}
