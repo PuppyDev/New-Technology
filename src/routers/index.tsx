@@ -1,30 +1,61 @@
 import ChatConversationPage from '@/Chat/pages'
-import { MainLayout } from '@/components/layout/MainLayout'
-import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import PrivateRoute from './PrivateRoute'
+import RenderRouteHeader from './RenderRouteHeader'
+
+const mainRoutes = [
+	{
+		id: 1,
+		element: 'Main Component',
+		pathName: '/',
+	},
+	{
+		id: 2,
+		element: 'User Component',
+		pathName: '/:username',
+	},
+	{
+		id: 3,
+		element: <ChatConversationPage />,
+		pathName: '/direct/inbox',
+	},
+	{
+		id: 6,
+		element: <ChatConversationPage />,
+		pathName: '/direct/inbox/:inboxId',
+	},
+	{
+		id: 4,
+		element: 'Explore Component',
+		pathName: '/explore/',
+	},
+	{
+		id: 5,
+		element: 'account edit Component',
+		pathName: '/accounts/edit/',
+	},
+]
 
 const index = () => {
-	// const renderRoute = (component) => {
-	// 	return <MainLayout>
-	// 		{component}
-	// 	</MainLayout>
-	// }
-
 	return (
-		<>
-			<MainLayout>
-				<Routes>
-					<Route path="/" element={<>Main Component</>} />
-					<Route path="/:username" element={<>User Component</>} />
-					<Route path="/direct/inbox" element={<ChatConversationPage />} />
-					<Route path="/direct/inbox/:inboxId" element={<ChatConversationPage />} />
-					<Route path="/explore/" element={<>Explore Page</>} />
-					<Route path="/accounts/edit/" element={<>account edit Page</>} />
+		<div>
+			<Routes>
+				<Route element={<RenderRouteHeader />}>
+					{mainRoutes.map((item) => (
+						<Route
+							path={item.pathName}
+							key={item.id}
+							element={<PrivateRoute>{item.element}</PrivateRoute>}
+						/>
+					))}
 
 					<Route path="*" element={<>Error page</>} />
-				</Routes>
-			</MainLayout>
-		</>
+				</Route>
+
+				<Route path="/login" element={<>Login page</>} />
+				<Route path="/register" element={<>register page</>} />
+			</Routes>
+		</div>
 	)
 }
 

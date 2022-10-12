@@ -21,15 +21,12 @@
 	&__containernav {
 		ul {
 			@include flex-center-center;
-
+			gap: 25px;
 			li {
-				padding-left: 24px;
 				color: black;
-				font-size: 20px;
 
 				.active {
 					font-size: '22px';
-					color: cyan;
 				}
 			}
 		}
