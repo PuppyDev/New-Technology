@@ -5,6 +5,8 @@ import styles from './Profile.module.scss'
 import avt from './cat.jpg'
 import { KeyNumbers } from './KeyNumbers/Index'
 import { Story } from './Story'
+import Tab from './Tab'
+import { Gallery } from './Galery'
 const { Header, Footer, Sider, Content } = Layout
 
 const Profile = () => (
@@ -40,6 +42,8 @@ const Profile = () => (
 			</div>
 		</header>
 		<Story />
+		<Tab />
+		<Gallery />
 	</main>
 )
 

@@ -38,6 +38,6 @@
 			"@/hooks/*": ["./hooks/*"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.tsx", "i18n.js"],
+	"include": ["**/*.ts", "**/*.tsx", "i18n.js", "src/pages/profile/Galery/data.js"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
