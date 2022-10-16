@@ -1,4 +1,5 @@
 import ChatConversationPage from '@/Chat/pages'
+import Profile from 'pages/profile'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
@@ -11,7 +12,7 @@ const mainRoutes = [
 	},
 	{
 		id: 2,
-		element: 'User Component',
+		element: <Profile />,
 		pathName: '/:username',
 	},
 	{
