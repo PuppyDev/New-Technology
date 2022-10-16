@@ -20,3 +20,8 @@ export interface Conversation {
 	owner: Owner
 	friend: Friend
 }
+
+export interface ReplyMessage {
+	msg: String | null
+	replyFor: String | null
+}

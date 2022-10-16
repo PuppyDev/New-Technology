@@ -1,8 +1,22 @@
-import { Conversation } from '@/models/conversation'
+import { Conversation, ReplyMessage } from '@/models/conversation'
+import { Message } from '@/models/message'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const KEY = 'CHAT'
-export interface ChatState {}
+export interface ChatState {
+	conversations: Conversation[]
+	messageObj: {
+		message: Message[]
+		page: number
+		size: number
+		totalItem: number
+		totalPage: number
+		loading: boolean
+	}
+	isLoading: boolean
+	conversationSelected: Conversation | null
+	replyMessage: ReplyMessage
+}
 
 const initialState: ChatState = {
 	conversations: [],
@@ -16,9 +30,9 @@ const initialState: ChatState = {
 	},
 	isLoading: false,
 	conversationSelected: null,
-	notifycationObj: {
-		isLoading: false,
-		notifycations: [],
+	replyMessage: {
+		msg: null,
+		replyFor: null,
 	},
 }
 
@@ -29,10 +43,14 @@ export const chatSlice = createSlice({
 		setConversations: (state, action: PayloadAction<{ conversations: Conversation[] }>) => {
 			// state.conversations = action.payload.conversations
 		},
+
+		setReplyMessage: (state, action: PayloadAction<{ replyMessage: ReplyMessage }>) => {
+			state.replyMessage = action.payload.replyMessage
+		},
 	},
 	extraReducers: (builder) => {},
 })
 
-export const {} = chatSlice.actions
+export const { setReplyMessage } = chatSlice.actions
 
 export default chatSlice.reducer

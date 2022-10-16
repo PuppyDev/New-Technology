@@ -26,6 +26,7 @@
 			"@/components/*": ["./components/*"],
 			"@/common/*": ["./components/common/*"],
 			"@/api/*": ["./api/*"],
+			"@/app/*": ["./app/*"],
 			"@/models/*": ["./models/*"],
 			"@/layout/*": ["./components/layout/*"],
 			"@/Home/*": ["./features/Home/*"],

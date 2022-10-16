@@ -4,53 +4,6 @@
 	overflow: hidden;
 	justify-content: flex-end;
 
-	&__topContent {
-		height: 60px;
-		border-bottom: 1px solid $ig-elevated-separator;
-
-		@include flex-center-between;
-		padding: 0px 25px;
-	}
-	&__profile {
-		@include flex-start-center;
-		gap: 12px;
-		padding: 8px 20px;
-		transition: background 0.3s;
-		cursor: pointer;
-
-		p {
-			font-size: 14px;
-			color: black !important;
-
-			&:first-child {
-				font-weight: 600;
-				font-size: 16px;
-			}
-
-			&:last-child {
-				color: #8e8e8e;
-				font-size: 12px;
-				font-weight: 400;
-			}
-		}
-
-		.item__content {
-			@include flex-column-center;
-			gap: 5px;
-			flex: 1 1 0;
-		}
-	}
-
-	&__action {
-		font-size: 22px;
-		@include flex-center-center;
-		gap: 16px;
-
-		svg {
-			cursor: pointer;
-		}
-	}
-
 	.mainContent {
 		width: 100%;
 		padding: 5px 20px;
@@ -74,20 +27,78 @@
 		}
 	}
 
+	.detail {
+		flex: 1 1 0;
+
+		&__action {
+			@include flex-column-center;
+			user-select: none;
+
+			color: $ig-error-or-destructive;
+			border-bottom: 1px solid $ig-elevated-separator;
+			cursor: pointer;
+
+			li {
+				padding: 15px 20px;
+				display: block;
+				width: 100%;
+				font-size: 14px;
+			}
+		}
+	}
+
+	.reply__action {
+		border-top: 1px solid $ig-elevated-separator;
+		padding: 10px 20px 0px;
+		padding-bottom: 0;
+		@include flex-center-between;
+
+		font-size: 14px;
+		transform: translateY(10px);
+		color: $ig-primary-text;
+
+		&_header {
+			color: $ig-secondary-text;
+			padding-bottom: 7px;
+		}
+
+		div {
+			width: 100%;
+
+			.reply__action_content {
+				height: 18px;
+				width: 400px;
+				padding: 0;
+				overflow: hidden;
+				display: inline-block;
+				text-decoration: none;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+
+		.closeBtn {
+			font-size: 18px;
+			color: $ig-secondary-text;
+		}
+	}
+
 	.sendInput {
 		padding: 20px;
 		height: 80px;
-		user-select: none;
 
 		.input {
 			padding: 10px 0;
 			border-radius: 20px;
-			// overflow: hidden;
 
 			&:hover,
 			&:focus {
-				border: 1px solid #d9d9d9;
-				box-shadow: unset;
+				border: 1px solid #d9d9d9 !important;
+				box-shadow: unset !important;
+			}
+
+			&::selection {
+				background-color: #d9d9d9;
 			}
 		}
 
@@ -95,6 +106,19 @@
 			padding-right: 10px;
 			padding-left: 20px;
 			font-size: 20px;
+		}
+
+		.iconAction {
+			font-size: 20px;
+			padding: 0 3px;
+			cursor: pointer;
+			color: $ig-secondary-text;
+			transition: color 0.4s;
+
+			&:hover,
+			&:active {
+				color: $ig-primary-text;
+			}
 		}
 
 		.actions {
@@ -106,70 +130,67 @@
 			background-color: white;
 		}
 
-		.emojiPicker {
+		.relative {
 			position: relative;
+			@include flex-center-center;
+
+			&.showEmoji {
+				.emojiPicker {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
 		}
 
-		// .emojiPicker {
-		// 	position: absolute;
-		// 	transform: translateY(-101%);
-		// 	background-color: white;
-		// 	top: 0;
-		// 	z-index: 10;
-		// }
+		.emojiPicker {
+			position: absolute;
+			transform: translateY(-56%);
+			background-color: white;
+			z-index: 90;
+			visibility: hidden;
+			opacity: 0;
+			left: 0;
+			transition: all 0.4s;
+			bottom: 100;
+		}
 	}
 }
 
-.blockMessage {
-	display: flex;
-	align-items: flex-end;
-	gap: 5px;
-}
-
-.timeConversation {
-	font-size: 12px;
-	text-align: center;
-	margin: 12px 0 24px 0;
-	color: $--ig-secondary-text;
-}
-
-@mixin commanText {
-	display: flex;
-	flex-direction: column;
-
-	span {
-		@include flex-column-center;
-		border-radius: 22px;
-		box-sizing: border-box;
-		max-width: 236px;
-
-		min-height: 44px;
-		overflow: hidden;
-		z-index: 1;
-		padding: 16px;
-
-		@include border-container;
-		margin-top: 5px;
-		font-size: 14px;
-		line-height: 18px;
-
-		color: $ig-primary-text;
-		display: inline-block;
+.wrapGif {
+	@include common-box-shadow;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: $ig-primary-background;
+	.middle {
+		.search {
+			padding: 10px;
+		}
 	}
 }
 
-.friendMessage {
-	@include commanText;
-	align-items: flex-start;
-}
+.gifStyle {
+	height: 300px;
+	width: 300px;
+	overflow-y: scroll;
+	overflow-x: hidden;
 
-.ownerMessage {
-	@include commanText;
-	justify-content: flex-end;
-	align-items: flex-end;
+	position: relative;
 
-	span {
-		background-color: $ig-highlight-background;
-		border-color: $ig-highlight-background;
+	&::-webkit-scrollbar {
+		width: 0px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #666;
+		border-radius: 16px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+		border-radius: 16px;
+	}
+
+	img {
+		width: 100%;
 	}
 }
