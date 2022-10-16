@@ -45,7 +45,7 @@ const ControlNavLink: React.FC = () => {
 				{
 					key: '1',
 					label: (
-						<Link to="/">
+						<Link to="/123">
 							<UserOutlined />
 							Profile
 						</Link>
