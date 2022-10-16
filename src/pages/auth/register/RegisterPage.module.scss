@@ -1,0 +1,49 @@
+.container {
+	@include grid-wide;
+	height: 100vh;
+
+	&__antform {
+		border: 1px solid;
+		border-color: gainsboro;
+        padding-top: 30px;
+		padding-left: 10%;
+		padding-right: 10%;
+		margin-top: 20px;
+		&__item {
+			margin-bottom: 7px;
+		}
+		p {
+			font-weight: 500;
+			text-align: center;
+			color: $silver-color;
+			font-size: small;
+			a {
+				color: $gray-color;
+			}
+		}
+		button {
+			width: 100%;
+            font-weight: 500;
+		}
+		&__btnlogo {
+			width: 100%;
+			height: 55px;
+			border: 0 solid;
+		}  
+	}
+}
+.redirectlogin{
+    border: 1px solid;
+    border-color: gainsboro;
+    align-items: center;
+    margin-top: 10px;
+    padding: 20px;
+    p{
+        font-size: 14px;
+        width: 100%;
+        text-align: center;
+        a{
+            color:  rgba(var(--d69,0,149,246),1);
+        }
+    }
+}
