@@ -1,8 +1,10 @@
 import ChatConversationPage from '@/Chat/pages'
-import Profile from 'pages/profile'
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
+
+const Profile = lazy(() => import('pages/profile'))
 
 const mainRoutes = [
 	{

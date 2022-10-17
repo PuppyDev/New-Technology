@@ -4,7 +4,7 @@
 	border-bottom: 1px solid $ig-elevated-separator;
 	position: fixed;
 	top: 0px;
-	z-index: 999999999;
+	z-index: 999;
 
 	&__container {
 		@include grid-wide;

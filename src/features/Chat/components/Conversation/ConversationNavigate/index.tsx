@@ -9,7 +9,7 @@ interface props {
 	onClick: React.ReactEventHandler
 }
 
-const ConversationNavigate: React.FC<props> = ({ isClickInfo, onClick }) => {
+const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 	return (
 		<header className={styles.ListConversation__topContent}>
 			{!isClickInfo && (
@@ -48,6 +48,10 @@ const ConversationNavigate: React.FC<props> = ({ isClickInfo, onClick }) => {
 			)}
 		</header>
 	)
+}
+
+ConversationNavigate.Skeleton = () => {
+	return <header className={styles.ListConversation__topContent}>Loading</header>
 }
 
 export default ConversationNavigate
