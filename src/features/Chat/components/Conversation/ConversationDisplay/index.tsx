@@ -24,7 +24,7 @@ const ConversationDisplay = ({ inboxId }: props) => {
 	const { open: isClickInfo, handleToggleOpen: toggleIsClickInfo } = useOpen()
 
 	// Display emoji
-	const { open: showIcons, handleSetOpen, handleSetClose, handleToggleOpen: toggleShowIcons } = useOpen()
+	const { open: showIcons, handleToggleOpen: toggleShowIcons } = useOpen()
 
 	const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
 		console.log('🚀 ~ file: index.tsx ~ line 11 ~ handleEmojiClick ~ emoji', emojiData)

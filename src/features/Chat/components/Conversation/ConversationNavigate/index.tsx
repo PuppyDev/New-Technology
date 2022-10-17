@@ -1,7 +1,7 @@
 import { InfoCircleFilled, InfoCircleOutlined, PhoneOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './ConversationNavigate.module.scss'
 
 interface props {
@@ -10,6 +10,14 @@ interface props {
 }
 
 const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
+	const navigate = useNavigate()
+
+	const handleVideoCall = () => {
+		// CallVideoID redirect here
+
+		navigate('/videoCall/123')
+	}
+
 	return (
 		<header className={styles.ListConversation__topContent}>
 			{!isClickInfo && (
@@ -30,7 +38,7 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 					<aside className={styles.ListConversation__action}>
 						<>
 							<PhoneOutlined size={40} />
-							<VideoCameraOutlined size={40} />
+							<VideoCameraOutlined size={40} onClick={handleVideoCall} />
 							<InfoCircleOutlined size={40} onClick={onClick} />
 						</>
 					</aside>
