@@ -1,0 +1,53 @@
+.ListConversation {
+	@include border-container;
+	@include flex-column;
+	height: auto;
+	overflow: hidden;
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+
+	.topContent {
+		height: 60px;
+		border-bottom: 1px solid $ig-elevated-separator;
+
+		@include flex-center-center;
+
+		.headerItem {
+			color: $ig-primary-text;
+			font-weight: 600;
+		}
+	}
+
+	.bottomContent {
+		overflow-y: scroll;
+		width: 100%;
+		flex: 1;
+
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: #666;
+			border-radius: 16px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: #ddd;
+			border-radius: 16px;
+		}
+	}
+
+	.skeleton {
+		padding: 20px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.listItem {
+		@include flex-column-center;
+		gap: 5px;
+		flex: 1 1 0;
+	}
+}

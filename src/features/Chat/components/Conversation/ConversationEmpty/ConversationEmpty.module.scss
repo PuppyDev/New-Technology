@@ -1,0 +1,26 @@
+$width-icon: 48px;
+
+.conversation {
+	@include flex-center-center;
+	flex-direction: column;
+	height: 100%;
+	gap: 20px;
+
+	&__icon {
+		font-size: $width-icon;
+		width: calc($width-icon * 2);
+		height: calc($width-icon * 2);
+		border: 2px solid $ig-primary-text;
+		color: $ig-primary-text;
+		border-radius: 50%;
+		@include flex-center-center;
+
+		svg {
+			transform: rotate(-30deg) translateX(15%);
+		}
+	}
+
+	p {
+		font-size: 22px;
+	}
+}

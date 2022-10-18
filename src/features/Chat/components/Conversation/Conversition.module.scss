@@ -1,0 +1,6 @@
+.conversation {
+	@include border-container;
+	border-left: unset;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+}

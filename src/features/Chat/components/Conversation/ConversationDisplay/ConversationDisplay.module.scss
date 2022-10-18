@@ -1,0 +1,208 @@
+.ListConversation {
+	@include flex-column;
+	height: 100%;
+	overflow: hidden;
+	justify-content: flex-end;
+
+	.mainContent {
+		width: 100%;
+		padding: 5px 20px;
+		display: flex;
+		flex-direction: column-reverse;
+		flex: 1 1 0;
+		overflow-y: scroll;
+
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: #666;
+			border-radius: 16px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: #ddd;
+			border-radius: 16px;
+		}
+	}
+
+	.detail {
+		flex: 1 1 0;
+
+		&__action {
+			@include flex-column-center;
+			user-select: none;
+
+			color: $ig-error-or-destructive;
+			border-bottom: 1px solid $ig-elevated-separator;
+			cursor: pointer;
+
+			li {
+				padding: 15px 20px;
+				display: block;
+				width: 100%;
+				font-size: 14px;
+			}
+		}
+	}
+
+	.visible {
+		opacity: 1;
+		visibility: visible;
+		display: block;
+	}
+
+	.hidden {
+		opacity: 0;
+		visibility: hidden;
+		display: none;
+	}
+
+	.reply__action {
+		border-top: 1px solid $ig-elevated-separator;
+		padding: 10px 20px 0px;
+		padding-bottom: 0;
+		@include flex-center-between;
+
+		font-size: 14px;
+		transform: translateY(10px);
+		color: $ig-primary-text;
+
+		&_header {
+			color: $ig-secondary-text;
+			padding-bottom: 7px;
+		}
+
+		div {
+			width: 100%;
+
+			.reply__action_content {
+				height: 18px;
+				width: 400px;
+				padding: 0;
+				overflow: hidden;
+				display: inline-block;
+				text-decoration: none;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+
+		.closeBtn {
+			font-size: 18px;
+			color: $ig-secondary-text;
+		}
+	}
+
+	.sendInput {
+		padding: 20px;
+		height: 80px;
+
+		.input {
+			padding: 10px 0;
+			border-radius: 20px;
+
+			&:hover,
+			&:focus {
+				border: 1px solid #d9d9d9 !important;
+				box-shadow: unset !important;
+			}
+
+			&::selection {
+				background-color: #d9d9d9;
+			}
+		}
+
+		.icon {
+			padding-right: 10px;
+			padding-left: 20px;
+			font-size: 20px;
+		}
+
+		.iconAction {
+			font-size: 20px;
+			padding: 0 3px;
+			cursor: pointer;
+			color: $ig-secondary-text;
+			transition: color 0.4s;
+
+			&:hover,
+			&:active {
+				color: $ig-primary-text;
+			}
+		}
+
+		.actions {
+			cursor: pointer;
+			margin-right: 20px;
+			color: $ig-primary-button;
+			font-size: 14px;
+			font-weight: $font-weight-system-semibold;
+			background-color: white;
+		}
+
+		.relative {
+			position: relative;
+			@include flex-center-center;
+
+			&.showEmoji {
+				.emojiPicker {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
+		}
+
+		.emojiPicker {
+			position: absolute;
+			transform: translateY(-56%);
+			background-color: white;
+			z-index: 90;
+			visibility: hidden;
+			opacity: 0;
+			left: 0;
+			transition: all 0.4s;
+			bottom: 100;
+		}
+	}
+}
+
+.wrapGif {
+	@include common-box-shadow;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: $ig-primary-background;
+	.middle {
+		.search {
+			padding: 10px;
+		}
+	}
+}
+
+.gifStyle {
+	height: 300px;
+	width: 300px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+
+	position: relative;
+
+	&::-webkit-scrollbar {
+		width: 0px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #666;
+		border-radius: 16px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+		border-radius: 16px;
+	}
+
+	img {
+		width: 100%;
+	}
+}

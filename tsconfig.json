@@ -26,6 +26,7 @@
 			"@/components/*": ["./components/*"],
 			"@/common/*": ["./components/common/*"],
 			"@/api/*": ["./api/*"],
+			"@/app/*": ["./app/*"],
 			"@/models/*": ["./models/*"],
 			"@/layout/*": ["./components/layout/*"],
 			"@/Home/*": ["./features/Home/*"],
@@ -38,6 +39,12 @@
 			"@/hooks/*": ["./hooks/*"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.tsx", "i18n.js", "src/pages/profile/Galery/data.js"],
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"i18n.js",
+		"src/features/Chat/containers/ChatContainer.module.scss",
+		"src/pages/profile/Galery/data.js"
+	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

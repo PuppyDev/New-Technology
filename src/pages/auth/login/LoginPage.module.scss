@@ -1,0 +1,35 @@
+.container {
+	@include grid-wide;
+	@include flex-center-between;
+	height: 100vh;
+
+	&__antform {
+		border: 1px solid;
+		border-color: gainsboro;
+		padding-left: 12%;
+		padding-top: 10px;
+
+		&__divider {
+			height: 0px;
+			span {
+				color: rgba(95, 95, 95, 0.85);
+				font-size: 14px;
+				margin: -10px;
+			}
+		}
+	}
+	button {
+		width: 100%;
+	}
+  &__redirectregister{
+    border: 1px solid;
+		border-color: gainsboro;
+    margin-top: 10px;
+    padding-top: 20px;
+    padding-left: 20% ;
+    padding-bottom: 0px;
+    button{
+      width: auto;
+    }
+  }
+}

@@ -8,7 +8,7 @@ export function MainLayout({ children }: LayoutProps) {
 		<React.Fragment>
 			<Header />
 			<main style={{ paddingTop: '80px' }}>{children}</main>
-			<Footer />
+			{/* <Footer /> */}
 		</React.Fragment>
 	)
 }
