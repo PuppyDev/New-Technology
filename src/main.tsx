@@ -6,6 +6,7 @@ import App from './App'
 import { store } from './app/store'
 // import './assets/styles/index.scss'
 import ErrorBoundary from './hoc/ErrorBoundary'
+import './locale/i18n'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<ErrorBoundary>
