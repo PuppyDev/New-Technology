@@ -1,0 +1,15 @@
+.Grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 28px;
+	@media only screen and (max-width: 735px) {
+		gap: 3px;
+	}
+}
+.Wrap {
+	position: relative;
+}
+.Img {
+	width: 100%;
+	display: block;
+}

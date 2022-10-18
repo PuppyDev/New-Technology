@@ -11,10 +11,22 @@
 	justify-content: center;
 }
 
+@mixin flex-start-between {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
 @mixin flex-start-center {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+}
+
+@mixin flex-center-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 @mixin flex-row-between {
@@ -31,6 +43,18 @@
 	justify-content: center;
 }
 
+@mixin flex-column-center {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+@mixin flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
 @mixin flex-center-between {
 	display: flex;
 	align-items: center;
@@ -45,8 +69,12 @@
 
 @mixin grid-wide {
 	@include grid;
-	max-width: 1200px;
+	max-width: 1000px;
 	margin: 0 auto;
+
+	@include desktop {
+		width: 90%;
+	}
 }
 
 /** Responsive breakpoint*/

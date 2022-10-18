@@ -1,0 +1,43 @@
+video.video {
+	height: 340px;
+	width: 640px;
+	display: block;
+	object-fit: cover;
+	border-radius: 8px;
+}
+
+.video__action {
+	position: relative;
+	color: white;
+
+	&_detail {
+		@include flex-center-center;
+		position: absolute;
+		bottom: 2%;
+		width: 100%;
+		z-index: 50;
+
+		span.icons {
+			padding: 20px;
+			transition: all 0.4s;
+			// opacity: 0.4;
+			cursor: pointer;
+			background-color: $ig-primary-text;
+
+			&:hover {
+				// opacity: 1;
+				background-color: $ig-secondary-text;
+			}
+
+			&:first-child {
+				border-top-left-radius: 10px;
+				border-bottom-left-radius: 10px;
+			}
+
+			&:last-child {
+				border-top-right-radius: 10px;
+				border-bottom-right-radius: 10px;
+			}
+		}
+	}
+}

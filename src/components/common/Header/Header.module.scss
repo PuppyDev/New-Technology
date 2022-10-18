@@ -2,8 +2,9 @@
 	width: 100%;
 	background-color: $ig-primary-background;
 	border-bottom: 1px solid $ig-elevated-separator;
-	position: absolute;
+	position: fixed;
 	top: 0px;
+	z-index: 999;
 
 	&__container {
 		@include grid-wide;
@@ -24,7 +25,7 @@
 			gap: 25px;
 			li {
 				color: black;
-				
+
 				.active {
 					font-size: '22px';
 				}

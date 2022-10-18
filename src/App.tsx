@@ -1,8 +1,12 @@
-import { MainLayout } from '@/layout/MainLayout'
+import { Suspense } from 'react'
 import Router from './routers'
 
 function App() {
-	return <Router></Router>
+	return (
+		<Suspense fallback="Loading...">
+			<Router />
+		</Suspense>
+	)
 }
 
 export default App

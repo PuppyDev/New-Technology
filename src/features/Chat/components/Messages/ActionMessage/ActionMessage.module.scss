@@ -1,0 +1,26 @@
+ul.action__message {
+	font-size: 22px;
+	@include flex-row-center;
+	gap: 15px;
+
+	li {
+		cursor: pointer;
+		&:not(:last-child) {
+			color: $ig-secondary-text;
+			transition: color 0.3s;
+
+			&:hover {
+				color: $ig-primary-text;
+			}
+		}
+
+		&:nth-child(2) {
+			font-size: 18px;
+			transform: translateY(2px) scaleX(-1);
+		}
+	}
+
+	&.action__reverse {
+		flex-direction: row-reverse;
+	}
+}

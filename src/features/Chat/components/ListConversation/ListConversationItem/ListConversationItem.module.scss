@@ -1,0 +1,57 @@
+.item {
+	@include flex-start-center;
+	gap: 12px;
+	padding: 8px 20px;
+	transition: background 0.3s;
+	cursor: pointer;
+	min-height: 72px;
+
+	&__content {
+		@include flex-column-center;
+		gap: 5px;
+		flex: 1 1 0;
+	}
+
+	p {
+		font-size: 14px;
+
+		&:first-child {
+			font-weight: 600;
+		}
+
+		&:last-child {
+			color: #8e8e8e;
+		}
+	}
+
+	&:hover {
+		background-color: #fafafa;
+	}
+
+	&.active {
+		background-color: $ig-highlight-background;
+		transition: background 0.5s;
+	}
+
+	&.notRead {
+		p {
+			font-weight: 600;
+			color: $ig-primary-text;
+		}
+	}
+
+	.circelNotRead {
+		width: 10px;
+		height: 10px;
+		background-color: $ig-primary-button;
+		border-radius: 50%;
+	}
+
+	& > .groupAvatar {
+		// @include flex-center-center;
+		// flex-wrap: wrap;
+		// flex-direction: column;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}

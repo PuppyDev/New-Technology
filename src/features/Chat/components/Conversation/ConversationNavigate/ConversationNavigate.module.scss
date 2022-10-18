@@ -1,0 +1,56 @@
+.ListConversation {
+	user-select: none;
+
+	&__topContent {
+		height: 60px;
+		border-bottom: 1px solid $ig-elevated-separator;
+
+		@include flex-center-between;
+		padding: 0px 25px;
+		user-select: none;
+		.headerName {
+			font-weight: 600;
+		}
+	}
+	&__profile {
+		@include flex-start-center;
+		gap: 12px;
+		padding: 8px 20px;
+		transition: background 0.3s;
+		cursor: pointer;
+		user-select: none;
+
+		p {
+			font-size: 14px;
+			color: black !important;
+			user-select: none;
+
+			&:first-child {
+				font-weight: 600;
+				font-size: 16px;
+			}
+
+			&:last-child {
+				color: #8e8e8e;
+				font-size: 12px;
+				font-weight: 400;
+			}
+		}
+
+		.item__content {
+			@include flex-column-center;
+			gap: 5px;
+			flex: 1 1 0;
+		}
+	}
+
+	&__action {
+		font-size: 22px;
+		@include flex-center-center;
+		gap: 16px;
+
+		svg {
+			cursor: pointer;
+		}
+	}
+}

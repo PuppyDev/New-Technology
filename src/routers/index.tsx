@@ -1,9 +1,13 @@
+import ChatConversationPage from '@/Chat/pages'
+import VideoCallPage from 'pages/videoCall'
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
 import LoginPage from '../pages/auth/login/LoginPage'
 import RegisterPage from '../pages/auth/register/RegisterPage'
 
+const Profile = lazy(() => import('pages/profile'))
 
 const mainRoutes = [
 	{
@@ -13,13 +17,18 @@ const mainRoutes = [
 	},
 	{
 		id: 2,
-		element: 'User Component',
+		element: <Profile />,
 		pathName: '/:username',
 	},
 	{
 		id: 3,
-		element: 'Inbox Component',
+		element: <ChatConversationPage />,
 		pathName: '/direct/inbox',
+	},
+	{
+		id: 6,
+		element: <ChatConversationPage />,
+		pathName: '/direct/inbox/:inboxId',
 	},
 	{
 		id: 4,
@@ -45,12 +54,18 @@ const index = () => {
 							element={<PrivateRoute>{item.element}</PrivateRoute>}
 						/>
 					))}
-
 					<Route path="*" element={<>Error page</>} />
 				</Route>
-
-				<Route path="/login" element={<LoginPage/>} />
-				<Route path="/register" element={<RegisterPage/>} />
+				<Route
+					path="videoCall/:idVideoCall"
+					element={
+						<PrivateRoute>
+							<VideoCallPage />
+						</PrivateRoute>
+					}
+				/>
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/register" element={<RegisterPage />} />
 			</Routes>
 		</div>
 	)
