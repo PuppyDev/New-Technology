@@ -29,6 +29,9 @@
 
 	.detail {
 		flex: 1 1 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
 
 		&__action {
 			@include flex-column-center;
@@ -50,7 +53,7 @@
 	.visible {
 		opacity: 1;
 		visibility: visible;
-		display: block;
+		display: flex;
 	}
 
 	.hidden {

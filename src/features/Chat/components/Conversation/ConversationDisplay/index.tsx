@@ -166,6 +166,11 @@ const ConversationDisplay = ({ inboxId }: props) => {
 									}
 								/>
 							</TextMessage.ListFriendMessage>
+							<TextMessage.ListFriendMessage>
+								<TextMessage.FriendMessage msg={'Nghe nef con ddix oiw1'} />
+								<TextMessage.FriendMessage msg={'Nghe nef con ddix oiw2'} />
+								<TextMessage.FriendMessage msg={'Nghe nef con ddix oiw3'} />
+							</TextMessage.ListFriendMessage>
 						</TextMessage>
 					</main>
 
