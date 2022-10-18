@@ -7,7 +7,7 @@ export function Gallery() {
 	return (
 		<div className={styles.Grid}>
 			{data.map((item, id) => (
-				<GalleryItem key={id} imagepath={item.imagepath} />
+				<GalleryItem key={id} imagepath={item.imagepath} title={item.title}  />
 			))}
 		</div>
 	)
