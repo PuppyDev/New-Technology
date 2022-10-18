@@ -4,6 +4,8 @@ import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
+import LoginPage from '../pages/auth/login/LoginPage'
+import RegisterPage from '../pages/auth/register/RegisterPage'
 
 const Profile = lazy(() => import('pages/profile'))
 
@@ -54,7 +56,6 @@ const index = () => {
 					))}
 					<Route path="*" element={<>Error page</>} />
 				</Route>
-
 				<Route
 					path="videoCall/:idVideoCall"
 					element={
@@ -63,8 +64,8 @@ const index = () => {
 						</PrivateRoute>
 					}
 				/>
-				<Route path="/login" element={<>Login page</>} />
-				<Route path="/register" element={<>register page</>} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/register" element={<RegisterPage />} />
 			</Routes>
 		</div>
 	)
