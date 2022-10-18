@@ -1,3 +1,4 @@
+import { useAppDispatch, useAppSelector } from '@/app/hook'
 import {
 	HeartOutlined,
 	HomeOutlined,
@@ -9,7 +10,8 @@ import {
 	SwapOutlined,
 	UserOutlined,
 } from '@ant-design/icons'
-import { Avatar, Dropdown, Menu, Space } from 'antd'
+import { Avatar, Dropdown, Menu, Modal, Space } from 'antd'
+import { logout } from 'pages/auth/authSlice'
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import ModalLogin from '../Modal/ModalLogin'
@@ -39,13 +41,34 @@ const ControlNavLink: React.FC = () => {
 	const [open, setOpen] = useState(false)
 	const [openAddPost, setOpenAddPost] = useState(false)
 
+	const dispatch = useAppDispatch()
+
+	const user = useAppSelector((state) => state.authSlice.user)
+
+	const handleLogout = () => {
+		const timerLogout = setTimeout(() => {
+			modal.destroy()
+			dispatch(logout())
+		}, 3000)
+
+		const modal = Modal.info({
+			title: 'Đang đăng xuất ',
+			content: 'Bạn cần phải đăng nhập lại',
+			onOk() {
+				dispatch(logout())
+				clearTimeout(timerLogout)
+			},
+			centered: true,
+		})
+	}
+
 	const menu = (
 		<Menu
 			items={[
 				{
 					key: '1',
 					label: (
-						<Link to="/123">
+						<Link to={`/${user?._id}`}>
 							<UserOutlined />
 							Profile
 						</Link>
@@ -85,7 +108,11 @@ const ControlNavLink: React.FC = () => {
 				{
 					key: '5',
 					danger: true,
-					label: <div className={styles.item}>Log out</div>,
+					label: (
+						<div className={styles.item} onClick={handleLogout}>
+							Log out
+						</div>
+					),
 				},
 			]}
 			className={styles.menu}

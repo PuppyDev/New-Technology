@@ -1,21 +1,49 @@
+import { authApi } from '@/api/authApi'
+import { useAppDispatch } from '@/app/hook'
 import { FacebookFilled } from '@ant-design/icons'
-import { Button, Form, Input, Image, Col, Row, Divider } from 'antd'
+import { Button, Col, Divider, Form, Input, notification, Row } from 'antd'
+import { NotificationPlacement } from 'antd/lib/notification'
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import styles from '../RegisterPage.module.scss'
-
-// import { Container } from './styles';
 
 const Register: React.FC = () => {
 	const { t } = useTranslation()
 
-	const onFinish = (values: any) => {
-		console.log('Success:', values)
-	}
+	const [loading, setLoading] = React.useState(false)
+	const [error, setError] = React.useState<{ message: string | null; errorCode: number }>()
+	const dispatch = useAppDispatch()
 
-	const onFinishFailed = (errorInfo: any) => {
-		console.log('Failed:', errorInfo)
+	const onFinish = async (values: any) => {
+		try {
+			setLoading(true)
+
+			const data = await authApi.register(values)
+
+			if (data.errorCode === 201 && data.message === 'Account is created') {
+				notification.info({
+					message: `Notification ${data.message}`,
+					placement: 'top',
+				})
+			}
+
+			notification.success({
+				message: `Thank you!`,
+				description:
+					'A new user account has been successfully created and a confirmation has been emailed to you. Please check your email and confirm your email address to complete the registration process.',
+				placement: 'top',
+			})
+
+			setLoading(false)
+		} catch (error: any) {
+			const { response } = error
+			notification.error({
+				message: `Notification ${response.data.message}`,
+				placement: 'top',
+			})
+			setLoading(false)
+		}
 	}
 
 	return (
@@ -29,7 +57,6 @@ const Register: React.FC = () => {
 					wrapperCol={{ span: 24 }}
 					initialValues={{ remember: true }}
 					onFinish={onFinish}
-					onFinishFailed={onFinishFailed}
 					autoComplete="off"
 				>
 					<Row justify="center">
@@ -57,10 +84,10 @@ const Register: React.FC = () => {
 					>
 						{t('AUTH.DIVIDER')}
 					</Divider>
-					<Form.Item className={styles.container__antform__item} name="contact">
+					<Form.Item className={styles.container__antform__item} name="email">
 						<Input size="large" placeholder={t('AUTH.INPUT_EMAIL')} />
 					</Form.Item>
-					<Form.Item className={styles.container__antform__item} name="fullname">
+					<Form.Item className={styles.container__antform__item} name="name">
 						<Input size="large" placeholder={t('AUTH.INPUT_FULLNAME')} />
 					</Form.Item>
 					<Form.Item className={styles.container__antform__item} name="username">

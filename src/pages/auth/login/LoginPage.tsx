@@ -1,13 +1,25 @@
-import React from 'react'
-import { Col, Row, Image, Form, Button } from 'antd'
+import { Col, Row } from 'antd'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import ImageLogo from '../../../assets/image/imageLogo.png'
 import FormLogin from '../login/components/FormLogin'
 import styles from './LoginPage.module.scss'
-import ImageLogo from '../../../assets/image/imageLogo.png'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+
+import { useAppSelector } from '@/app/hook'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
 	const { t } = useTranslation()
+
+	const isAuth = useAppSelector((state) => state.authSlice.user)
+
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		isAuth && navigate('/')
+	}, [isAuth])
+
 	return (
 		<div className={styles.container}>
 			<Row justify="center">
@@ -21,7 +33,7 @@ const LoginForm = () => {
 						<Row justify="center">
 							<FormLogin></FormLogin>
 						</Row>
-						<Row justify='center' className={styles.container__div_row}>
+						<Row justify="center" className={styles.container__div_row}>
 							<div>
 								<span>{t('AUTH.DONT_HAVE_ACCOUNT')}</span>
 								<Link to="/register">{t('AUTH.SIGN_UP')}</Link>

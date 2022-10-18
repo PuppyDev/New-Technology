@@ -1,5 +1,6 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import chatSlice from './../features/Chat/slices/ChatSlice'
+import authSlice from './../pages/auth/authSlice'
 
 import global from './globalSlice'
 
@@ -7,6 +8,7 @@ export const store = configureStore({
 	reducer: {
 		global,
 		chatSlice,
+		authSlice,
 	},
 })
 
