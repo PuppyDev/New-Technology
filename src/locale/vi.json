@@ -1,7 +1,8 @@
 {
-    "AUTH": {
-        "LOGIN": "Đăng nhập",
-        "REGISTER": "Đăng ký"
-    },
-    "SEARCH": "Tìm kiếm"
+	"AUTH": {
+		"LOGIN": "Đăng nhập",
+		"REGISTER": "Đăng ký"
+	},
+	"SEARCH": "Tìm kiếm",
+	"EDIT_PROFILE": "Chỉnh sửa trang cá nhân"
 }
