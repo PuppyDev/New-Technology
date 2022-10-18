@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 function Login() {
-	const { t } = useTranslation();
+	const { t } = useTranslation()
 
 	const onFinish = () => {
 		console.log('Success:')
@@ -34,11 +34,11 @@ function Login() {
 						/>
 					</Link>
 					<Form.Item name="username" style={{ marginBottom: '10px' }}>
-						<Input size="large" placeholder="phone number, username or email" />
+						<Input size="large" placeholder={t('AUTH.INPUT_USER_NAME')} />
 					</Form.Item>
 
 					<Form.Item name="password" style={{ marginBottom: '16px' }}>
-						<Input.Password size="large" placeholder="password" />
+						<Input.Password size="large" placeholder={t('AUTH.INPUT_PASSWORD')} />
 					</Form.Item>
 					<Form.Item style={{ marginBottom: '10px' }}>
 						<Button
@@ -48,28 +48,28 @@ function Login() {
 							size="large"
 							id="btn-submit"
 						>
-							Login
+							{t('AUTH.LOGIN')}
 						</Button>
 					</Form.Item>
 					<Form.Item style={{ marginBottom: '0px' }}>
 						<Divider className={styles.container__antform__divider} orientation="center">
-							OR
+							{t('AUTH.DIVIDER')}
 						</Divider>
 					</Form.Item>
-					<Form.Item style={{ marginBottom: '16px' }}>
+					<Form.Item style={{ marginBottom: '10px' }}>
 						<Button
 							type="link"
 							icon={<FacebookFilled />}
 							size="large"
 							className={styles.container__antform__btnloginwfb}
 						>
-							Đăng nhập với Facebook
+							{t('AUTH.LOGIN_WITH_FB')}
 						</Button>
 					</Form.Item>
 					<Form.Item>
-						<Button style={{ color: 'black', width: '100%' }} type="link">
-							Quên mật khẩu?
-						</Button>
+						<Row justify="center">
+							<Link to={'/forgotpass'}>{t('AUTH.FORGOT_PASS')}</Link>
+						</Row>
 					</Form.Item>
 				</Form>
 			</Col>

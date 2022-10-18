@@ -1,22 +1,25 @@
 .container {
 	@include grid-wide;
 	height: 100vh;
+	display: flex;
+	align-items: center;
+
+	&__border {
+		border: 1px solid;
+		border-color: $gainsboro-color;
+	}
 
 	&__antform {
-		border: 1px solid;
-		border-color: gainsboro;
         padding-top: 30px;
-		padding-left: 10%;
-		padding-right: 10%;
 		margin-top: 20px;
 		&__item {
-			margin-bottom: 7px;
+			margin-bottom: 10px;
 		}
 		p {
 			font-weight: 500;
 			text-align: center;
 			color: $silver-color;
-			font-size: small;
+			font-size: 16px;
 			a {
 				color: $gray-color;
 			}
@@ -34,12 +37,12 @@
 }
 .redirectlogin{
     border: 1px solid;
-    border-color: gainsboro;
+    border-color: $gainsboro-color;
     align-items: center;
     margin-top: 10px;
     padding: 20px;
     p{
-        font-size: 14px;
+        font-size: 16px;
         width: 100%;
         text-align: center;
         a{

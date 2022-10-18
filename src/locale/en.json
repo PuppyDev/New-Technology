@@ -1,7 +1,25 @@
 {
 	"AUTH": {
 		"LOGIN": "Login",
-		"REGISTER": "Register"
+		"REGISTER": "Register",
+		"INPUT_USER_NAME": "Phone number, username, or email",
+		"INPUT_PASSWORD": "Password",
+		"DIVIDER" : "OR",
+		"LOGIN_WITH_FB":"Log in with facebook",
+		"FORGOT_PASS":"Forgot Password?",
+		"DONT_HAVE_ACCOUNT":"Don't have an account? ",
+		"SIGN_UP":"Sign up",
+		"TITLE_REGISTER":"Sign up to see photos and videos from friends.",
+		"INPUT_EMAIL":"Mobie number or email", 
+		"INPUT_FULLNAME":"Full name",
+		"INPUT_USERNAME":"User name",
+		"ABOUT":"Users of our service may have uploaded your contact information to Instagram.",
+		"LEARN_MORE":"Learn more",
+		"ABOUT_POLICY":"By signing up, you agree to our",
+		"POLICY":"POLICY",
+		"COOKIE_POLICY":"COOKIE_POLICY",
+		"AND":"and ",
+		"HAVE_ACCOUNT":"Do you have acount? "
 	},
 	"SEARCH": "Search",
 	"EDIT_PROFILE": "Edit Profile"
