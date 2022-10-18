@@ -21,7 +21,7 @@ const ActionMessage = ({ reverse = false, msg }: { reverse?: boolean; msg: Strin
 							setReplyMessage({
 								replyMessage: {
 									msg: msgSend,
-									replyFor: '123Con Mực',
+									replyFor: null,
 								},
 							})
 						)

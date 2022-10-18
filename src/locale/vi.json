@@ -4,5 +4,18 @@
 		"REGISTER": "Đăng ký"
 	},
 	"SEARCH": "Tìm kiếm",
-	"EDIT_PROFILE": "Chỉnh sửa trang cá nhân"
+	"EDIT_PROFILE": "Chỉnh sửa trang cá nhân",
+	"CONVERSATION": {
+		"REPLY": "Trả lời",
+		"MINE": "chính mình",
+		"ATTACHMENTS": "file đính kèm",
+		"DETAIL_ACTION": {
+			"DELETE_CHAT": "Xoá đoạn chat",
+			"BLOCK": "Chặn",
+			"REPORT": "Báo cáo"
+		},
+		"MESSAGE": "Nhắn tin...",
+		"DETAIL": "Chi tiết",
+		"SEARCH_GIF": "Tìm kiếm Gif..."
+	}
 }

@@ -4,5 +4,18 @@
 		"REGISTER": "Register"
 	},
 	"SEARCH": "Search",
-	"EDIT_PROFILE": "Edit Profile"
+	"EDIT_PROFILE": "Edit Profile",
+	"CONVERSATION": {
+		"REPLY": "Reply to",
+		"MINE": "yourself",
+		"ATTACHMENTS": "Attachments file",
+		"DETAIL_ACTION": {
+			"DELETE_CHAT": "Delete chat",
+			"BLOCK": "Block",
+			"REPORT": "Report"
+		},
+		"MESSAGE": "Message...",
+		"DETAIL": "Details",
+		"SEARCH_GIF": "Search Gif..."
+	}
 }
