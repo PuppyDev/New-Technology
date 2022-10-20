@@ -21,7 +21,7 @@ export function GalleryItem({ imagepath, title }) {
 		<div className={styles.Wrap}>
 			<Image preview={false} className={styles.Img} alt="gallery-post" src={imagepath} onClick={showModal} />
 
-			<Modal title={title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
+			<Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
 				<p>{title}</p>
 				<Image preview={false} className={styles.Img} alt="gallery-post" src={imagepath} />
 			</Modal>
