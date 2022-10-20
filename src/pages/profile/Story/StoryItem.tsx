@@ -1,7 +1,6 @@
 import { Modal } from 'antd'
 import React, { useState } from 'react'
 import Stories from 'react-insta-stories'
-import './index.css'
 
 import styles from './Story.module.scss'
 export function StoryItem(props) {
