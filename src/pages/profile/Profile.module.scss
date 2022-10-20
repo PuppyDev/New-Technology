@@ -1,6 +1,6 @@
 .Header {
 	margin-bottom: 44px;
-	background: var(--ins-background-primary);
+	background: var($ig-primary-background);
 	color: var(--ins-content-primary);
 	@media only screen and (max-width: 735px) {
 		display: block;
@@ -19,9 +19,7 @@
 }
 .ProfilePic {
 	height: 160px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	@include flex-center-center;s
 	@media only screen and (max-width: 735px) {
 		width: 77px;
 		height: 77px;
