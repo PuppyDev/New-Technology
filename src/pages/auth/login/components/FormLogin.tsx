@@ -32,6 +32,7 @@ function Login() {
 			setLoading(false)
 		} catch (error: any) {
 			const { response } = error
+			console.log('🚀 ~ file: FormLogin.tsx ~ line 35 ~ onFinish ~ error', error)
 			setError(response.data)
 			setLoading(false)
 		}

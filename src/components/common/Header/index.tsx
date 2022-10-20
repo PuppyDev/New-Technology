@@ -13,7 +13,7 @@ import {
 import { Avatar, Dropdown, Menu, Modal, Space } from 'antd'
 import { logout } from 'pages/auth/authSlice'
 import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalPost from '../Modal/ModalPost'
 import styles from './Header.module.scss'
@@ -42,7 +42,7 @@ const ControlNavLink: React.FC = () => {
 	const [openAddPost, setOpenAddPost] = useState(false)
 
 	const dispatch = useAppDispatch()
-
+	const navigate = useNavigate()
 	const user = useAppSelector((state) => state.authSlice.user)
 
 	const handleLogout = () => {
@@ -56,6 +56,7 @@ const ControlNavLink: React.FC = () => {
 			content: 'Bạn cần phải đăng nhập lại',
 			onOk() {
 				dispatch(logout())
+				navigate('/login')
 				clearTimeout(timerLogout)
 			},
 			centered: true,

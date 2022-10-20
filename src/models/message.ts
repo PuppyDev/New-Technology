@@ -1,16 +1,17 @@
-export type messageType = 'TEXT' | 'FILE'
+export type messageType = 'TEXT' | 'FILE' | 'IMAGE' | 'GIF'
 export interface Sender {
 	id: number
 	image: string
 	username: string
 }
 export interface LastMessage {
-	content: string
-	conversationId: number
-	createdDate: number
-	id: number
-	sender: null | Sender
-	messageType: messageType
+	type: string
+	reaction: string
+	readMessage: boolean
+	_id: string
+	sender: string
+	room: string
+	message: string
 }
 
 export interface Message {

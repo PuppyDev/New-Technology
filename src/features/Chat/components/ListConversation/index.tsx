@@ -1,4 +1,8 @@
+import { roomApi } from '@/api/roomApi'
+import { openNotificationWithIcon } from '@/components/common/ToastMessage'
+import { Room } from '@/models/room'
 import { Skeleton } from 'antd'
+import { useEffect, useState } from 'react'
 import styles from './ListConversation.module.scss'
 import ListConversationItem from './ListConversationItem'
 import ListConversationMul from './ListConversationMul'
@@ -35,8 +39,23 @@ const ListConversationValues = [
 ]
 
 const ListConversation = () => {
+	const [roomConvesation, setRoomConvesation] = useState<Room[]>()
+	console.log('🚀 ~ file: index.tsx ~ line 42 ~ ListConversation ~ roomConvesation', roomConvesation)
+
 	// SOCKET-CLIENTS HERE!!!
 	/** Using socket and listen socket right here */
+
+	useEffect(() => {
+		;(async () => {
+			try {
+				const response = await roomApi.getRoomConversation()
+				setRoomConvesation(response.data.rooms)
+			} catch (err) {
+				console.log(err)
+				if (err) openNotificationWithIcon('error', 'Something wrong please contact an admin!!!')
+			}
+		})()
+	}, [])
 
 	ListConversationValues.sort((item1, item2) => {
 		return item2.createAt - item1.createAt
@@ -48,23 +67,25 @@ const ListConversation = () => {
 				<p className={styles.headerItem}>Yone Doan</p>
 			</div>
 			<ul className={styles.bottomContent}>
-				{ListConversationValues.map((item) => {
-					return item?.isGroup ? (
-						<ListConversationMul key={item.id} conversation={item} />
-					) : (
-						<ListConversationItem key={item.id} conversation={item} />
-					)
-				})}
+				{roomConvesation &&
+					roomConvesation.map((item) => {
+						return item?.group ? (
+							<ListConversationMul key={item._id} conversation={item} />
+						) : (
+							<ListConversationItem key={item._id} conversation={item} />
+						)
+					})}
 
-				{/* {Array.from({ length: 2 }).map((_, index) => (
-					<div key={index} className={styles.skeleton}>
-						<Skeleton.Avatar active size={55} />
-						<div className={styles.listItem}>
-							<Skeleton.Input active size="small" />
-							<Skeleton.Input active block size="small" />
+				{!roomConvesation &&
+					Array.from({ length: 8 }).map((_, index) => (
+						<div key={index} className={styles.skeleton}>
+							<Skeleton.Avatar active size={55} />
+							<div className={styles.listItem}>
+								<Skeleton.Input active size="small" />
+								<Skeleton.Input active block size="small" />
+							</div>
 						</div>
-					</div>
-				))} */}
+					))}
 			</ul>
 		</div>
 	)

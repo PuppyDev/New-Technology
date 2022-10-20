@@ -4,7 +4,9 @@ import queryString from 'query-string'
 
 const createAxiosInstance = () => {
 	const axiosInstance = axios.create({
-		baseURL: 'http://192.168.1.98:3000/v1',
+		// baseURL: 'http://192.168.1.98:3000/v1',
+		// baseURL: 'http://localhost:3000/v1',
+		baseURL: 'http://192.168.1.83:3000/v1',
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -33,6 +35,17 @@ const createAxiosInstance = () => {
 	axiosInstance.interceptors.request.use(
 		function (config: AxiosRequestConfig) {
 			// Do something before request is sent
+
+			// mouted access token in header
+			const loginData = localStorage.getItem('loginData')
+			if (loginData) {
+				const data = JSON.parse(loginData)
+				config.headers = {
+					...config.headers,
+					Authorization: data.accessToken,
+				}
+			}
+
 			return config
 		},
 		function (error) {

@@ -36,6 +36,7 @@ export const authSlice = createSlice({
 			state.isDisabled = action.payload
 		},
 		logout: (state) => {
+			localStorage.removeItem('loginData')
 			state.user = null
 		},
 	},

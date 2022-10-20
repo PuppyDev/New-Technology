@@ -8,7 +8,6 @@ import styles from './RegisterPage.module.scss'
 import { useAppSelector } from '@/app/hook'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import { Container } from './styles';
 
 const RegisterPage: React.FC = () => {
 	const { t } = useTranslation()
