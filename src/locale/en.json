@@ -4,7 +4,7 @@
 		"REGISTER": "Register",
 		"INPUT_USER_NAME": "Phone number, username, or email",
 		"INPUT_PASSWORD": "Password",
-		"DIVIDER": "OR",
+		"DIVIDER": "Register",
 		"LOGIN_WITH_FB": "Log in with facebook",
 		"FORGOT_PASS": "Forgot Password?",
 		"DONT_HAVE_ACCOUNT": "Don't have an account? ",
@@ -41,5 +41,7 @@
 		"SEND_MESSAGE": "Send messages",
 		"NEW_MESSAGE": "New message",
 		"TO": "To:"
-	}
+	},
+	"WARINING": {},
+	"ERROR": {}
 }

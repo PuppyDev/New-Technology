@@ -19,14 +19,7 @@ const Register: React.FC = () => {
 		try {
 			setLoading(true)
 
-			const data = await authApi.register(values)
-
-			if (data.errorCode === 201 && data.message === 'Account is created') {
-				notification.info({
-					message: `Notification ${data.message}`,
-					placement: 'top',
-				})
-			}
+			await authApi.register(values)
 
 			notification.success({
 				message: `Thank you!`,
@@ -74,9 +67,7 @@ const Register: React.FC = () => {
 							{t('AUTH.TITLE_REGISTER')}
 						</p>
 					</Form.Item>
-					<Button type="primary" icon={<FacebookFilled />} size="large">
-						{t('AUTH.LOGIN_WITH_FB')}
-					</Button>
+
 					<Divider
 						className={styles.container__antform__divider}
 						orientation="center"
@@ -85,16 +76,16 @@ const Register: React.FC = () => {
 						{t('AUTH.DIVIDER')}
 					</Divider>
 					<Form.Item className={styles.container__antform__item} name="email">
-						<Input size="large" placeholder={t('AUTH.INPUT_EMAIL')} />
+						<Input autoComplete="off" size="large" placeholder={t('AUTH.INPUT_EMAIL')} />
 					</Form.Item>
 					<Form.Item className={styles.container__antform__item} name="name">
-						<Input size="large" placeholder={t('AUTH.INPUT_FULLNAME')} />
+						<Input autoComplete="off" size="large" placeholder={t('AUTH.INPUT_FULLNAME')} />
 					</Form.Item>
 					<Form.Item className={styles.container__antform__item} name="username">
-						<Input size="large" placeholder={t('AUTH.INPUT_USERNAME')} />
+						<Input autoComplete="off" size="large" placeholder={t('AUTH.INPUT_USERNAME')} />
 					</Form.Item>
 					<Form.Item name="password">
-						<Input.Password size="large" placeholder={t('AUTH.INPUT_PASSWORD')} />
+						<Input.Password autoComplete="off" size="large" placeholder={t('AUTH.INPUT_PASSWORD')} />
 					</Form.Item>
 					<Form.Item>
 						<p>
@@ -107,7 +98,7 @@ const Register: React.FC = () => {
 						</p>
 					</Form.Item>
 					<Form.Item wrapperCol={{ span: 24 }}>
-						<Button type="primary" htmlType="submit" size="large">
+						<Button type="primary" htmlType="submit" size="large" loading={loading}>
 							{t('AUTH.REGISTER')}
 						</Button>
 					</Form.Item>

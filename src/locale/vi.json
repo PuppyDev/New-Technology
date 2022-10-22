@@ -4,7 +4,7 @@
 		"REGISTER": "Đăng ký",
 		"INPUT_USER_NAME": "Số điện thoại, tên người dùng hoặc email",
 		"INPUT_PASSWORD": "Mật khẩu",
-		"DIVIDER": "HOẶC",
+		"DIVIDER": "Đăng Ký",
 		"LOGIN_WITH_FB": "Đăng nhập bằng facebook",
 		"FORGOT_PASS": "Quên mật khẩu?",
 		"DONT_HAVE_ACCOUNT": "Bạn chưa có tài khoản ư? ",
@@ -41,5 +41,7 @@
 		"SEND_MESSAGE": "Gửi tin nhắn",
 		"NEW_MESSAGE": "Tin nhắn mới",
 		"TO": "Tới:"
-	}
+	},
+	"WARINING": {},
+	"ERROR": {}
 }

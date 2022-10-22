@@ -22,3 +22,9 @@ export interface Message {
 	sender: Sender
 	messageType: messageType
 }
+
+export interface PayloadMessage {
+	roomId: string
+	nMessage: number
+	userId: string
+}

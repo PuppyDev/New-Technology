@@ -1,17 +1,23 @@
+import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { RootState } from '@/app/store'
 import { setReplyMessage } from '@/Chat/slices/ChatSlice'
 import useOpen from '@/hooks/useOpen'
 import { ReplyMessage } from '@/models/conversation'
-import { CloseOutlined, FileGifOutlined, FileImageOutlined, PaperClipOutlined } from '@ant-design/icons'
+import {
+	CloseOutlined,
+	FileGifOutlined,
+	FileImageOutlined,
+	LoadingOutlined,
+	PaperClipOutlined,
+} from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Dropdown, Form, Input, Upload } from 'antd'
-import { EmojiClickData } from 'emoji-picker-react'
+import { Dropdown, Form, Input, Spin, Upload } from 'antd'
 import { Suspense, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import InputEmoji from 'react-input-emoji'
-import TextMessage from '../../Messages/TextMessage'
+import { useParams } from 'react-router-dom'
 import ConversationNavigate from '../ConversationNavigate'
 import styles from './ConversationDisplay.module.scss'
 import './ConversationDisplay.scss'
@@ -19,23 +25,14 @@ type FormValues = {
 	message: ''
 }
 
-interface props {
-	inboxId: String
-}
+const ConversationDisplay = () => {
+	const { inboxId: conversationRoomId } = useParams()
 
-const ConversationDisplay = ({ inboxId }: props) => {
 	const { t } = useTranslation()
 	// Display details
 	const { open: isClickInfo, handleToggleOpen: toggleIsClickInfo } = useOpen()
 
-	// Display emoji
-	const { open: showIcons, handleToggleOpen: toggleShowIcons } = useOpen()
-
-	const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
-		console.log('🚀 ~ file: index.tsx ~ line 11 ~ handleEmojiClick ~ emoji', emojiData)
-		// setValue("message", message + )
-	}
-
+	const roomConversations = useAppSelector((state) => state.chatSlice.conversations)
 	const [message, setMessage] = useState<string>('')
 
 	// Display reply message
@@ -43,17 +40,34 @@ const ConversationDisplay = ({ inboxId }: props) => {
 
 	// Subcriber Socket msg in here
 
+	// Get Message using api
+	useEffect(() => {
+		// roomApi.getMessageInRoom()
+
+		const roomConversationSelect =
+			roomConversations && roomConversations.find((room) => room._id === conversationRoomId)
+
+		if (!roomConversationSelect) return
+
+		const { _id } = roomConversationSelect.users[0]
+
+		console.log('vo')
+		;(async () => {
+			const response = await roomApi.getMessageInRoom({
+				roomId: roomConversationSelect._id,
+				nMessage: 10,
+				userId: _id,
+			})
+			console.log('🚀 ~ file: index.tsx ~ line 68 ~ ; ~ response', response)
+		})()
+	}, [])
+
 	const onFinish = (values?: string) => {
 		const newValues: string = message
 
 		console.log('Success:', newValues)
 		setMessage('')
 	}
-
-	useEffect(() => {
-		const inputEle: HTMLInputElement | null = document.querySelector('input#message.ant-input')
-		inputEle?.focus()
-	}, [showIcons])
 
 	// GIF handle
 	const [keyword, setkeyword] = useState('')
@@ -117,9 +131,11 @@ const ConversationDisplay = ({ inboxId }: props) => {
 
 				<main className={`${styles.mainContent} ${isClickInfo ? styles.hidden : styles.visible} `}>
 					{/* Render msg in here */}
-					<TextMessage>
+					{/* <TextMessage>
 						<TextMessage.TimeMessage msg={'12:29 SA'} />
-					</TextMessage>
+					</TextMessage> */}
+
+					<ConversationDisplay.Skeleton />
 				</main>
 
 				<ConversationDisplay.ReplyDialog replyMessage={replyMessage} />
@@ -223,8 +239,12 @@ ConversationDisplay.ReplyDialog = ({ replyMessage }: { replyMessage: ReplyMessag
 	)
 }
 
-ConversationDisplay.Sekeleton = () => {
-	return
+ConversationDisplay.Skeleton = () => {
+	return (
+		<div className={styles.skeleton}>
+			<Spin size="large" indicator={<LoadingOutlined />} />
+		</div>
+	)
 }
 
 export default ConversationDisplay

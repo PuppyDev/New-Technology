@@ -1,55 +1,27 @@
 import { roomApi } from '@/api/roomApi'
+import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { openNotificationWithIcon } from '@/components/common/ToastMessage'
 import { Room } from '@/models/room'
 import { Skeleton } from 'antd'
 import { useEffect, useState } from 'react'
+import { setConversations } from '../..'
 import styles from './ListConversation.module.scss'
 import ListConversationItem from './ListConversationItem'
 import ListConversationMul from './ListConversationMul'
 
-const ListConversationValues = [
-	{
-		id: 1,
-		name: 'Cún Nè',
-		image: 'https://joeschmoe.io/api/v1/random',
-		lastTimeActive: '2days',
-		isActive: false,
-		lastMessage: 'Hello',
-		createAt: 1665392787939,
-	},
-	{
-		id: 2,
-		name: 'Giang Nè',
-		image: 'https://joeschmoe.io/api/v1/random',
-		lastTimeActive: '2days',
-		isActive: false,
-		lastMessage: null,
-		createAt: 1665392822075,
-	},
-	{
-		id: 3,
-		name: 'Chúa hề ',
-		image: 'https://joeschmoe.io/api/v1/random',
-		lastTimeActive: '2days',
-		isActive: false,
-		lastMessage: 'Hello mấy con đĩ',
-		createAt: 1665392822075,
-		isGroup: true,
-	},
-]
-
 const ListConversation = () => {
-	const [roomConvesation, setRoomConvesation] = useState<Room[]>()
-	console.log('🚀 ~ file: index.tsx ~ line 42 ~ ListConversation ~ roomConvesation', roomConvesation)
+	const dispatch = useAppDispatch()
+
+	const roomConvesation = useAppSelector((state) => state.chatSlice.conversations)
+	const user = useAppSelector((state) => state.authSlice.user) || { name: 'Loading...' }
 
 	// SOCKET-CLIENTS HERE!!!
 	/** Using socket and listen socket right here */
-
 	useEffect(() => {
 		;(async () => {
 			try {
 				const response = await roomApi.getRoomConversation()
-				setRoomConvesation(response.data.rooms)
+				dispatch(setConversations({ conversations: response.data.rooms }))
 			} catch (err) {
 				console.log(err)
 				if (err) openNotificationWithIcon('error', 'Something wrong please contact an admin!!!')
@@ -57,14 +29,14 @@ const ListConversation = () => {
 		})()
 	}, [])
 
-	ListConversationValues.sort((item1, item2) => {
-		return item2.createAt - item1.createAt
-	})
+	// ListConversationValues.sort((item1, item2) => {
+	// 	return item2.createAt - item1.createAt
+	// })
 
 	return (
 		<div className={styles.ListConversation}>
 			<div className={styles.topContent}>
-				<p className={styles.headerItem}>Yone Doan</p>
+				<p className={styles.headerItem}>{user.name}</p>
 			</div>
 			<ul className={styles.bottomContent}>
 				{roomConvesation &&

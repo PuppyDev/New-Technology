@@ -4,9 +4,7 @@ import queryString from 'query-string'
 
 const createAxiosInstance = () => {
 	const axiosInstance = axios.create({
-		// baseURL: 'http://192.168.1.98:3000/v1',
-		// baseURL: 'http://localhost:3000/v1',
-		baseURL: 'http://192.168.1.83:3000/v1',
+		baseURL: import.meta.env.BASE_URL,
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -24,6 +22,8 @@ const createAxiosInstance = () => {
 		(error) => {
 			console.log('🚀 ~ file: axiosClient.ts ~ line 23 ~ createAxiosInstance ~ error', error)
 			if (error.response?.status === NOT_AUTHORIZED) {
+				console.log('Vo not authorized')
+
 				deleteToken()
 				showNotify()
 			}
@@ -49,6 +49,7 @@ const createAxiosInstance = () => {
 			return config
 		},
 		function (error) {
+			console.log('🚀 ~ file: axiosClient.ts ~ line 58 ~ createAxiosInstance ~ error', error)
 			// Do something with request error
 			return Promise.reject(error)
 		}
