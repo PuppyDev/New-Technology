@@ -6,15 +6,18 @@ import styles from './Story.module.scss'
 export function StoryItem(props) {
 	const [open, setOpen] = useState(false)
 	const showConfirmModal = () => {
+		console.log(imgPath)
+
 		setOpen(true)
 	}
 	const onCancel = () => {
 		setOpen(false)
 	}
+	const imgPath = props.imagePath
 	const stories: any = [
-		'https://example.com/pic.jpg',
+		'https://picsum.photos/1080/1920',
 		{
-			url: 'https://example.com/pic2.jpg',
+			url: 'https://picsum.photos/1080/1920',
 			duration: 5000,
 			header: {
 				heading: 'Mohit Karekar',
@@ -29,9 +32,9 @@ export function StoryItem(props) {
 				<img className={styles.Image} src={props.imagePath} onClick={showConfirmModal} />
 			</div>
 			<div className={styles.Title}>{props.title}</div>
-				<Modal centered={true} open={open} onCancel={onCancel} footer={false}>
-					<Stories stories={stories} />
-				</Modal>
+			<Modal centered={true} open={open} onCancel={onCancel} footer={false}>
+				<Stories stories={stories} />
+			</Modal>
 		</li>
 	)
 }
