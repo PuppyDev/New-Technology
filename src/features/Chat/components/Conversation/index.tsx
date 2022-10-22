@@ -15,7 +15,7 @@ const Conversation = () => {
 		)
 	return (
 		<div className={styles.conversation}>
-			<ConversationDisplay inboxId={inboxId} />
+			<ConversationDisplay />
 		</div>
 	)
 }
