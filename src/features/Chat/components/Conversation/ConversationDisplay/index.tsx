@@ -4,6 +4,7 @@ import { RootState } from '@/app/store'
 import { setReplyMessage } from '@/Chat/slices/ChatSlice'
 import useOpen from '@/hooks/useOpen'
 import { ReplyMessage } from '@/models/conversation'
+import { Message } from '@/models/message'
 import {
 	CloseOutlined,
 	FileGifOutlined,
@@ -18,55 +19,80 @@ import { Suspense, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import InputEmoji from 'react-input-emoji'
 import { useParams } from 'react-router-dom'
+import { io } from 'socket.io-client'
+import TextMessage from '../../Messages/TextMessage'
 import ConversationNavigate from '../ConversationNavigate'
 import styles from './ConversationDisplay.module.scss'
 import './ConversationDisplay.scss'
-type FormValues = {
-	message: ''
-}
+
+const socket = io('http://localhost:3000', {
+	extraHeaders: {
+		Authorization: JSON.parse(localStorage.getItem('loginData') || '{}')?.accessToken || '',
+	},
+}).connect()
+
+let tempMessage: Message[] = []
 
 const ConversationDisplay = () => {
-	const { inboxId: conversationRoomId } = useParams()
-
 	const { t } = useTranslation()
+	const { inboxId } = useParams()
+
+	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
+	const user = useAppSelector((state) => state.authSlice.user)
 	// Display details
 	const { open: isClickInfo, handleToggleOpen: toggleIsClickInfo } = useOpen()
-
-	const roomConversations = useAppSelector((state) => state.chatSlice.conversations)
-	const [message, setMessage] = useState<string>('')
-
+	const [messageSender, setMessageSender] = useState<string>('')
+	const [isLoadingMessages, setIsLoadingMessages] = useState(true)
 	// Display reply message
 	const replyMessage = useAppSelector((state: RootState) => state.chatSlice.replyMessage)
 
+	const [dummyMessage, setDummyMessage] = useState<String>('')
+
+	const [messagesConversation, setMessageConversation] = useState<Message[]>()
+	const [messageRecive, setMessageRecive] = useState<any>('')
 	// Subcriber Socket msg in here
+	useEffect(() => {
+		socket.on('chat:print_message', (dataGot) => {
+			setMessageRecive(dataGot)
+			setDummyMessage('')
+		})
+	}, [])
+
+	useEffect(() => {
+		if (messageRecive.roomId === conversationSelected?._id && messagesConversation) {
+			setMessageConversation((pre) => [...pre, messageRecive.message])
+		}
+	}, [messageRecive])
 
 	// Get Message using api
 	useEffect(() => {
-		// roomApi.getMessageInRoom()
+		if (!conversationSelected) return
 
-		const roomConversationSelect =
-			roomConversations && roomConversations.find((room) => room._id === conversationRoomId)
+		const { _id } = conversationSelected.users[0]
 
-		if (!roomConversationSelect) return
-
-		const { _id } = roomConversationSelect.users[0]
-
-		console.log('vo')
 		;(async () => {
 			const response = await roomApi.getMessageInRoom({
-				roomId: roomConversationSelect._id,
+				roomId: conversationSelected._id,
 				nMessage: 10,
 				userId: _id,
 			})
-			console.log('🚀 ~ file: index.tsx ~ line 68 ~ ; ~ response', response)
+			setIsLoadingMessages(false)
+			setMessageConversation(response.data.messages)
 		})()
-	}, [])
+	}, [conversationSelected?._id])
 
-	const onFinish = (values?: string) => {
-		const newValues: string = message
+	const handleSendMessage = (values?: string) => {
+		const newValues: string = messageSender
 
-		console.log('Success:', newValues)
-		setMessage('')
+		socket.emit('chat:send_message', {
+			username: conversationSelected?.users[0].username,
+			userId: conversationSelected?.users[0]?._id,
+			roomId: conversationSelected?._id,
+			content: newValues,
+		})
+
+		setDummyMessage(messageSender)
+		setMessageSender('')
 	}
 
 	// GIF handle
@@ -84,30 +110,14 @@ const ConversationDisplay = () => {
 
 	const sendGifHandler = (gif: any) => {
 		const url_gif = gif.images.preview_gif.url || gif.images.preview_webp.url
-		console.log('🚀 ~ file: index.tsx ~ line 69 ~ sendGifHandler ~ url_gif', url_gif)
 
-		// const newMessage = {
-		//     sender: idLogin,
-		//     type: 'gif',
-		//     text: e.currentTarget.childNodes[0].childNodes[0].childNodes[1]
-		//         .attributes['src'].value,
-		//     RoomId: props.onSendRoomToBoxChat?._id,
-		// }
-		// const fetchAddMessage = async () => {
-		//     try {
-		//         const res = await messageAPI.AddMessage({
-		//             message: newMessage,
-		//         })
-		//         console.log(res)
-		//         setMessages([...messages, res.data])
-		//         //console.log(res.data);
-		//         //setEnteredChat("");
-		//         setIsOpenGif(false)
-		//     } catch (error) {
-		//         console.log(error)
-		//     }
-		// }
-		// fetchAddMessage()
+		socket.emit('chat:send_message', {
+			username: conversationSelected?.users[0].username,
+			userId: conversationSelected?.users[0]?._id,
+			roomId: conversationSelected?._id,
+			content: url_gif,
+			type: 'GIF',
+		})
 	}
 
 	return (
@@ -131,18 +141,70 @@ const ConversationDisplay = () => {
 
 				<main className={`${styles.mainContent} ${isClickInfo ? styles.hidden : styles.visible} `}>
 					{/* Render msg in here */}
-					{/* <TextMessage>
-						<TextMessage.TimeMessage msg={'12:29 SA'} />
-					</TextMessage> */}
+					<TextMessage>
+						{/* <TextMessage.TimeMessage msg={'12:29 SA'} /> */}
+						{messagesConversation &&
+							messagesConversation.map((messageInfo, index) => {
+								const nextMessage = messagesConversation[index + 1]
+								const msg =
+									messageInfo.type === 'TEXT' ? (
+										messageInfo.message
+									) : (
+										<img src={messageInfo.message} />
+									)
 
-					<ConversationDisplay.Skeleton />
+								if (messageInfo.sender === user?.username) {
+									return (
+										<TextMessage.OwnerMessage
+											msg={msg}
+											ispadding={messageInfo.type !== 'GIF'}
+											key={index}
+										/>
+									)
+								}
+								// else if (nextMessage?.sender === messageInfo?.sender) {
+								// 	tempMessage.push(messageInfo)
+
+								// 	return
+								// } else if (nextMessage?.sender !== user?.username) {
+								// 	tempMessage.push(messageInfo)
+
+								// 	const contentMessageBlock = (
+								// 		<TextMessage.ListFriendMessage key={index}>
+								// 			{tempMessage &&
+								// 				tempMessage?.map((messageFriend) => (
+								// 					<TextMessage.FriendMessage
+								// 						msg={messageFriend.message}
+								// 						key={messageFriend._id}
+								// 					/>
+								// 				))}
+								// 		</TextMessage.ListFriendMessage>
+								// 	)
+
+								// 	tempMessage = []
+								// 	return contentMessageBlock
+								// }
+								return (
+									<TextMessage.ListFriendMessage key={index}>
+										<TextMessage.FriendMessage
+											msg={msg}
+											key={messageInfo._id}
+											ispadding={messageInfo.type !== 'GIF'}
+										/>
+									</TextMessage.ListFriendMessage>
+								)
+							})}
+						{dummyMessage && <TextMessage.OwnerMessage msg={dummyMessage} loading />}
+					</TextMessage>
+
+					{isLoadingMessages && <ConversationDisplay.Skeleton />}
 				</main>
 
 				<ConversationDisplay.ReplyDialog replyMessage={replyMessage} />
 
-				<Form onFinish={onFinish} className={styles.sendInput}>
+				<Form onFinish={handleSendMessage} className={styles.sendInput}>
 					<div className={styles.wrapInputItem}>
-						{message.trim().length < 1 && (
+						{messageSender.trim().length < 1 && (
 							<>
 								<label htmlFor="file">
 									<FileImageOutlined className={styles.iconAction} />
@@ -185,18 +247,22 @@ const ConversationDisplay = () => {
 							</>
 						)}
 						<InputEmoji
-							value={message}
+							value={messageSender}
 							name="message"
-							onChange={setMessage}
+							onChange={setMessageSender}
 							cleanOnEnter
-							onEnter={onFinish}
+							onEnter={handleSendMessage}
 							placeholder={`${t('CONVERSATION.MESSAGE')}`}
 							theme="light"
 							className={styles.inputEmoji}
+							onKeyDown={() => {
+								/** Subcriber socket listen key typing in here */
+								// console.log('vo')
+							}}
 						/>
-						{message.trim().length >= 1 && (
+						{messageSender.trim().length >= 1 && (
 							<button type="submit" className={styles.actions}>
-								Send
+								<Trans>SEND</Trans>
 							</button>
 						)}
 					</div>
@@ -245,6 +311,10 @@ ConversationDisplay.Skeleton = () => {
 			<Spin size="large" indicator={<LoadingOutlined />} />
 		</div>
 	)
+}
+
+ConversationDisplay.Typing = () => {
+	// return <span style={{ fontSize: 12, padding: '0px 20px' }}>Typing time</span>
 }
 
 export default ConversationDisplay

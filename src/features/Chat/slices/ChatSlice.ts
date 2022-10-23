@@ -14,8 +14,7 @@ export interface ChatState {
 		totalPage: number
 		loading: boolean
 	}
-	isLoading: boolean
-	conversationSelected: Conversation | null
+	conversationSelected: Room | null | undefined
 	replyMessage: ReplyMessage
 }
 
@@ -29,7 +28,6 @@ const initialState: ChatState = {
 		totalPage: 0,
 		loading: false,
 	},
-	isLoading: false,
 	conversationSelected: null,
 	replyMessage: {
 		msg: null,
@@ -53,10 +51,14 @@ export const chatSlice = createSlice({
 		setReplyMessage: (state, action: PayloadAction<{ replyMessage: ReplyMessage }>) => {
 			state.replyMessage = action.payload.replyMessage
 		},
+
+		setConversationSelected: (state, action: PayloadAction<Conversation | null | undefined>) => {
+			state.conversationSelected = action.payload
+		},
 	},
 	extraReducers: (builder) => {},
 })
 
-export const { setReplyMessage, setConversations } = chatSlice.actions
+export const { setReplyMessage, setConversations, setConversationSelected } = chatSlice.actions
 
 export default chatSlice.reducer

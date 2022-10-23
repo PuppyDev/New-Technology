@@ -20,8 +20,10 @@ const ListConversation = () => {
 	useEffect(() => {
 		;(async () => {
 			try {
-				const response = await roomApi.getRoomConversation()
-				dispatch(setConversations({ conversations: response.data.rooms }))
+				if (!roomConvesation) {
+					const response = await roomApi.getRoomConversation()
+					dispatch(setConversations({ conversations: response.data.rooms }))
+				}
 			} catch (err) {
 				console.log(err)
 				if (err) openNotificationWithIcon('error', 'Something wrong please contact an admin!!!')

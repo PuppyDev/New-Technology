@@ -1,7 +1,9 @@
+import { useAppDispatch } from '@/app/hook'
+import { setConversationSelected } from '@/Chat/slices/ChatSlice'
 import { Room } from '@/models/room'
 import { Avatar } from 'antd'
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import styles from './ListConversationItem.module.scss'
 
@@ -14,9 +16,13 @@ const ListConversationItem: React.FC<props> = ({ conversation }) => {
 
 	if (!conversation) return null
 
+	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
+
 	const contentRender = (isActive = false, isRead = false) => {
 		const { name } = conversation.users[0]
-		const lastMessage = conversation.messages[0]?.message
+		const lastMessage = conversation.messages[conversation.messages.length - 1]
+		const messageDisplay: any = (lastMessage?.type === 'TEXT' ? lastMessage?.message : lastMessage?.type) || ''
 		return (
 			<li className={`${styles.item} ${!isRead ? styles.notRead : ''} ${isActive ? styles.active : ''}`}>
 				<Avatar
@@ -27,7 +33,7 @@ const ListConversationItem: React.FC<props> = ({ conversation }) => {
 
 				<div className={styles.item__content}>
 					<p className={styles.item__contentName}>{name}</p>
-					{conversation.messages && <p>{lastMessage}</p>}
+					{messageDisplay && <p>{messageDisplay}</p>}
 				</div>
 
 				{!isRead && <div className={styles.circelNotRead}></div>}
@@ -35,9 +41,14 @@ const ListConversationItem: React.FC<props> = ({ conversation }) => {
 		)
 	}
 
+	const handleSelectConversation = () => {
+		dispatch(setConversationSelected(conversation))
+		navigate(`/direct/inbox/${conversation._id}`)
+	}
+
 	if (!inboxId || conversation?._id !== inboxId) {
 		// return contentRender
-		return <Link to={`/direct/inbox/${conversation._id}`}>{contentRender()}</Link>
+		return <div onClick={handleSelectConversation}>{contentRender()}</div>
 	}
 
 	return <>{contentRender(true, true)}</>

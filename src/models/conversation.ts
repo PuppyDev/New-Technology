@@ -1,3 +1,4 @@
+import { Room } from '@/models/room'
 import { LastMessage } from './message'
 
 export interface Friend {
@@ -11,15 +12,7 @@ export interface Owner {
 	username: string
 }
 
-export interface Conversation {
-	id: number
-	lastMessage: LastMessage
-	sourceImage: string
-	sourceName: string
-	readStatus: boolean
-	owner: Owner
-	friend: Friend
-}
+export interface Conversation extends Room {}
 
 export interface ReplyMessage {
 	msg: String | null

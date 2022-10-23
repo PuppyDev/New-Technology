@@ -15,12 +15,13 @@ export interface LastMessage {
 }
 
 export interface Message {
-	content: string
-	conversationId: number
+	message: string
+	room: number
 	createdDate: number
-	id: number
-	sender: Sender
-	messageType: messageType
+	_id: number
+	sender: string
+	type: messageType
+	reaction: string
 }
 
 export interface PayloadMessage {

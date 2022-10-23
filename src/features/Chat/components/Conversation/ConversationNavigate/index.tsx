@@ -1,10 +1,11 @@
+import { useAppDispatch, useAppSelector } from '@/app/hook'
+import { setConversationSelected } from '@/Chat/slices/ChatSlice'
 import { InfoCircleFilled, InfoCircleOutlined, PhoneOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { Trans } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './ConversationNavigate.module.scss'
-
 interface props {
 	isClickInfo: boolean
 	onClick: React.ReactEventHandler
@@ -12,6 +13,19 @@ interface props {
 
 const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
+	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
+	const conversations = useAppSelector((state) => state.chatSlice.conversations)
+
+	const { inboxId } = useParams()
+
+	useEffect(() => {
+		if (!conversationSelected) {
+			const conversation = conversations?.find((conversation) => conversation._id === inboxId)
+
+			dispatch(setConversationSelected(conversation))
+		}
+	}, [conversations])
 
 	const handleVideoCall = () => {
 		// CallVideoID redirect here
@@ -30,8 +44,8 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 								style={{ border: '1px solid rgb(219, 219, 219)' }}
 							/>
 							<div className={styles.item__content}>
-								<p className={styles.item__contentName}>Cún Nè</p>
-								<p>Active now</p>
+								<p className={styles.item__contentName}>{conversationSelected?.users[0].name}</p>
+								{conversationSelected?.active && <p>Active now</p>}
 							</div>
 						</div>
 					</Link>
