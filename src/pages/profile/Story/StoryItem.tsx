@@ -32,7 +32,14 @@ export function StoryItem(props) {
 				<img className={styles.Image} src={props.imagePath} onClick={showConfirmModal} />
 			</div>
 			<div className={styles.Title}>{props.title}</div>
-			<Modal centered={true} open={open} onCancel={onCancel} footer={false}>
+			<Modal
+				bodyStyle={{ padding: 0 }}
+				width={360}
+				centered={true}
+				open={open}
+				onCancel={onCancel}
+				footer={false}
+			>
 				<Stories stories={stories} />
 			</Modal>
 		</li>
