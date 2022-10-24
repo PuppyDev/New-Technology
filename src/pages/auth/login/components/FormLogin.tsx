@@ -1,5 +1,6 @@
 import { authApi } from '@/api/authApi'
 import { useAppDispatch } from '@/app/hook'
+import Logo from '@/assets/images/bbsgl.png'
 import { LoginPayload } from '@/models/auth'
 import { FacebookFilled } from '@ant-design/icons'
 import { Button, Col, Divider, Form, Image, Input, notification, Row } from 'antd'
@@ -54,11 +55,7 @@ function Login() {
 					onFinish={onFinish}
 					autoComplete="off"
 				>
-					<Image
-						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogos-world.net%2Fwp-content%2Fuploads%2F2020%2F04%2FInstagram-Logo-2010-2013.png&f=1&nofb=1&ipt=b62dc7579e3af6fffec776ec72377be923cd58b6aa4670d7aff9ecb6976faa0f&ipo=images"
-						alt="logo"
-						preview={false}
-					/>
+					<Image src={Logo} alt="logo" preview={false} />
 					<Form.Item
 						name="email"
 						style={{ marginBottom: '10px' }}

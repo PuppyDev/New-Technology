@@ -17,16 +17,14 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalPost from '../Modal/ModalPost'
 import styles from './Header.module.scss'
+import Logo from '@/assets/images/bbsgl.png'
 
 const Header = () => {
 	return (
 		<div className={styles.header}>
 			<div className={styles.header__container}>
 				<Link to="/" className={styles.header__containerlogo}>
-					<img
-						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogos-world.net%2Fwp-content%2Fuploads%2F2020%2F04%2FInstagram-Logo-2010-2013.png&f=1&nofb=1&ipt=b62dc7579e3af6fffec776ec72377be923cd58b6aa4670d7aff9ecb6976faa0f&ipo=images"
-						alt="logo"
-					/>
+					<img src={Logo} alt="logo" />
 				</Link>
 
 				<nav className={styles.header__containernav}>

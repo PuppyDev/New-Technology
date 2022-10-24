@@ -1,13 +1,10 @@
+import { useAppSelector } from '@/app/hook'
 import { Col, Row } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import FormRegister from './componets/FormRegister'
 import styles from './RegisterPage.module.scss'
-
-import { useAppSelector } from '@/app/hook'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 const RegisterPage: React.FC = () => {
 	const { t } = useTranslation()

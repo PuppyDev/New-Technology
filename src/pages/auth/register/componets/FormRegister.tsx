@@ -1,8 +1,7 @@
 import { authApi } from '@/api/authApi'
 import { useAppDispatch } from '@/app/hook'
-import { FacebookFilled } from '@ant-design/icons'
+import Logo from '@/assets/images/bbsgl.png'
 import { Button, Col, Divider, Form, Input, notification, Row } from 'antd'
-import { NotificationPlacement } from 'antd/lib/notification'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -55,15 +54,12 @@ const Register: React.FC = () => {
 					<Row justify="center">
 						<Col>
 							<Link to={'/'}>
-								<img
-									src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png"
-									alt="???"
-								/>
+								<img src={Logo} alt="Logo" style={{ width: '100%' }} />
 							</Link>
 						</Col>
 					</Row>
 					<Form.Item>
-						<p className={styles.container__antform__heading} style={{ fontSize: 20 }}>
+						<p className={styles.container__antform__heading} style={{ fontSize: 22, color: 'black' }}>
 							{t('AUTH.TITLE_REGISTER')}
 						</p>
 					</Form.Item>

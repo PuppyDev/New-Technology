@@ -36,7 +36,8 @@
 			"@/Chat/*": ["./features/Chat/*"],
 			"@/constants/*": ["./constants/*"],
 			"@/utils/*": ["./utils/*"],
-			"@/hooks/*": ["./hooks/*"]
+			"@/hooks/*": ["./hooks/*"],
+			"@/assets/*": ["./assets/*"]
 		}
 	},
 	"include": [
