@@ -32,6 +32,7 @@ const initialState: ChatState = {
 	replyMessage: {
 		msg: null,
 		replyFor: null,
+		_id: null,
 	},
 }
 

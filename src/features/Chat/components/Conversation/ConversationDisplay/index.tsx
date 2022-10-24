@@ -5,7 +5,7 @@ import { RootState } from '@/app/store'
 import { setReplyMessage } from '@/Chat/slices/ChatSlice'
 import useOpen from '@/hooks/useOpen'
 import { ReplyMessage } from '@/models/conversation'
-import { Message } from '@/models/message'
+import { Message, messageType } from '@/models/message'
 import { handleNameFile } from '@/utils/file'
 import {
 	CloseOutlined,
@@ -17,12 +17,10 @@ import {
 } from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Dropdown, Form, Image, Input, Spin, Upload } from 'antd'
-import axios from 'axios'
+import { Dropdown, Form, Image, Input, Spin } from 'antd'
 import { Suspense, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import InputEmoji from 'react-input-emoji'
-import { useParams } from 'react-router-dom'
 import { io } from 'socket.io-client'
 import TextMessage from '../../Messages/TextMessage'
 import ConversationNavigate from '../ConversationNavigate'
@@ -33,15 +31,12 @@ const socket = io('http://localhost:3000', {
 	extraHeaders: {
 		Authorization: JSON.parse(localStorage.getItem('loginData') || '{}')?.accessToken || '',
 	},
-}).connect()
-
-console.log('Connect')
+})
 
 let tempMessage: Message[] = []
 
 const ConversationDisplay = () => {
 	const { t } = useTranslation()
-	const { inboxId } = useParams()
 
 	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
 	const user = useAppSelector((state) => state.authSlice.user)
@@ -64,11 +59,14 @@ const ConversationDisplay = () => {
 			setMessageRecive(dataGot)
 			setDummyMessage('')
 		})
+		return () => {
+			socket.disconnect()
+		}
 	}, [])
 
 	useEffect(() => {
 		if (messageRecive.roomId === conversationSelected?._id && messagesConversation) {
-			setMessageConversation((pre) => [...pre, messageRecive.message])
+			setMessageConversation((pre) => [...(pre as Message[]), messageRecive.message])
 		}
 	}, [messageRecive])
 
@@ -128,33 +126,27 @@ const ConversationDisplay = () => {
 		})
 	}
 
-	const handleSendImage = async (e: any) => {
+	const handleSendImage = async (e: any, type?: messageType) => {
 		const file = e.target.files[0]
+		console.log('🚀 ~ file: index.tsx ~ line 131 ~ handleSendImage ~ file', file)
+		const fileExt = file.name.split('.')[1]
+		const fileType = type ? type : fileExt == 'mp4' || fileExt === 'mp3' ? 'VIDEO' : 'IMAGE'
+		console.log('🚀 ~ file: index.tsx ~ line 135 ~ handleSendImage ~ fileType', fileType)
 		if (!conversationSelected) return
+
+		setDummyMessage('Message is sending...')
 
 		let formData = await new FormData()
 		formData.append('file', file)
 		formData.append('username', conversationSelected?.users[0].username)
 		formData.append('userId', conversationSelected?.users[0]?._id)
 		formData.append('roomId', conversationSelected?._id)
-		formData.append('type', 'IMAGE')
+		formData.append('type', fileType)
 
-		const response = messageApi.uploadFile(formData)
-	}
-
-	const handleSendFile = async (e: any) => {
-		const file = e.target.files[0]
-		console.log('🚀 ~ file: index.tsx ~ line 142 ~ handleSendFile ~ file', file)
-		if (!conversationSelected) return
-
-		// let formData = await new FormData()
-		// formData.append('file', file)
-		// formData.append('username', conversationSelected?.users[0].username)
-		// formData.append('userId', conversationSelected?.users[0]?._id)
-		// formData.append('roomId', conversationSelected?._id)
-		// formData.append('type', 'IMAGE')
-
-		// const response = messageApi.uploadFile(formData)
+		const response = await messageApi.uploadFile(formData)
+		setMessageRecive(response.data)
+		setDummyMessage('')
+		socket.emit('chat:send_image', response?.data)
 	}
 
 	return (
@@ -183,7 +175,10 @@ const ConversationDisplay = () => {
 						{messagesConversation &&
 							messagesConversation.map((messageInfo, index) => {
 								const nextMessage = messagesConversation[index + 1]
-								const isPadding = messageInfo.type !== 'GIF' && messageInfo.type !== 'IMAGE'
+								const isPadding =
+									messageInfo.type !== 'GIF' &&
+									messageInfo.type !== 'IMAGE' &&
+									messageInfo.type !== 'VIDEO'
 
 								let msg: any
 								switch (messageInfo.type) {
@@ -201,7 +196,11 @@ const ConversationDisplay = () => {
 										)
 										break
 									case 'VIDEO':
-										msg = <video></video>
+										msg = (
+											<video width="100%" controls>
+												<source src={messageInfo.message} type="video/mp4"></source>
+											</video>
+										)
 										break
 									default:
 										msg = messageInfo.message
@@ -209,7 +208,14 @@ const ConversationDisplay = () => {
 								}
 
 								if (messageInfo.sender === user?.username) {
-									return <TextMessage.OwnerMessage msg={msg} ispadding={isPadding} key={index} />
+									return (
+										<TextMessage.OwnerMessage
+											messageObj={messageInfo}
+											msg={msg}
+											ispadding={isPadding}
+											key={index}
+										/>
+									)
 								}
 								// else if (nextMessage?.sender === messageInfo?.sender) {
 								// 	tempMessage.push(messageInfo)
@@ -236,6 +242,7 @@ const ConversationDisplay = () => {
 								return (
 									<TextMessage.ListFriendMessage key={index}>
 										<TextMessage.FriendMessage
+											messageObj={messageInfo}
 											msg={msg}
 											key={messageInfo._id}
 											ispadding={isPadding}
@@ -258,12 +265,24 @@ const ConversationDisplay = () => {
 								<label htmlFor="image">
 									<FileImageOutlined className={styles.iconAction} />
 								</label>
-								<input type="file" id="image" name="image" hidden onChange={handleSendImage} />
+								<input
+									type="file"
+									id="image"
+									name="image"
+									hidden
+									onChange={(e) => handleSendImage(e)}
+								/>
 
 								<label htmlFor="file">
 									<PaperClipOutlined className={styles.iconAction} />
 								</label>
-								<input type="file" id="file" name="file" onChange={handleSendFile} hidden />
+								<input
+									type="file"
+									id="file"
+									name="file"
+									onChange={(e) => handleSendImage(e, 'FILE')}
+									hidden
+								/>
 
 								<Dropdown
 									overlay={
@@ -346,6 +365,7 @@ ConversationDisplay.ReplyDialog = ({ replyMessage }: { replyMessage: ReplyMessag
 							replyMessage: {
 								msg: null,
 								replyFor: null,
+								_id: null,
 							},
 						})
 					)

@@ -1,3 +1,5 @@
+import { RoomProvider } from 'context/RoomContext'
+import { socket, SocketContext } from 'context/SocketContext'
 import { setUser } from 'pages/auth/authSlice'
 import { Suspense, useEffect } from 'react'
 import { useAppDispatch } from './app/hook'
@@ -16,7 +18,9 @@ function App() {
 
 	return (
 		<Suspense fallback="Loading...">
-			<Router />
+			<RoomProvider>
+				<Router />
+			</RoomProvider>
 		</Suspense>
 	)
 }

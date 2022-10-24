@@ -6,12 +6,13 @@ import FormLogin from '../login/components/FormLogin'
 import styles from './LoginPage.module.scss'
 
 import { useAppSelector } from '@/app/hook'
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { SocketContext } from 'context/SocketContext'
+import { RoomContext } from 'context/RoomContext'
 
 const LoginForm = () => {
 	const { t } = useTranslation()
-
 	const isAuth = useAppSelector((state) => state.authSlice.user)
 
 	const navigate = useNavigate()

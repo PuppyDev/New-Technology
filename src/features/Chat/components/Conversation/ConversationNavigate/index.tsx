@@ -36,7 +36,7 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 		<header className={styles.ListConversation__topContent}>
 			{!isClickInfo && (
 				<>
-					<Link to={`/123`}>
+					<Link to={`/${conversationSelected?.users[0]._id}`}>
 						<div className={styles.ListConversation__profile}>
 							<Avatar
 								size={26}
