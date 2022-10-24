@@ -28,9 +28,9 @@ const ActionMessage = ({ reverse = false, msg }: { reverse?: boolean; msg: Strin
 					}
 				/>
 			</li>
-			<li>
+			{/* <li>
 				<SmileOutlined />
-			</li>
+			</li> */}
 		</ul>
 	)
 }

@@ -1,3 +1,4 @@
+import { messageApi } from '@/api/messageApi'
 import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { RootState } from '@/app/store'
@@ -14,7 +15,8 @@ import {
 } from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Dropdown, Form, Input, Spin, Upload } from 'antd'
+import { Dropdown, Form, Image, Input, Spin, Upload } from 'antd'
+import axios from 'axios'
 import { Suspense, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import InputEmoji from 'react-input-emoji'
@@ -53,6 +55,7 @@ const ConversationDisplay = () => {
 	// Subcriber Socket msg in here
 	useEffect(() => {
 		socket.on('chat:print_message', (dataGot) => {
+			console.log('🚀 ~ file: index.tsx ~ line 58 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)
 			setDummyMessage('')
 		})
@@ -109,7 +112,7 @@ const ConversationDisplay = () => {
 	const onSearch = (value: string) => setkeyword(value)
 
 	const sendGifHandler = (gif: any) => {
-		const url_gif = gif.images.preview_gif.url || gif.images.preview_webp.url
+		const url_gif = gif.images.preview_webp.url || gif.images.preview_gif.url
 
 		socket.emit('chat:send_message', {
 			username: conversationSelected?.users[0].username,
@@ -118,6 +121,35 @@ const ConversationDisplay = () => {
 			content: url_gif,
 			type: 'GIF',
 		})
+	}
+
+	const handleSendImage = async (e: any) => {
+		const file = e.target.files[0]
+		if (!conversationSelected) return
+
+		let formData = await new FormData()
+		formData.append('file', file)
+		formData.append('username', conversationSelected?.users[0].username)
+		formData.append('userId', conversationSelected?.users[0]?._id)
+		formData.append('roomId', conversationSelected?._id)
+		formData.append('type', 'IMAGE')
+
+		const response = messageApi.uploadFile(formData)
+	}
+
+	const handleSendFile = async (e: any) => {
+		const file = e.target.files[0]
+		console.log('🚀 ~ file: index.tsx ~ line 142 ~ handleSendFile ~ file', file)
+		if (!conversationSelected) return
+
+		// let formData = await new FormData()
+		// formData.append('file', file)
+		// formData.append('username', conversationSelected?.users[0].username)
+		// formData.append('userId', conversationSelected?.users[0]?._id)
+		// formData.append('roomId', conversationSelected?._id)
+		// formData.append('type', 'IMAGE')
+
+		// const response = messageApi.uploadFile(formData)
 	}
 
 	return (
@@ -145,22 +177,28 @@ const ConversationDisplay = () => {
 						{/* <TextMessage.TimeMessage msg={'12:29 SA'} /> */}
 						{messagesConversation &&
 							messagesConversation.map((messageInfo, index) => {
+								console.log(
+									'🚀 ~ file: index.tsx ~ line 180 ~ messagesConversation.map ~ messageInfo',
+									messageInfo
+								)
 								const nextMessage = messagesConversation[index + 1]
-								const msg =
-									messageInfo.type === 'TEXT' ? (
-										messageInfo.message
-									) : (
-										<img src={messageInfo.message} />
-									)
+								const isPadding = messageInfo.type !== 'GIF' && messageInfo.type !== 'IMAGE'
+
+								let msg: any
+								switch (messageInfo.type) {
+									case 'GIF':
+										msg = <img src={messageInfo.message} />
+										break
+									case 'IMAGE':
+										msg = <Image src={messageInfo.message} />
+										break
+									default:
+										msg = messageInfo.message
+										break
+								}
 
 								if (messageInfo.sender === user?.username) {
-									return (
-										<TextMessage.OwnerMessage
-											msg={msg}
-											ispadding={messageInfo.type !== 'GIF'}
-											key={index}
-										/>
-									)
+									return <TextMessage.OwnerMessage msg={msg} ispadding={isPadding} key={index} />
 								}
 								// else if (nextMessage?.sender === messageInfo?.sender) {
 								// 	tempMessage.push(messageInfo)
@@ -189,7 +227,7 @@ const ConversationDisplay = () => {
 										<TextMessage.FriendMessage
 											msg={msg}
 											key={messageInfo._id}
-											ispadding={messageInfo.type !== 'GIF'}
+											ispadding={isPadding}
 										/>
 									</TextMessage.ListFriendMessage>
 								)
@@ -206,14 +244,15 @@ const ConversationDisplay = () => {
 					<div className={styles.wrapInputItem}>
 						{messageSender.trim().length < 1 && (
 							<>
-								<label htmlFor="file">
+								<label htmlFor="image">
 									<FileImageOutlined className={styles.iconAction} />
 								</label>
-								<input type="file" id="file" name="file" hidden />
+								<input type="file" id="image" name="image" hidden onChange={handleSendImage} />
 
-								<Upload>
+								<label htmlFor="file">
 									<PaperClipOutlined className={styles.iconAction} />
-								</Upload>
+								</label>
+								<input type="file" id="file" name="file" onChange={handleSendFile} hidden />
 
 								<Dropdown
 									overlay={
