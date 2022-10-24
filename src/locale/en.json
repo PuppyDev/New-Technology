@@ -19,7 +19,18 @@
 		"POLICY": "POLICY",
 		"COOKIE_POLICY": "COOKIE_POLICY",
 		"AND": "and ",
-		"HAVE_ACCOUNT": "Do you have acount? "
+		"HAVE_ACCOUNT": "Do you have acount? ",
+		"PASSWORD_REQUIRED_MESSAGE":"Please enter your password!",
+		"PASSWORD_MIN_MESSAGE":"Password must be at least 6 characters",
+		"EMAIL_VALID_MESSAGE":"Please enter a valid email",
+		"EMAIL_REQUIRED_MESSAGE":"Please enter your email!",
+		"FULLNAME_REQUIRED_MESSAGE":"Please enter your name!",
+		"FULLNAME_INVALID_MESSAGE":"Please enter a valid full name",
+		"USERNAME_INVALID_MESSAGE":"Please enter a valid username name",
+		"USERNAME_REQUIRED_MESSAGE":"Please enter username!",
+		"USERNAME_MIN_MESSAGE":"Username must be at least 6 characters"
+
+
 	},
 	"SEARCH": "Search",
 	"EDIT_PROFILE": "Edit Profile",

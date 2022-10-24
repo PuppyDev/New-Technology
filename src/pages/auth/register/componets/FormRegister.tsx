@@ -75,16 +75,50 @@ const Register: React.FC = () => {
 					>
 						{t('AUTH.DIVIDER')}
 					</Divider>
-					<Form.Item className={styles.container__antform__item} name="email">
+					<Form.Item
+						className={styles.container__antform__item}
+						name="email"
+						rules={[
+							{ type: 'email', message: t('AUTH.EMAIL_VALID_MESSAGE') },
+							{ required: true, message: t('EMAIL_REQUIRED_MESSAGE') },
+						]}
+					>
 						<Input autoComplete="off" size="large" placeholder={t('AUTH.INPUT_EMAIL')} />
 					</Form.Item>
-					<Form.Item className={styles.container__antform__item} name="name">
+					<Form.Item
+						className={styles.container__antform__item}
+						name="name"
+						rules={[
+							{ required: true, message: t('AUTH.FULLNAME_REQUIRED_MESSAGE') },
+							{
+								pattern: new RegExp('^([a-zA-Z ]+[a-zA-Z ]{1,})$'),
+								message: t('AUTH.FULLNAME_INVALID_MESSAGE'),
+							},
+						]}
+					>
 						<Input autoComplete="off" size="large" placeholder={t('AUTH.INPUT_FULLNAME')} />
 					</Form.Item>
-					<Form.Item className={styles.container__antform__item} name="username">
+					<Form.Item
+						className={styles.container__antform__item}
+						name="username"
+						rules={[
+							{ required: true, message: t('AUTH.USERNAME_REQUIRED_MESSAGE') },
+							{ min: 6, message: t('AUTH.USERNAME_MIN_MESSAGE') },
+							{
+								pattern: new RegExp('^([a-zA-Z0-9]+[a-zA-Z0-9]{1,})$'),
+								message: t('AUTH.USERNAME_INVALID_MESSAGE'),
+							},
+						]}
+					>
 						<Input autoComplete="off" size="large" placeholder={t('AUTH.INPUT_USERNAME')} />
 					</Form.Item>
-					<Form.Item name="password">
+					<Form.Item
+						name="password"
+						rules={[
+							{ required: true, message: t('AUTH.PASSWORD_REQUIRED_MESSAGE') },
+							{ min: 6, message: t('AUTH.PASSWORD_MIN_MESSAGE') },
+						]}
+					>
 						<Input.Password autoComplete="off" size="large" placeholder={t('AUTH.INPUT_PASSWORD')} />
 					</Form.Item>
 					<Form.Item>

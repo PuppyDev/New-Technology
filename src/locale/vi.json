@@ -19,7 +19,16 @@
 		"POLICY": "Điều khoản, Chính sách quyền riêng tư",
 		"COOKIE_POLICY": "Chính sách cookie",
 		"AND": "và ",
-		"HAVE_ACCOUNT": "Bạn có tài khoản? "
+		"HAVE_ACCOUNT": "Bạn có tài khoản? ",
+		"PASSWORD_REQUIRED_MESSAGE":"Vui lòng nhập mật khẩu!",
+		"PASSWORD_MIN_MESSAGE":"Mật khẩu phải tối thiểu 6 kí tự",
+		"EMAIL_VALID_MESSAGE":"Vui lòng nhập đúng email",
+		"EMAIL_REQUIRED_MESSAGE":"Vui lòng nhập email của bạn",
+		"FULLNAME_REQUIRED_MESSAGE":"Vui lòng nhập tên đầy đủ của bạn",
+		"FULLNAME_INVALID_MESSAGE":"Vui lòng nhập tên theo đúng định dạng",
+		"USERNAME_INVALID_MESSAGE":"Vui lòng nhập username đúng định dạng",
+		"USERNAME_REQUIRED_MESSAGE":"Nhập user name",
+		"USERNAME_MIN_MESSAGE":"User name tối thiểu 6 kí tự"
 	},
 	"SEARCH": "Tìm kiếm",
 	"EDIT_PROFILE": "Chỉnh sửa trang cá nhân",

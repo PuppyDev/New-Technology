@@ -62,7 +62,10 @@ function Login() {
 					<Form.Item
 						name="email"
 						style={{ marginBottom: '10px' }}
-						rules={[{ required: true, message: 'Please input your email!' }]}
+						rules={[
+							{ required: true, message: t('AUTH.EMAIL_REQUIRED_MESSAGE') },
+							{ type: 'email', message: t('AUTH.EMAIL_VALID_MESSAGE') },
+						]}
 					>
 						<Input size="large" placeholder={t('AUTH.INPUT_USER_NAME')} />
 					</Form.Item>
@@ -70,7 +73,10 @@ function Login() {
 					<Form.Item
 						name="password"
 						style={{ marginBottom: '16px' }}
-						rules={[{ required: true, message: 'Please input your password!' }]}
+						rules={[
+							{ required: true, message: t('AUTH.PASSWORD_REQUIRED_MESSAGE') },
+							{ min: 6, message: t('AUTH.PASSWORD_MIN_MESSAGE') },
+						]}
 					>
 						<Input.Password size="large" placeholder={t('AUTH.INPUT_PASSWORD')} />
 					</Form.Item>
