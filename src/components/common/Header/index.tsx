@@ -12,6 +12,7 @@ import {
 import { Avatar, Dropdown, Menu, Space } from 'antd'
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import ModalChagePass from '../Modal/ModalChangePass'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalPost from '../Modal/ModalPost'
 import styles from './Header.module.scss'
@@ -38,6 +39,7 @@ const Header = () => {
 const ControlNavLink: React.FC = () => {
 	const [open, setOpen] = useState(false)
 	const [openAddPost, setOpenAddPost] = useState(false)
+	const [openChangePass, setOpenChangePass] = useState(false)
 
 	const menu = (
 		<Menu
@@ -63,10 +65,14 @@ const ControlNavLink: React.FC = () => {
 				{
 					key: '3',
 					label: (
-						<Link to="/accounts/edit/">
-							<SettingOutlined />
-							Settings
-						</Link>
+						<a
+							onClick={() => {
+								setOpenChangePass(true)
+							}}
+						>
+							<SwapOutlined />
+							Change password
+						</a>
 					),
 				},
 				{
@@ -129,6 +135,7 @@ const ControlNavLink: React.FC = () => {
 				</Dropdown>
 				<ModalLogin open={open} setOpen={setOpen} />
 				<ModalPost open={openAddPost} setOpen={setOpenAddPost} />
+				<ModalChagePass open={openChangePass} setOpen={setOpenChangePass} />
 			</li>
 		</ul>
 	)
