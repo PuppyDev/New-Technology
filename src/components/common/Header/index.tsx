@@ -14,6 +14,7 @@ import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalPost from '../Modal/ModalPost'
+import Search from '../Search'
 import styles from './Header.module.scss'
 
 const Header = () => {
@@ -26,7 +27,9 @@ const Header = () => {
 						alt="logo"
 					/>
 				</Link>
-
+				<div>
+					<Search />
+				</div>
 				<nav className={styles.header__containernav}>
 					<ControlNavLink />
 				</nav>
