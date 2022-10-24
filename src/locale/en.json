@@ -2,7 +2,7 @@
 	"AUTH": {
 		"LOGIN": "Login",
 		"REGISTER": "Register",
-		"INPUT_USER_NAME": "Phone number, username, or email",
+		"INPUT_USER_NAME": "Username or email",
 		"INPUT_PASSWORD": "Password",
 		"DIVIDER": "Register",
 		"LOGIN_WITH_FB": "Log in with facebook",
@@ -10,7 +10,7 @@
 		"DONT_HAVE_ACCOUNT": "Don't have an account? ",
 		"SIGN_UP": "Sign up",
 		"TITLE_REGISTER": "Sign up to see photos and videos from friends.",
-		"INPUT_EMAIL": "Mobie number or email",
+		"INPUT_EMAIL": "Your email",
 		"INPUT_FULLNAME": "Full name",
 		"INPUT_USERNAME": "User name",
 		"ABOUT": "Users of our service may have uploaded your contact information to Instagram.",

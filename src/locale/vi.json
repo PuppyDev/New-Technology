@@ -2,7 +2,7 @@
 	"AUTH": {
 		"LOGIN": "Đăng nhập",
 		"REGISTER": "Đăng ký",
-		"INPUT_USER_NAME": "Số điện thoại, tên người dùng hoặc email",
+		"INPUT_USER_NAME": "Tên người dùng hoặc email",
 		"INPUT_PASSWORD": "Mật khẩu",
 		"DIVIDER": "Đăng Ký",
 		"LOGIN_WITH_FB": "Đăng nhập bằng facebook",
@@ -10,7 +10,7 @@
 		"DONT_HAVE_ACCOUNT": "Bạn chưa có tài khoản ư? ",
 		"SIGN_UP": "Đăng ký",
 		"TITLE_REGISTER": "Đăng ký để xem ảnh và video từ bạn bè.",
-		"INPUT_EMAIL": "Số di động hoặc email",
+		"INPUT_EMAIL": "Email của bạn",
 		"INPUT_FULLNAME": "Tên đầy đủ",
 		"INPUT_USERNAME": "Tên người dùng",
 		"ABOUT": "Những người dùng dịch vụ của chúng tôi có thể đã tải thông tin liên hệ của bạn lên Instagram.",

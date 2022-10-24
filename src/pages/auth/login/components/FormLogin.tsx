@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from '../LoginPage.module.scss'
+import ImageLogo from '../../../../assets/image/bbsgl.png'
 
 function Login() {
 	const { t } = useTranslation()
@@ -55,7 +56,7 @@ function Login() {
 					autoComplete="off"
 				>
 					<Image
-						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogos-world.net%2Fwp-content%2Fuploads%2F2020%2F04%2FInstagram-Logo-2010-2013.png&f=1&nofb=1&ipt=b62dc7579e3af6fffec776ec72377be923cd58b6aa4670d7aff9ecb6976faa0f&ipo=images"
+						src={ImageLogo}
 						alt="logo"
 						preview={false}
 					/>
@@ -64,7 +65,14 @@ function Login() {
 						style={{ marginBottom: '10px' }}
 						rules={[
 							{ required: true, message: t('AUTH.EMAIL_REQUIRED_MESSAGE') },
-							{ type: 'email', message: t('AUTH.EMAIL_VALID_MESSAGE') },
+							// { type: 'email', message: t('AUTH.EMAIL_VALID_MESSAGE') },
+							{
+								pattern: new RegExp(
+									'^(([a-zA-Z0-9]+[a-zA-Z0-9]{1,})$/)||(^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$)'
+								),
+								message: t('AUTH.USER_EMAIL_INVALID_MESSAGE')
+							},
+							{ min: 6 },
 						]}
 					>
 						<Input size="large" placeholder={t('AUTH.INPUT_USER_NAME')} />

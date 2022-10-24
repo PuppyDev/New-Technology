@@ -7,6 +7,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import styles from '../RegisterPage.module.scss'
+import ImageLogo from '../../../../assets/image/bbsgl.png'
 
 const Register: React.FC = () => {
 	const { t } = useTranslation()
@@ -55,10 +56,14 @@ const Register: React.FC = () => {
 					<Row justify="center">
 						<Col>
 							<Link to={'/'}>
-								<img
-									src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png"
+								<div>
+									<img
+									src={ImageLogo}
 									alt="???"
+									style={{width:'100%'}}
 								/>
+								</div>
+								
 							</Link>
 						</Col>
 					</Row>
@@ -80,7 +85,7 @@ const Register: React.FC = () => {
 						name="email"
 						rules={[
 							{ type: 'email', message: t('AUTH.EMAIL_VALID_MESSAGE') },
-							{ required: true, message: t('EMAIL_REQUIRED_MESSAGE') },
+							{ required: true, message: t('AUTH.EMAIL_REQUIRED_MESSAGE') },
 						]}
 					>
 						<Input autoComplete="off" size="large" placeholder={t('AUTH.INPUT_EMAIL')} />
