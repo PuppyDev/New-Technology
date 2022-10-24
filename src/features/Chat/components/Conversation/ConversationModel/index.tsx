@@ -1,10 +1,11 @@
+import { CloseCircleOutlined } from '@ant-design/icons'
 import { Avatar, Checkbox, Modal } from 'antd'
+import { CheckboxValueType } from 'antd/lib/checkbox/Group'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { CheckboxValueType } from 'antd/lib/checkbox/Group'
 import styles from './ConversationModel.module.scss'
 import './ConversationModel.scss'
+
 const ConversationModel = ({ open, onClose }: { open: boolean; onClose: any }) => {
 	const { t } = useTranslation()
 
@@ -20,17 +21,55 @@ const ConversationModel = ({ open, onClose }: { open: boolean; onClose: any }) =
 		>
 			<div className={styles.modal__content}>
 				<div className={styles.modal__content_search}>
-					<span>{t('CONVERSATION.TO')} </span>
+					<div className={styles.modal__content_search_top}>
+						<span>{t('CONVERSATION.TO')} </span>
+						<input type="text" placeholder={t('SEARCH') + '...'} />
+					</div>
 
-					<input type="text" placeholder={t('SEARCH') + '...'} />
+					<ul className={styles.modal__content_search_seekResult}>
+						<li>
+							Giang vo{' '}
+							<span
+								onClick={() => {
+									console.log('2 3 con muwcj')
+								}}
+							>
+								<CloseCircleOutlined />
+							</span>
+						</li>
+						<li>
+							Giang vo con cak
+							<span>
+								<CloseCircleOutlined />
+							</span>
+						</li>
+						<li>
+							Giang vo{' '}
+							<span>
+								<CloseCircleOutlined />
+							</span>
+						</li>
+						<li>
+							Giang vo{' '}
+							<span>
+								<CloseCircleOutlined />
+							</span>
+						</li>
+						<li>
+							Giang vo con cak
+							<span>
+								<CloseCircleOutlined />
+							</span>
+						</li>
+					</ul>
 				</div>
 				<div className={styles.modal__content_result}>
 					<p>{t('SUGGESTED')}</p>
 
 					<ConversationModel.ListUser>
-						<ConversationModel.UserItem />
-						<ConversationModel.UserItem />
-						<ConversationModel.UserItem />
+						{Array.from({ length: 20 }).map((item, index) => {
+							return <ConversationModel.UserItem key={index} value={'' + index} />
+						})}
 					</ConversationModel.ListUser>
 				</div>
 			</div>
@@ -38,7 +77,7 @@ const ConversationModel = ({ open, onClose }: { open: boolean; onClose: any }) =
 	)
 }
 
-ConversationModel.UserItem = () => {
+ConversationModel.UserItem = ({ value }: { value: String }) => {
 	return (
 		<div className={styles.user__content}>
 			<Avatar
@@ -51,7 +90,7 @@ ConversationModel.UserItem = () => {
 				<p className={styles.fullname}>Giang vo</p>
 			</div>
 
-			<Checkbox className={styles.checkbox} value="123" />
+			<Checkbox className={styles.checkbox} value={value} />
 		</div>
 	)
 }

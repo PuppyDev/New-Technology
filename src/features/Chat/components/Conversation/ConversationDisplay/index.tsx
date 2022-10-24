@@ -6,10 +6,12 @@ import { setReplyMessage } from '@/Chat/slices/ChatSlice'
 import useOpen from '@/hooks/useOpen'
 import { ReplyMessage } from '@/models/conversation'
 import { Message } from '@/models/message'
+import { handleNameFile } from '@/utils/file'
 import {
 	CloseOutlined,
 	FileGifOutlined,
 	FileImageOutlined,
+	FileZipOutlined,
 	LoadingOutlined,
 	PaperClipOutlined,
 } from '@ant-design/icons'
@@ -33,6 +35,8 @@ const socket = io('http://localhost:3000', {
 	},
 }).connect()
 
+console.log('Connect')
+
 let tempMessage: Message[] = []
 
 const ConversationDisplay = () => {
@@ -54,6 +58,7 @@ const ConversationDisplay = () => {
 	const [messageRecive, setMessageRecive] = useState<any>('')
 	// Subcriber Socket msg in here
 	useEffect(() => {
+		console.log('connect socket again')
 		socket.on('chat:print_message', (dataGot) => {
 			console.log('🚀 ~ file: index.tsx ~ line 58 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)
@@ -177,10 +182,6 @@ const ConversationDisplay = () => {
 						{/* <TextMessage.TimeMessage msg={'12:29 SA'} /> */}
 						{messagesConversation &&
 							messagesConversation.map((messageInfo, index) => {
-								console.log(
-									'🚀 ~ file: index.tsx ~ line 180 ~ messagesConversation.map ~ messageInfo',
-									messageInfo
-								)
 								const nextMessage = messagesConversation[index + 1]
 								const isPadding = messageInfo.type !== 'GIF' && messageInfo.type !== 'IMAGE'
 
@@ -191,6 +192,16 @@ const ConversationDisplay = () => {
 										break
 									case 'IMAGE':
 										msg = <Image src={messageInfo.message} />
+										break
+									case 'FILE':
+										msg = (
+											<a href={messageInfo.message} download style={{ fontSize: 18 }}>
+												<FileZipOutlined size={40} /> {handleNameFile(messageInfo.message)}
+											</a>
+										)
+										break
+									case 'VIDEO':
+										msg = <video></video>
 										break
 									default:
 										msg = messageInfo.message

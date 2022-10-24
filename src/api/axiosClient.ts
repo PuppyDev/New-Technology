@@ -4,7 +4,7 @@ import queryString from 'query-string'
 
 const createAxiosInstance = () => {
 	const axiosInstance = axios.create({
-		baseURL: 'http://192.168.9.178/v1',
+		baseURL: 'http://localhost:3000/v1',
 		headers: {
 			'Content-Type': 'application/json',
 		},

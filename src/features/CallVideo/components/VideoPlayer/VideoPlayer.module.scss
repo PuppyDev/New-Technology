@@ -4,6 +4,7 @@ video.video {
 	display: block;
 	object-fit: cover;
 	border-radius: 8px;
+	transform: scaleX(-1);
 }
 
 .video__action {

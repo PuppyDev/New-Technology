@@ -1,4 +1,4 @@
-export type messageType = 'TEXT' | 'FILE' | 'IMAGE' | 'GIF'
+export type messageType = 'TEXT' | 'FILE' | 'IMAGE' | 'GIF' | 'VIDEO'
 export interface Sender {
 	id: number
 	image: string

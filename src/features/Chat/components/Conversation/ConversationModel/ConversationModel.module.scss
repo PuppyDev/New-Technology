@@ -10,24 +10,45 @@
 		@include flex-column;
 
 		&_search {
-			@include flex-start-center;
 			padding: 4px;
-			gap: 16px;
 			border-bottom: 1px solid $ig-elevated-separator;
 			padding: 15px 10px;
 			max-height: 15vh;
-			flex-wrap: wrap;
 			overflow-y: auto;
-			span {
-				font-weight: 600;
+
+			&_top {
+				@include flex-center-center;
+				gap: 16px;
+				padding-bottom: 10px;
+				span {
+					font-weight: 600;
+				}
+
+				input {
+					width: 100%;
+					flex: 1 1 0;
+					&::placeholder {
+						color: $ig-elevated-separator;
+					}
+				}
 			}
 
-			input {
-				width: 100%;
-				flex: 1 1 0;
-				min-width: 45vw;
-				&::placeholder {
-					color: $ig-elevated-separator;
+			&_seekResult {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 5px;
+
+				li {
+					display: inline-block;
+					padding: 5px 10px;
+					border-radius: 10px;
+					background-color: $web-secondary-action;
+					color: $ig-primary-button;
+					user-select: none;
+					span {
+						cursor: pointer;
+						margin-left: 5px;
+					}
 				}
 			}
 		}

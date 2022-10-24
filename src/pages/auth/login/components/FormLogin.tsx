@@ -33,7 +33,13 @@ function Login() {
 		} catch (error: any) {
 			const { response } = error
 			console.log('🚀 ~ file: FormLogin.tsx ~ line 35 ~ onFinish ~ error', error)
-			setError(response.data)
+			if (response.data) {
+				console.log('Vo')
+				setError(response.data)
+			} else
+				notification.error({
+					message: error.message,
+				})
 			setLoading(false)
 		}
 	}

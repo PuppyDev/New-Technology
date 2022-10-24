@@ -1,13 +1,13 @@
-import ChatConversationPage from '@/Chat/pages'
-import VideoCallPage from 'pages/videoCall'
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import LoginPage from '../pages/auth/login/LoginPage'
-import RegisterPage from '../pages/auth/register/RegisterPage'
 import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
 
+const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
 const Profile = lazy(() => import('pages/profile'))
+const ChatConversationPage = lazy(() => import('@/Chat/pages'))
+const VideoCallPage = lazy(() => import('pages/videoCall'))
+const RegisterPage = lazy(() => import('../pages/auth/register/RegisterPage'))
 
 const mainRoutes = [
 	{
