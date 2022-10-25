@@ -32,6 +32,10 @@
 
 
 	},
+	"CONFIRM":"Confirm",
+	"DELETE":"Delete",
+	"FRIEND_REQUEST":"Friend request",
+	"FRIEND_SEND_REQUEST":"sent you a friend request.",
 	"SEARCH": "Search",
 	"EDIT_PROFILE": "Edit Profile",
 	"SUGGESTED": "Suggested",

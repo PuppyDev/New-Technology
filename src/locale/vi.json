@@ -30,6 +30,10 @@
 		"USERNAME_REQUIRED_MESSAGE":"Nhập user name",
 		"USERNAME_MIN_MESSAGE":"User name tối thiểu 6 kí tự"
 	},
+	"CONFIRM":"Xác nhận",
+	"DELETE":"Xóa",
+	"FRIEND_REQUEST":"Lời mời kết bạn",
+	"FRIEND_SEND_REQUEST":"gửi yêu cầu kết bạn.",
 	"SEARCH": "Tìm kiếm",
 	"EDIT_PROFILE": "Chỉnh sửa trang cá nhân",
 	"SUGGESTED": "Gợi ý",
