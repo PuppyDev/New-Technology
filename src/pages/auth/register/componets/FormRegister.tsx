@@ -1,5 +1,4 @@
 import { authApi } from '@/api/authApi'
-import { useAppDispatch } from '@/app/hook'
 import Logo from '@/assets/images/bbsgl.png'
 import { Button, Col, Divider, Form, Input, notification, Row } from 'antd'
 import React from 'react'
@@ -11,8 +10,6 @@ const Register: React.FC = () => {
 	const { t } = useTranslation()
 
 	const [loading, setLoading] = React.useState(false)
-	const [error, setError] = React.useState<{ message: string | null; errorCode: number }>()
-	const dispatch = useAppDispatch()
 
 	const onFinish = async (values: any) => {
 		try {

@@ -3,6 +3,7 @@ import { setReplyMessage } from '@/Chat/slices/ChatSlice'
 import { Message } from '@/models/message'
 import { EllipsisOutlined, EnterOutlined, SmileOutlined } from '@ant-design/icons'
 import { Dropdown, Menu } from 'antd'
+import { Trans } from 'react-i18next'
 
 import styles from './ActionMessage.module.scss'
 
@@ -46,8 +47,12 @@ const ActionMessage = ({
 				<Dropdown
 					overlay={
 						<div className={styles.action__mesage_overlay}>
-							<span onClick={handleRemoveMessage}>Gỡ tin nhắn</span>
-							<span onClick={handleResendMessage}>Chuyển tiếp</span>
+							<span onClick={handleRemoveMessage}>
+								<Trans>CONVERSATION.UNSEND_MESSAGE</Trans>
+							</span>
+							<span onClick={handleResendMessage}>
+								<Trans>CONVERSATION.FORWARD</Trans>
+							</span>
 						</div>
 					}
 					placement="top"

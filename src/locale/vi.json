@@ -41,8 +41,14 @@
 		"SUB_YOUR_MESSAGE": "Gửi ảnh và tin nhắn riêng tư cho bạn bè hoặc nhóm.",
 		"SEND_MESSAGE": "Gửi tin nhắn",
 		"NEW_MESSAGE": "Tin nhắn mới",
-		"TO": "Tới:"
+		"TO": "Tới:",
+		"UNSEND_MESSAGE": "Gỡ tin nhắn",
+		"FORWARD": "Chuyển tiếp"
 	},
-	"WARINING": {},
-	"ERROR": {}
+	"WARINING": {
+		"TIME_EXPIRE": "Phiên đăng nhập đã hết hạn",
+		"LOGIN_AGAIN": "Vui lòng đăng nhập lại để tiếp tục sử dụng trang web"
+	},
+	"ERROR": {},
+	"SUCCESS": {}
 }

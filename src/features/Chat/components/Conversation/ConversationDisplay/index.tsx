@@ -17,7 +17,7 @@ import {
 } from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Dropdown, Form, Image, Input, Spin } from 'antd'
+import { Dropdown, Form, Image, Input, Modal, Spin } from 'antd'
 import { Suspense, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import InputEmoji from 'react-input-emoji'

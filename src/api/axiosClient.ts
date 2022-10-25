@@ -1,6 +1,10 @@
+import { store } from '@/app/store'
 import { NOT_AUTHORIZED } from '@/constants/index'
+import { Modal } from 'antd'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { logout } from 'pages/auth/authSlice'
 import queryString from 'query-string'
+import { useTranslation } from 'react-i18next'
 
 const createAxiosInstance = () => {
 	const axiosInstance = axios.create({
@@ -25,7 +29,6 @@ const createAxiosInstance = () => {
 				console.log('Vo not authorized')
 
 				showNotify()
-				deleteToken()
 			}
 
 			throw error
@@ -57,12 +60,17 @@ const createAxiosInstance = () => {
 	return axiosInstance
 }
 
-const deleteToken = () => {
-	// return axios.post(`/api/auth/logout`);
-}
-
 const showNotify = () => {
-	// store.dispatch(setDisableUser(true));
+	const { t } = useTranslation()
+
+	const modal = Modal.warning({
+		title: t('WARINING.TIME_EXPIRE'),
+		content: t('WARINING.LOGIN_AGAIN'),
+		onOk() {
+			store.dispatch(logout())
+		},
+		centered: true,
+	})
 }
 
 export default createAxiosInstance

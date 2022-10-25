@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/app/hook'
+import Logo from '@/assets/images/bbsgl.png'
 import {
 	HeartOutlined,
 	HomeOutlined,
@@ -17,7 +18,6 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalPost from '../Modal/ModalPost'
 import styles from './Header.module.scss'
-import Logo from '@/assets/images/bbsgl.png'
 
 const Header = () => {
 	return (

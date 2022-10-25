@@ -41,8 +41,14 @@
 		"SUB_YOUR_MESSAGE": "Send private photos and messages to a friend or group.",
 		"SEND_MESSAGE": "Send messages",
 		"NEW_MESSAGE": "New message",
-		"TO": "To:"
+		"TO": "To:",
+		"UNSEND_MESSAGE": "Unsend",
+		"FORWARD": "Forward"
 	},
-	"WARINING": {},
-	"ERROR": {}
+	"WARINING": {
+		"TIME_EXPIRE": "Login session has expired",
+		"LOGIN_AGAIN": "Please login again to continue using the website"
+	},
+	"ERROR": {},
+	"SUCCESS": {}
 }
