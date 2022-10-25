@@ -79,7 +79,7 @@ const ForgotPassPage: React.FC = () => {
 				<Row justify="center" style={{paddingTop:'10px'}}>
 					<Col span={10} className={styles.border_form}>
 						<div style={{width:'100%', padding:'20px'}}>
-							<Link className={styles.link} to={'/register'} style={{textAlign:'center'}}>
+							<Link className={styles.link} to={'/home'} style={{textAlign:'center'}}>
 								Back to login
 							</Link>
 						</div>
