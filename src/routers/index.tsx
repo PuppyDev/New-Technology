@@ -1,3 +1,4 @@
+import ForgotPassPage from 'pages/auth/forgot/ForgotPassPage'
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
@@ -38,7 +39,7 @@ const mainRoutes = [
 	{
 		id: 5,
 		element: 'account edit Component',
-		pathName: '/accounts/edit/',
+		pathName: '/accounts/reset/',
 	},
 ]
 
@@ -66,6 +67,7 @@ const index = () => {
 				/>
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/register" element={<RegisterPage />} />
+				<Route path="/forgotpass" element={<ForgotPassPage />} />
 			</Routes>
 		</div>
 	)
