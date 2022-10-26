@@ -11,6 +11,7 @@ const { Header, Footer, Sider, Content } = Layout
 import { useTranslation } from 'react-i18next'
 const Profile = () => {
 	const { t, i18n } = useTranslation()
+	const stateUser = 'owner'
 
 	return (
 		<main className={styles.Main}>
@@ -25,7 +26,11 @@ const Profile = () => {
 								<h2 className={styles.ProfileH2}>BaoHuynh</h2>
 
 								<div className={styles.ProfileButtonWrap}>
-									<Button>{t('EDIT_PROFILE')}</Button>
+									{stateUser === 'owner' ? (
+										<Button>{t('EDIT_PROFILE')}</Button>
+									) : (
+										<Button type="primary">Theo dõi</Button>
+									)}
 								</div>
 							</div>
 						</div>
