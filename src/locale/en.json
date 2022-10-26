@@ -20,22 +20,20 @@
 		"COOKIE_POLICY": "COOKIE_POLICY",
 		"AND": "and ",
 		"HAVE_ACCOUNT": "Do you have acount? ",
-		"PASSWORD_REQUIRED_MESSAGE":"Please enter your password!",
-		"PASSWORD_MIN_MESSAGE":"Password must be at least 6 characters",
-		"EMAIL_VALID_MESSAGE":"Please enter a valid email",
-		"EMAIL_REQUIRED_MESSAGE":"Please enter your email!",
-		"FULLNAME_REQUIRED_MESSAGE":"Please enter your name!",
-		"FULLNAME_INVALID_MESSAGE":"Please enter a valid full name",
-		"USERNAME_INVALID_MESSAGE":"Please enter a valid username name",
-		"USERNAME_REQUIRED_MESSAGE":"Please enter username!",
-		"USERNAME_MIN_MESSAGE":"Username must be at least 6 characters"
-
-
+		"PASSWORD_REQUIRED_MESSAGE": "Please enter your password!",
+		"PASSWORD_MIN_MESSAGE": "Password must be at least 6 characters",
+		"EMAIL_VALID_MESSAGE": "Please enter a valid email",
+		"EMAIL_REQUIRED_MESSAGE": "Please enter your email!",
+		"FULLNAME_REQUIRED_MESSAGE": "Please enter your name!",
+		"FULLNAME_INVALID_MESSAGE": "Please enter a valid full name",
+		"USERNAME_INVALID_MESSAGE": "Please enter a valid username name",
+		"USERNAME_REQUIRED_MESSAGE": "Please enter username!",
+		"USERNAME_MIN_MESSAGE": "Username must be at least 6 characters"
 	},
-	"CONFIRM":"Confirm",
-	"DELETE":"Delete",
-	"FRIEND_REQUEST":"Friend request",
-	"FRIEND_SEND_REQUEST":"sent you a friend request.",
+	"CONFIRM": "Confirm",
+	"DELETE": "Delete",
+	"FRIEND_REQUEST": "Friend request",
+	"FRIEND_SEND_REQUEST": "sent you a friend request.",
 	"SEARCH": "Search",
 	"EDIT_PROFILE": "Edit Profile",
 	"SUGGESTED": "Suggested",
@@ -59,5 +57,7 @@
 		"TO": "To:"
 	},
 	"WARINING": {},
-	"ERROR": {}
+	"ERROR": {},
+	"ACCOUNT": "Account",
+	"SEARCH_ACCOUNT_USERNAME_OR_EMAIL": "Search account username or email"
 }

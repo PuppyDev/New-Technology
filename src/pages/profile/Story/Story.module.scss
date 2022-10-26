@@ -7,34 +7,41 @@
 	scrollbar-width: none;
 	position: relative;
 	margin-bottom: 44px;
-	background: var(--ins-background-primary);
-	@media only screen and (max-width: 735px) {
+	background: $ig-primary-background;
+	@include mobile {
 		padding: 0;
 		margin-bottom: 21px;
 	}
+}
+.Stories::-webkit-scrollbar {
+	display: none;
 }
 .Wrap {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 10px 15px;
-	color: var(--ins-content-primary);
-	@media only screen and (max-width: 735px) {
+	color: $ig-primary-text;
+	@include mobile {
 		padding: 0px 5px;
+	}
+	.ant-modal-content {
+		border-radius: 20px;
+		background: red;
 	}
 }
 
 .ImageWrap {
 	padding: 3px;
 	border-radius: 1000px;
-	border: 1px solid var(--ins-border-secondary);
+	border: 1px solid $ig-secondary-text;
 }
 .Image {
 	border-radius: 1000px;
 	width: 77px;
 	height: 77px;
 	display: block;
-	@media only screen and (max-width: 735px) {
+	@include mobile {
 		width: 56px;
 		height: 56px;
 	}
@@ -48,7 +55,7 @@
 	width: 80px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	@media only screen and (max-width: 735px) {
+	@include mobile {
 		font-size: 12px;
 		padding-top: 8px;
 		font-weight: 400;

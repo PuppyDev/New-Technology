@@ -16,6 +16,7 @@ import React, { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalPost from '../Modal/ModalPost'
+import Search from '../Search'
 import styles from './Header.module.scss'
 import ImageLogo from '../../../assets/image/bbsgl.png'
 import FriendRequest from '../FriendRequest'
@@ -27,7 +28,9 @@ const Header = () => {
 				<Link to="/" className={styles.header__containerlogo}>
 					<img src={ImageLogo} alt="logo" />
 				</Link>
-
+				<div>
+					<Search />
+				</div>
 				<nav className={styles.header__containernav}>
 					<ControlNavLink />
 				</nav>
