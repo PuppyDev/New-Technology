@@ -1,15 +1,12 @@
-import { useEffect, useState, useRef } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import classNames from 'classnames/bind'
-import HeadlessTippy from '@tippyjs/react/headless'
-
-import AccountItem from '@/components/AccountItem/index'
-import * as searchServices from '@/api/searchServices'
+import { userApi } from '@/api/userApi'
+import AccountItem from '@/components/common/AccountItem/index'
 import { Wrapper as PopperWrapper } from '@/components/Popper/index'
 import useDebounce from '@/hooks/useDebounce'
+import { CloseCircleFilled, LoadingOutlined } from '@ant-design/icons'
+import HeadlessTippy from '@tippyjs/react/headless'
+import { useEffect, useRef, useState } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import styles from './Seach.module.scss'
-import { CloseCircleFilled, FontSizeOutlined, LoadingOutlined, SearchOutlined } from '@ant-design/icons'
 
 function Search() {
 	const [searchValue, setSearchValue] = useState('')
@@ -30,9 +27,10 @@ function Search() {
 		const fetchApi = async () => {
 			setLoading(true)
 
-			const result = await searchServices.search(debounced)
+			const result = await userApi.searchUserByUserName(debounced)
+			console.log('🚀 ~ file: index.tsx ~ line 32 ~ fetchApi ~ result', result)
 
-			setSearchResult(result)
+			// setSearchResult(result)
 			setLoading(false)
 		}
 
@@ -55,14 +53,18 @@ function Search() {
 		}
 	}
 
+	const { t } = useTranslation()
+
 	return (
 		<HeadlessTippy
 			interactive
 			visible={showResult && searchResult.length > 0}
 			render={(attrs) => (
 				<div className={styles.search_result} tabIndex={-1} {...attrs}>
-					<PopperWrapper children={undefined} className={undefined}>
-						<h4 className={styles.search_title}>Account</h4>
+					<PopperWrapper className={undefined}>
+						<h4 className={styles.search_title}>
+							<Trans>ACCOUNT</Trans>
+						</h4>
 						{searchResult.map((result) => (
 							<AccountItem key={result} data={result} />
 						))}
@@ -75,7 +77,7 @@ function Search() {
 				<input
 					ref={inputRef}
 					value={searchValue}
-					placeholder="Seach account and video"
+					placeholder={t('SEARCH_ACCOUNT_USERNAME_OR_EMAIL')}
 					spellCheck={false}
 					onChange={handleChange}
 					onFocus={() => setshowResult(true)}
@@ -92,7 +94,7 @@ function Search() {
 				<button className={styles.search_btn} onMouseDown={(e) => e.preventDefault()}>
 					<svg
 						width={'1.5rem'}
-						height={'1.5Wrem'}
+						height={'1.5rem'}
 						viewBox="0 0 48 48"
 						fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg"

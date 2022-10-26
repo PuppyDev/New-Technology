@@ -4,5 +4,7 @@
 		"REGISTER": "Đăng ký"
 	},
 	"SEARCH": "Tìm kiếm",
-	"EDIT_PROFILE": "Chỉnh sửa trang cá nhân"
+	"EDIT_PROFILE": "Chỉnh sửa trang cá nhân",
+	"ACCOUNT": "Tài khoản",
+	"SEARCH_ACCOUNT_USERNAME_OR_EMAIL": "Tìm kiếm username hoặc email"
 }
