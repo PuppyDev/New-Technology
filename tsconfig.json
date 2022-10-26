@@ -45,7 +45,8 @@
 		"**/*.tsx",
 		"i18n.js",
 		"src/features/Chat/containers/ChatContainer.module.scss",
-		"src/pages/profile/Galery/data.js"
+		"src/pages/profile/Galery/data.js",
+		"src/features/CallVideo/containers/index.jsx"
 	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

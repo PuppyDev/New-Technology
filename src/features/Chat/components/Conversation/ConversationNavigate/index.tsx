@@ -29,7 +29,7 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 
 	const handleVideoCall = () => {
 		// CallVideoID redirect here
-		navigate('/videoCall/123')
+		navigate(`/videoCall/${conversationSelected?._id}`)
 	}
 
 	return (

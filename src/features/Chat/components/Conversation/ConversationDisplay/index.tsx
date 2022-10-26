@@ -17,26 +17,23 @@ import {
 } from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Dropdown, Form, Image, Input, Modal, Spin } from 'antd'
-import { Suspense, useEffect, useState } from 'react'
+import { Col, Collapse, Dropdown, Form, Image, Input, Row, Spin } from 'antd'
+import { SocketContext } from 'context/SocketContext'
+import { Suspense, useContext, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import InputEmoji from 'react-input-emoji'
-import { io } from 'socket.io-client'
 import TextMessage from '../../Messages/TextMessage'
 import ConversationNavigate from '../ConversationNavigate'
 import styles from './ConversationDisplay.module.scss'
 import './ConversationDisplay.scss'
 
-const socket = io('http://localhost:3000', {
-	extraHeaders: {
-		Authorization: JSON.parse(localStorage.getItem('loginData') || '{}')?.accessToken || '',
-	},
-})
-
 let tempMessage: Message[] = []
 
 const ConversationDisplay = () => {
 	const { t } = useTranslation()
+	const socket = useContext(SocketContext)
+
+	if (!socket) return
 
 	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
 	const user = useAppSelector((state) => state.authSlice.user)
@@ -53,15 +50,10 @@ const ConversationDisplay = () => {
 	const [messageRecive, setMessageRecive] = useState<any>('')
 	// Subcriber Socket msg in here
 	useEffect(() => {
-		console.log('connect socket again')
 		socket.on('chat:print_message', (dataGot) => {
-			console.log('🚀 ~ file: index.tsx ~ line 58 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)
 			setDummyMessage('')
 		})
-		return () => {
-			socket.disconnect()
-		}
 	}, [])
 
 	useEffect(() => {
@@ -128,10 +120,8 @@ const ConversationDisplay = () => {
 
 	const handleSendImage = async (e: any, type?: messageType) => {
 		const file = e.target.files[0]
-		console.log('🚀 ~ file: index.tsx ~ line 131 ~ handleSendImage ~ file', file)
 		const fileExt = file.name.split('.')[1]
 		const fileType = type ? type : fileExt == 'mp4' || fileExt === 'mp3' ? 'VIDEO' : 'IMAGE'
-		console.log('🚀 ~ file: index.tsx ~ line 135 ~ handleSendImage ~ fileType', fileType)
 		if (!conversationSelected) return
 
 		setDummyMessage('Message is sending...')
@@ -154,19 +144,7 @@ const ConversationDisplay = () => {
 			<Suspense fallback={<ConversationNavigate.Skeleton />}>
 				<ConversationNavigate isClickInfo={isClickInfo} onClick={toggleIsClickInfo} />
 
-				<div className={`${styles.detail} ${isClickInfo ? styles.visible : styles.hidden} `}>
-					<ul className={styles.detail__action}>
-						<li onClick={() => console.log('vo')}>
-							<Trans>CONVERSATION.DETAIL_ACTION.DELETE_CHAT</Trans>
-						</li>
-						<li>
-							<Trans>CONVERSATION.DETAIL_ACTION.BLOCK</Trans>
-						</li>
-						<li>
-							<Trans>CONVERSATION.DETAIL_ACTION.REPORT</Trans>
-						</li>
-					</ul>
-				</div>
+				<ConversationDisplay.DetailsConversation isClickInfo={isClickInfo} />
 
 				<main className={`${styles.mainContent} ${isClickInfo ? styles.hidden : styles.visible} `}>
 					{/* Render msg in here */}
@@ -258,7 +236,7 @@ const ConversationDisplay = () => {
 
 				<ConversationDisplay.ReplyDialog replyMessage={replyMessage} />
 
-				<Form onFinish={handleSendMessage} className={styles.sendInput}>
+				<Form onFinish={handleSendMessage} className={`${styles.sendInput} ${isClickInfo && styles.hidden}`}>
 					<div className={styles.wrapInputItem}>
 						{messageSender.trim().length < 1 && (
 							<>
@@ -379,6 +357,57 @@ ConversationDisplay.Skeleton = () => {
 	return (
 		<div className={styles.skeleton}>
 			<Spin size="large" indicator={<LoadingOutlined />} />
+		</div>
+	)
+}
+
+const { Panel } = Collapse
+ConversationDisplay.DetailsConversation = ({ isClickInfo }: { isClickInfo: boolean }) => {
+	return (
+		<div className={`${styles.detail} ${isClickInfo ? styles.visible : styles.hidden} `}>
+			<ul className={styles.detail__action}>
+				<li onClick={() => console.log('vo')}>
+					<Trans>CONVERSATION.DETAIL_ACTION.DELETE_CHAT</Trans>
+				</li>
+				<li>
+					<Trans>CONVERSATION.DETAIL_ACTION.BLOCK</Trans>
+				</li>
+				<li>
+					<Trans>CONVERSATION.DETAIL_ACTION.REPORT</Trans>
+				</li>
+			</ul>
+			<Collapse
+				defaultActiveKey={['1', '2']}
+				expandIconPosition="end"
+				style={{ userSelect: 'none', paddingLeft: '5px', paddingRight: '5px' }}
+				ghost
+			>
+				<Panel header="Ảnh/Video " key="1">
+					<p>Meo meo</p>
+				</Panel>
+				<Panel header="File" key="2">
+					<Image.PreviewGroup>
+						<Row gutter={16}>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.HR_QAr5KgVT_TmLNrnF1rgHaKx%26pid%3DApi&f=1&ipt=78ec0579f91f9aca37c0fcf5fbfeb5eadf87173f9f3d302507f86c3467280934&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.HR_QAr5KgVT_TmLNrnF1rgHaKx%26pid%3DApi&f=1&ipt=78ec0579f91f9aca37c0fcf5fbfeb5eadf87173f9f3d302507f86c3467280934&ipo=images" />
+							</Col>
+						</Row>
+					</Image.PreviewGroup>
+				</Panel>
+			</Collapse>
+			{/* <Collapse collapsible="header" defaultActiveKey={['1', '2']} expandIconPosition="end"></Collapse> */}
 		</div>
 	)
 }

@@ -30,6 +30,7 @@
 		"react-redux": "^8.0.4",
 		"react-router-dom": "^6.4.1",
 		"redux": "^4.2.0",
+		"simple-peer": "^9.11.1",
 		"socket.io-client": "^4.5.3",
 		"vite-tsconfig-paths": "^3.5.1",
 		"yup": "^0.32.11"
@@ -38,6 +39,7 @@
 		"@types/node": "^18.11.3",
 		"@types/react": "^18.0.17",
 		"@types/react-dom": "^18.0.6",
+		"@types/simple-peer": "^9.11.5",
 		"@vitejs/plugin-react": "^2.1.0",
 		"sass": "^1.55.0",
 		"sass-loader": "^13.0.2",

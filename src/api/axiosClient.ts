@@ -26,8 +26,6 @@ const createAxiosInstance = () => {
 		(error) => {
 			console.log('🚀 ~ file: axiosClient.ts ~ line 23 ~ createAxiosInstance ~ error', error)
 			if (error.response?.status === NOT_AUTHORIZED) {
-				console.log('Vo not authorized')
-
 				showNotify()
 			}
 
@@ -61,11 +59,11 @@ const createAxiosInstance = () => {
 }
 
 const showNotify = () => {
-	const { t } = useTranslation()
+	// const { t } = useTranslation()
 
 	const modal = Modal.warning({
-		title: t('WARINING.TIME_EXPIRE'),
-		content: t('WARINING.LOGIN_AGAIN'),
+		title: 'Login session has expired',
+		content: 'Please login again to continue using the website',
 		onOk() {
 			store.dispatch(logout())
 		},

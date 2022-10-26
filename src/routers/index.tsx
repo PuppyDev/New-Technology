@@ -1,3 +1,4 @@
+import VideoCallPage from 'pages/videoCall'
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
@@ -6,7 +7,7 @@ import RenderRouteHeader from './RenderRouteHeader'
 const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
 const Profile = lazy(() => import('pages/profile'))
 const ChatConversationPage = lazy(() => import('@/Chat/pages'))
-const VideoCallPage = lazy(() => import('pages/videoCall'))
+// const VideoCallPage = lazy(() => import('pages/videoCall'))
 const RegisterPage = lazy(() => import('../pages/auth/register/RegisterPage'))
 
 const mainRoutes = [
