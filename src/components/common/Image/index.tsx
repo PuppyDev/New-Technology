@@ -3,20 +3,7 @@ import classNames from 'classnames'
 
 import styles from './Image.module.scss'
 
-const Image = ({
-	src,
-	alt,
-	data,
-	className,
-	ref,
-	...props
-}: {
-	src: string
-	alt: string
-	data: any
-	className: any
-	ref?: any
-}) => {
+const Image = ({ src, alt, className, ref, ...props }: { src: string; alt: string; className: any; ref?: any }) => {
 	const [fallback, setFallback] = useState('')
 
 	return (

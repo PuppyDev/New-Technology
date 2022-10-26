@@ -5,6 +5,7 @@ export interface User {
 	username: string
 	name: string
 	image?: string
+	email?: string
 }
 export interface UserProfile extends User {
 	accessToken: string

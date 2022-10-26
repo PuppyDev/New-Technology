@@ -199,11 +199,6 @@ const ControlNavLink: React.FC = () => {
 				<PlusSquareOutlined />
 			</li>
 			<li>
-				<NavLink to="/123" className={({ isActive }) => (isActive ? styles.active : '')}>
-					<SearchOutlined />
-				</NavLink>
-			</li>
-			<li>
 				<Dropdown
 					overlay={menuNotification}
 					placement="bottomRight"
