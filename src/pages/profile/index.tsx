@@ -9,6 +9,7 @@ import Tab from './Tab'
 import { Gallery } from './Galery'
 const { Header, Footer, Sider, Content } = Layout
 import { useTranslation } from 'react-i18next'
+import { FollowButton } from './FollowButton'
 const Profile = () => {
 	const { t, i18n } = useTranslation()
 
@@ -25,7 +26,7 @@ const Profile = () => {
 								<h2 className={styles.ProfileH2}>BaoHuynh</h2>
 
 								<div className={styles.ProfileButtonWrap}>
-									<Button>{t('EDIT_PROFILE')}</Button>
+									<FollowButton />
 								</div>
 							</div>
 						</div>
