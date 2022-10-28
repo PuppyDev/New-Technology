@@ -5,9 +5,9 @@ import Image from '../Image'
 import styles from './AccountItem.module.scss'
 const cx = classNames.bind(styles)
 
-function AccountItem({ data }: { data: User }) {
+function AccountItem({ data, onClick }: { data: User; onClick: any }) {
 	return (
-		<Link to={`/${data.username}`} className={cx('wrapper')}>
+		<Link to={`/${data._id}`} className={cx('wrapper')} onClick={onClick}>
 			<Image
 				className={cx('avatar')}
 				src={data?.image ? data.image : 'https://joeschmoe.io/api/v1/random'}

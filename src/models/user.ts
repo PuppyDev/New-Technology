@@ -11,3 +11,11 @@ export interface UserProfile extends User {
 	accessToken: string
 	refreshToken: string
 }
+
+export interface UserInfo extends User {
+	friends: User[]
+	gender: string
+	isFriend: boolean
+	posts: any
+	addFriendRequest: boolean
+}

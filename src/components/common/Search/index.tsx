@@ -67,7 +67,7 @@ function Search() {
 							<Trans>ACCOUNT</Trans>
 						</h4>
 						{searchResult.map((result) => (
-							<AccountItem key={result._id} data={result} />
+							<AccountItem key={result._id} data={result} onClick={handleClear} />
 						))}
 
 						{(searchResult.length < 1 || loading) && (

@@ -58,7 +58,6 @@ const ConversationDisplay = () => {
 	const [messageRecive, setMessageRecive] = useState<any>('')
 	// Subcriber Socket msg in here
 	useEffect(() => {
-		console.log('connect socket again')
 		socket.on('chat:print_message', (dataGot) => {
 			console.log('🚀 ~ file: index.tsx ~ line 58 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)

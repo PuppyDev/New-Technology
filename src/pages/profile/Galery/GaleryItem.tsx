@@ -5,7 +5,7 @@ import { useState } from 'react'
 import styles from './Galery.module.scss'
 import avt from './cat.jpg'
 
-export function GalleryItem({ imagepath, title }) {
+export function GalleryItem({ imagepath, title }: { imagepath: string; title: string }) {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const showModal = () => {
 		setIsModalOpen(true)
@@ -18,7 +18,7 @@ export function GalleryItem({ imagepath, title }) {
 	const handleCancel = () => {
 		setIsModalOpen(false)
 	}
-	console.log('imagePath - GalleryItem', imagepath)
+
 	return (
 		<div className={styles.Wrap}>
 			<Image preview={false} className={styles.Img} alt="gallery-post" src={imagepath} onClick={showModal} />

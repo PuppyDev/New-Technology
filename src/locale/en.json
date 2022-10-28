@@ -38,6 +38,8 @@
 	"EDIT_PROFILE": "Edit Profile",
 	"SUGGESTED": "Suggested",
 	"SEND": "Send",
+	"ADD_FRIEND": "Add friend",
+	"CANCEL_FRIEND": "Cancel friend",
 	"CONVERSATION": {
 		"REPLY": "Reply to",
 		"MINE": "yourself",
