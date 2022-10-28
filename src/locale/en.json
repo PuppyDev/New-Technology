@@ -20,26 +20,27 @@
 		"COOKIE_POLICY": "COOKIE_POLICY",
 		"AND": "and ",
 		"HAVE_ACCOUNT": "Do you have acount? ",
-		"PASSWORD_REQUIRED_MESSAGE":"Please enter your password!",
-		"PASSWORD_MIN_MESSAGE":"Password must be at least 6 characters",
-		"EMAIL_VALID_MESSAGE":"Please enter a valid email",
-		"EMAIL_REQUIRED_MESSAGE":"Please enter your email!",
-		"FULLNAME_REQUIRED_MESSAGE":"Please enter your name!",
-		"FULLNAME_INVALID_MESSAGE":"Please enter a valid full name",
-		"USERNAME_INVALID_MESSAGE":"Please enter a valid username name",
-		"USERNAME_REQUIRED_MESSAGE":"Please enter username!",
-		"USERNAME_MIN_MESSAGE":"Username must be at least 6 characters"
-
-
+		"PASSWORD_REQUIRED_MESSAGE": "Please enter your password!",
+		"PASSWORD_MIN_MESSAGE": "Password must be at least 6 characters",
+		"EMAIL_VALID_MESSAGE": "Please enter a valid email",
+		"EMAIL_REQUIRED_MESSAGE": "Please enter your email!",
+		"FULLNAME_REQUIRED_MESSAGE": "Please enter your name!",
+		"FULLNAME_INVALID_MESSAGE": "Please enter a valid full name",
+		"USERNAME_INVALID_MESSAGE": "Please enter a valid username name",
+		"USERNAME_REQUIRED_MESSAGE": "Please enter username!",
+		"USERNAME_MIN_MESSAGE": "Username must be at least 6 characters"
 	},
-	"CONFIRM":"Confirm",
-	"DELETE":"Delete",
-	"FRIEND_REQUEST":"Friend request",
-	"FRIEND_SEND_REQUEST":"sent you a friend request.",
+	"CONFIRM": "Confirm",
+	"DELETE": "Delete",
+	"FRIEND_REQUEST": "Friend request",
+	"FRIEND_SEND_REQUEST": "sent you a friend request.",
 	"SEARCH": "Search",
 	"EDIT_PROFILE": "Edit Profile",
 	"SUGGESTED": "Suggested",
 	"SEND": "Send",
+	"ADD_FRIEND": "Add friend",
+	"ADD_FRIENDED": "Pending Friend Requests",
+	"CANCEL_FRIEND": "Cancel friend",
 	"CONVERSATION": {
 		"REPLY": "Reply to",
 		"MINE": "yourself",
@@ -56,8 +57,16 @@
 		"SUB_YOUR_MESSAGE": "Send private photos and messages to a friend or group.",
 		"SEND_MESSAGE": "Send messages",
 		"NEW_MESSAGE": "New message",
-		"TO": "To:"
+		"TO": "To:",
+		"UNSEND_MESSAGE": "Unsend",
+		"FORWARD": "Forward"
 	},
-	"WARINING": {},
-	"ERROR": {}
+	"ERROR": {},
+	"ACCOUNT": "Account",
+	"SEARCH_ACCOUNT_USERNAME_OR_EMAIL": "Search account username or email",
+	"WARINING": {
+		"TIME_EXPIRE": "Login session has expired",
+		"LOGIN_AGAIN": "Please login again to continue using the website"
+	},
+	"SUCCESS": {}
 }

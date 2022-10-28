@@ -24,3 +24,17 @@ ul.action__message {
 		flex-direction: row-reverse;
 	}
 }
+
+.action__mesage_overlay {
+	@include border-container;
+	overflow: hidden;
+	border-radius: 10px;
+	span {
+		padding: 10px 10px;
+		font-weight: 600;
+		display: inline-block;
+		background-color: $web-always-black;
+		color: $web-always-white;
+		cursor: pointer;
+	}
+}

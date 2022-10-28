@@ -1,0 +1,98 @@
+.search,
+.search_result {
+	width: 361px;
+}
+
+.search {
+	position: relative;
+	width: 361px;
+	height: 36px;
+	padding-left: 16px;
+	font-size: 0.8rem;
+	display: flex;
+	background-color: rgba(22, 24, 35, 0.06);
+	border-radius: $search-border-radius;
+	border: 1.5px solid transparent;
+
+	input {
+		flex: 1;
+		height: 100%;
+		color: $black-russian-color;
+		background-color: transparent;
+		caret-color: $primary;
+		border: 0;
+		outline: 0;
+	}
+	input:focus {
+		outline: none !important;
+	}
+	// Khi input dc nhap => btn se doi mau
+	input:not(:placeholder-shown) ~ .search-btn {
+		color: rgba(22, 24, 35, 0.75);
+	}
+	&:focus-within {
+		border: 1.5px solid rgba(22, 24, 35, 0.2);
+		outline: none;
+	}
+}
+.clear,
+.loading {
+	position: absolute;
+	right: calc($search-button-witdh + 16px);
+	top: 50%;
+	transform: translateY(-50%);
+	color: rgba(22, 24, 35, 0.34);
+}
+.search_title {
+	padding: 5px 12px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: rgba(22, 24, 35, 0.5);
+}
+.loading {
+	animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+	from {
+		transform: translateY(-50%) rotate(0);
+	}
+	to {
+		transform: translateY(-50%) rotate(360deg);
+	}
+}
+
+.search_btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: $search-button-witdh;
+	height: 100%;
+	color: rgba(22, 24, 35, 0.34);
+	background-color: transparent;
+	font-size: 1.8rem;
+	border-top-right-radius: $search-border-radius;
+	border-bottom-right-radius: $search-border-radius;
+	&:hover {
+		cursor: pointer;
+		background-color: rgba(22, 24, 35, 0.03);
+	}
+	&:active {
+		background-color: rgba(22, 24, 35, 0.06);
+	}
+	&::after {
+		content: '';
+		position: absolute;
+		top: 3px;
+		right: $search-button-witdh;
+		width: 1px;
+		height: 28px;
+		background-color: rgba(22, 24, 35, 0.12);
+	}
+}
+
+.search_result_empty {
+	padding: 10px;
+	padding-top: 20px;
+	text-align: center;
+}

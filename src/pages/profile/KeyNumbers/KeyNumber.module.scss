@@ -3,10 +3,10 @@
 	font-weight: 400;
 	margin-right: 40px;
 	list-style-type: none;
-	@media only screen and (max-width: 735px) {
+	@include mobile {
 		font-size: 14px;
 		font-weight: 400;
-		color: rgb(142, 142, 142);
+		color: $silver-color;
 		line-height: 18px;
 		text-align: center;
 		margin-right: 0;
@@ -14,18 +14,18 @@
 }
 .ProfileDetailSpan {
 	font-weight: 600;
-	@media only screen and (max-width: 735px) {
+	@include mobile {
 		font-weight: 600;
-		color: var(--ins-content-primary);
+		color: var($ig-primary-text);
 		display: block;
 	}
 }
 .ProfileDetailUl {
 	display: flex;
-	@media only screen and (max-width: 735px) {
+	@include mobile {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		padding: 12px 0;
-		border-top: 1px solid var(--ins-border-primary);
+		border-top: 1px solid var($ig-primary-text);
 	}
 }

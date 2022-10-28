@@ -1,5 +1,6 @@
 import { authApi } from '@/api/authApi'
 import { useAppDispatch } from '@/app/hook'
+import Logo from '@/assets/images/bbsgl.png'
 import { LoginPayload } from '@/models/auth'
 import { FacebookFilled } from '@ant-design/icons'
 import { Button, Col, Divider, Form, Image, Input, notification, Row } from 'antd'
@@ -8,7 +9,6 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from '../LoginPage.module.scss'
-import ImageLogo from '../../../../assets/image/bbsgl.png'
 
 function Login() {
 	const { t } = useTranslation()
@@ -33,9 +33,7 @@ function Login() {
 			setLoading(false)
 		} catch (error: any) {
 			const { response } = error
-			console.log('🚀 ~ file: FormLogin.tsx ~ line 35 ~ onFinish ~ error', error)
 			if (response.data) {
-				console.log('Vo')
 				setError(response.data)
 			} else
 				notification.error({
@@ -55,11 +53,7 @@ function Login() {
 					onFinish={onFinish}
 					autoComplete="off"
 				>
-					<Image
-						src={ImageLogo}
-						alt="logo"
-						preview={false}
-					/>
+					<Image src={Logo} alt="logo" preview={false} />
 					<Form.Item
 						name="email"
 						style={{ marginBottom: '10px' }}
@@ -70,7 +64,7 @@ function Login() {
 								pattern: new RegExp(
 									'^(([a-zA-Z0-9]+[a-zA-Z0-9]{1,})$/)||(^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$)'
 								),
-								message: t('AUTH.USER_EMAIL_INVALID_MESSAGE')
+								message: t('AUTH.USER_EMAIL_INVALID_MESSAGE'),
 							},
 							{ min: 6 },
 						]}

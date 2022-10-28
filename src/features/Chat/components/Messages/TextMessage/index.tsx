@@ -1,4 +1,5 @@
 import useOpen from '@/hooks/useOpen'
+import { Message } from '@/models/index'
 import { Avatar, Spin } from 'antd'
 import React from 'react'
 import ActionMessage from '../ActionMessage'
@@ -12,6 +13,7 @@ interface msg {
 	msg: String | React.ReactNode
 	loading?: boolean
 	ispadding?: boolean
+	messageObj?: Message
 }
 
 const TextMessage = ({ children }: props) => {
@@ -27,26 +29,26 @@ TextMessage.ListFriendMessage = ({ children }: { children: React.ReactNode }) =>
 	)
 }
 
-TextMessage.FriendMessage = ({ msg, ispadding = true }: msg) => {
+TextMessage.FriendMessage = ({ msg, ispadding = true, messageObj }: msg) => {
 	const { open: showOption, handleSetOpen, handleSetClose } = useOpen()
 
 	return (
 		<div className={styles.action_content} onMouseEnter={handleSetOpen} onMouseLeave={handleSetClose}>
 			<div className={`${styles.messageContent} ${ispadding && styles.padding}`}>{msg}</div>
 			<div className={`${styles.hidden_content} ${showOption && styles.show_content}`}>
-				<ActionMessage msg={msg} reverse />
+				<ActionMessage msg={msg} reverse messageObj={messageObj} />
 			</div>
 		</div>
 	)
 }
 
-TextMessage.OwnerMessage = ({ msg, loading = false, ispadding = true }: msg) => {
+TextMessage.OwnerMessage = ({ messageObj, msg, loading = false, ispadding = true }: msg) => {
 	const { open: showOption, handleSetOpen, handleSetClose } = useOpen()
 
 	return (
 		<div className={styles.ownerMessage} onMouseEnter={handleSetOpen} onMouseLeave={handleSetClose}>
 			<div className={`${styles.hidden_content} ${showOption && styles.show_content}`}>
-				<ActionMessage msg={msg} />
+				<ActionMessage msg={msg} messageObj={messageObj} />
 			</div>
 			<div className={`${styles.messageContent} ${ispadding && styles.padding}`}>{msg}</div>
 			{loading && <Spin size="small" style={{ marginTop: 'auto' }} />}

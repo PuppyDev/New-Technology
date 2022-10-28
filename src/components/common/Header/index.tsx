@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/app/hook'
+import Logo from '@/assets/images/bbsgl.png'
 import {
 	HeartOutlined,
 	HomeOutlined,
@@ -16,6 +17,7 @@ import React, { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalPost from '../Modal/ModalPost'
+import Search from '../Search'
 import styles from './Header.module.scss'
 import ImageLogo from '../../../assets/image/bbsgl.png'
 import FriendRequest from '../FriendRequest'
@@ -25,9 +27,11 @@ const Header = () => {
 		<div className={styles.header}>
 			<div className={styles.header__container}>
 				<Link to="/" className={styles.header__containerlogo}>
-					<img src={ImageLogo} alt="logo" />
+					<img src={Logo} alt="logo" />
 				</Link>
-
+				<div>
+					<Search />
+				</div>
 				<nav className={styles.header__containernav}>
 					<ControlNavLink />
 				</nav>
@@ -121,7 +125,7 @@ const ControlNavLink: React.FC = () => {
 				{
 					key: '1',
 					label: (
-						<Link to={`/${user?._id}`}>
+						<Link to={`/${user?.username}`}>
 							<UserOutlined />
 							Profile
 						</Link>
@@ -190,11 +194,6 @@ const ControlNavLink: React.FC = () => {
 				}}
 			>
 				<PlusSquareOutlined />
-			</li>
-			<li>
-				<NavLink to="/123" className={({ isActive }) => (isActive ? styles.active : '')}>
-					<SearchOutlined />
-				</NavLink>
 			</li>
 			<li>
 				<Dropdown

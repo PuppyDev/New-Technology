@@ -8,7 +8,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": true,
 		"jsx": "preserve",
-		"lib": ["dom", "dom.iterable", "esnext", "es5", "es6", "dom"],
+		"lib": ["dom", "dom.iterable", "esnext", "es5", "es6"],
 		"module": "esnext",
 		"moduleResolution": "node",
 		"noEmit": true,
@@ -36,7 +36,8 @@
 			"@/Chat/*": ["./features/Chat/*"],
 			"@/constants/*": ["./constants/*"],
 			"@/utils/*": ["./utils/*"],
-			"@/hooks/*": ["./hooks/*"]
+			"@/hooks/*": ["./hooks/*"],
+			"@/assets/*": ["./assets/*"]
 		}
 	},
 	"include": [
@@ -44,7 +45,8 @@
 		"**/*.tsx",
 		"i18n.js",
 		"src/features/Chat/containers/ChatContainer.module.scss",
-		"src/pages/profile/Galery/data.js"
+		"src/pages/profile/Galery/data.js",
+		"src/features/CallVideo/containers/index.jsx"
 	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

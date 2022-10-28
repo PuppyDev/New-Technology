@@ -5,7 +5,7 @@ import { RootState } from '@/app/store'
 import { setReplyMessage } from '@/Chat/slices/ChatSlice'
 import useOpen from '@/hooks/useOpen'
 import { ReplyMessage } from '@/models/conversation'
-import { Message } from '@/models/message'
+import { Message, messageType } from '@/models/message'
 import { handleNameFile } from '@/utils/file'
 import {
 	CloseOutlined,
@@ -17,31 +17,23 @@ import {
 } from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Dropdown, Form, Image, Input, Spin, Upload } from 'antd'
-import axios from 'axios'
-import { Suspense, useEffect, useState } from 'react'
+import { Col, Collapse, Dropdown, Form, Image, Input, Row, Spin } from 'antd'
+import { SocketContext } from 'context/SocketContext'
+import { Suspense, useContext, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import InputEmoji from 'react-input-emoji'
-import { useParams } from 'react-router-dom'
-import { io } from 'socket.io-client'
 import TextMessage from '../../Messages/TextMessage'
 import ConversationNavigate from '../ConversationNavigate'
 import styles from './ConversationDisplay.module.scss'
 import './ConversationDisplay.scss'
 
-const socket = io('http://localhost:3000', {
-	extraHeaders: {
-		Authorization: JSON.parse(localStorage.getItem('loginData') || '{}')?.accessToken || '',
-	},
-}).connect()
-
-console.log('Connect')
-
 let tempMessage: Message[] = []
 
 const ConversationDisplay = () => {
 	const { t } = useTranslation()
-	const { inboxId } = useParams()
+	const socket = useContext(SocketContext)
+
+	if (!socket) return
 
 	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
 	const user = useAppSelector((state) => state.authSlice.user)
@@ -58,9 +50,7 @@ const ConversationDisplay = () => {
 	const [messageRecive, setMessageRecive] = useState<any>('')
 	// Subcriber Socket msg in here
 	useEffect(() => {
-		console.log('connect socket again')
 		socket.on('chat:print_message', (dataGot) => {
-			console.log('🚀 ~ file: index.tsx ~ line 58 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)
 			setDummyMessage('')
 		})
@@ -68,7 +58,7 @@ const ConversationDisplay = () => {
 
 	useEffect(() => {
 		if (messageRecive.roomId === conversationSelected?._id && messagesConversation) {
-			setMessageConversation((pre) => [...pre, messageRecive.message])
+			setMessageConversation((pre) => [...(pre as Message[]), messageRecive.message])
 		}
 	}, [messageRecive])
 
@@ -128,33 +118,25 @@ const ConversationDisplay = () => {
 		})
 	}
 
-	const handleSendImage = async (e: any) => {
+	const handleSendImage = async (e: any, type?: messageType) => {
 		const file = e.target.files[0]
+		const fileExt = file.name.split('.')[1]
+		const fileType = type ? type : fileExt == 'mp4' || fileExt === 'mp3' ? 'VIDEO' : 'IMAGE'
 		if (!conversationSelected) return
+
+		setDummyMessage('Message is sending...')
 
 		let formData = await new FormData()
 		formData.append('file', file)
 		formData.append('username', conversationSelected?.users[0].username)
 		formData.append('userId', conversationSelected?.users[0]?._id)
 		formData.append('roomId', conversationSelected?._id)
-		formData.append('type', 'IMAGE')
+		formData.append('type', fileType)
 
-		const response = messageApi.uploadFile(formData)
-	}
-
-	const handleSendFile = async (e: any) => {
-		const file = e.target.files[0]
-		console.log('🚀 ~ file: index.tsx ~ line 142 ~ handleSendFile ~ file', file)
-		if (!conversationSelected) return
-
-		// let formData = await new FormData()
-		// formData.append('file', file)
-		// formData.append('username', conversationSelected?.users[0].username)
-		// formData.append('userId', conversationSelected?.users[0]?._id)
-		// formData.append('roomId', conversationSelected?._id)
-		// formData.append('type', 'IMAGE')
-
-		// const response = messageApi.uploadFile(formData)
+		const response = await messageApi.uploadFile(formData)
+		setMessageRecive(response.data)
+		setDummyMessage('')
+		socket.emit('chat:send_image', response?.data)
 	}
 
 	return (
@@ -162,19 +144,7 @@ const ConversationDisplay = () => {
 			<Suspense fallback={<ConversationNavigate.Skeleton />}>
 				<ConversationNavigate isClickInfo={isClickInfo} onClick={toggleIsClickInfo} />
 
-				<div className={`${styles.detail} ${isClickInfo ? styles.visible : styles.hidden} `}>
-					<ul className={styles.detail__action}>
-						<li onClick={() => console.log('vo')}>
-							<Trans>CONVERSATION.DETAIL_ACTION.DELETE_CHAT</Trans>
-						</li>
-						<li>
-							<Trans>CONVERSATION.DETAIL_ACTION.BLOCK</Trans>
-						</li>
-						<li>
-							<Trans>CONVERSATION.DETAIL_ACTION.REPORT</Trans>
-						</li>
-					</ul>
-				</div>
+				<ConversationDisplay.DetailsConversation isClickInfo={isClickInfo} />
 
 				<main className={`${styles.mainContent} ${isClickInfo ? styles.hidden : styles.visible} `}>
 					{/* Render msg in here */}
@@ -183,7 +153,10 @@ const ConversationDisplay = () => {
 						{messagesConversation &&
 							messagesConversation.map((messageInfo, index) => {
 								const nextMessage = messagesConversation[index + 1]
-								const isPadding = messageInfo.type !== 'GIF' && messageInfo.type !== 'IMAGE'
+								const isPadding =
+									messageInfo.type !== 'GIF' &&
+									messageInfo.type !== 'IMAGE' &&
+									messageInfo.type !== 'VIDEO'
 
 								let msg: any
 								switch (messageInfo.type) {
@@ -201,7 +174,11 @@ const ConversationDisplay = () => {
 										)
 										break
 									case 'VIDEO':
-										msg = <video></video>
+										msg = (
+											<video width="100%" controls>
+												<source src={messageInfo.message} type="video/mp4"></source>
+											</video>
+										)
 										break
 									default:
 										msg = messageInfo.message
@@ -209,7 +186,14 @@ const ConversationDisplay = () => {
 								}
 
 								if (messageInfo.sender === user?.username) {
-									return <TextMessage.OwnerMessage msg={msg} ispadding={isPadding} key={index} />
+									return (
+										<TextMessage.OwnerMessage
+											messageObj={messageInfo}
+											msg={msg}
+											ispadding={isPadding}
+											key={index}
+										/>
+									)
 								}
 								// else if (nextMessage?.sender === messageInfo?.sender) {
 								// 	tempMessage.push(messageInfo)
@@ -236,6 +220,7 @@ const ConversationDisplay = () => {
 								return (
 									<TextMessage.ListFriendMessage key={index}>
 										<TextMessage.FriendMessage
+											messageObj={messageInfo}
 											msg={msg}
 											key={messageInfo._id}
 											ispadding={isPadding}
@@ -251,19 +236,31 @@ const ConversationDisplay = () => {
 
 				<ConversationDisplay.ReplyDialog replyMessage={replyMessage} />
 
-				<Form onFinish={handleSendMessage} className={styles.sendInput}>
+				<Form onFinish={handleSendMessage} className={`${styles.sendInput} ${isClickInfo && styles.hidden}`}>
 					<div className={styles.wrapInputItem}>
 						{messageSender.trim().length < 1 && (
 							<>
 								<label htmlFor="image">
 									<FileImageOutlined className={styles.iconAction} />
 								</label>
-								<input type="file" id="image" name="image" hidden onChange={handleSendImage} />
+								<input
+									type="file"
+									id="image"
+									name="image"
+									hidden
+									onChange={(e) => handleSendImage(e)}
+								/>
 
 								<label htmlFor="file">
 									<PaperClipOutlined className={styles.iconAction} />
 								</label>
-								<input type="file" id="file" name="file" onChange={handleSendFile} hidden />
+								<input
+									type="file"
+									id="file"
+									name="file"
+									onChange={(e) => handleSendImage(e, 'FILE')}
+									hidden
+								/>
 
 								<Dropdown
 									overlay={
@@ -346,6 +343,7 @@ ConversationDisplay.ReplyDialog = ({ replyMessage }: { replyMessage: ReplyMessag
 							replyMessage: {
 								msg: null,
 								replyFor: null,
+								_id: null,
 							},
 						})
 					)
@@ -359,6 +357,57 @@ ConversationDisplay.Skeleton = () => {
 	return (
 		<div className={styles.skeleton}>
 			<Spin size="large" indicator={<LoadingOutlined />} />
+		</div>
+	)
+}
+
+const { Panel } = Collapse
+ConversationDisplay.DetailsConversation = ({ isClickInfo }: { isClickInfo: boolean }) => {
+	return (
+		<div className={`${styles.detail} ${isClickInfo ? styles.visible : styles.hidden} `}>
+			<ul className={styles.detail__action}>
+				<li onClick={() => console.log('vo')}>
+					<Trans>CONVERSATION.DETAIL_ACTION.DELETE_CHAT</Trans>
+				</li>
+				<li>
+					<Trans>CONVERSATION.DETAIL_ACTION.BLOCK</Trans>
+				</li>
+				<li>
+					<Trans>CONVERSATION.DETAIL_ACTION.REPORT</Trans>
+				</li>
+			</ul>
+			<Collapse
+				defaultActiveKey={['1', '2']}
+				expandIconPosition="end"
+				style={{ userSelect: 'none', paddingLeft: '5px', paddingRight: '5px' }}
+				ghost
+			>
+				<Panel header="Ảnh/Video " key="1">
+					<p>Meo meo</p>
+				</Panel>
+				<Panel header="File" key="2">
+					<Image.PreviewGroup>
+						<Row gutter={16}>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.HR_QAr5KgVT_TmLNrnF1rgHaKx%26pid%3DApi&f=1&ipt=78ec0579f91f9aca37c0fcf5fbfeb5eadf87173f9f3d302507f86c3467280934&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.HR_QAr5KgVT_TmLNrnF1rgHaKx%26pid%3DApi&f=1&ipt=78ec0579f91f9aca37c0fcf5fbfeb5eadf87173f9f3d302507f86c3467280934&ipo=images" />
+							</Col>
+						</Row>
+					</Image.PreviewGroup>
+				</Panel>
+			</Collapse>
+			{/* <Collapse collapsible="header" defaultActiveKey={['1', '2']} expandIconPosition="end"></Collapse> */}
 		</div>
 	)
 }

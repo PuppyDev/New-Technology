@@ -1,20 +1,15 @@
 import { authApi } from '@/api/authApi'
-import { useAppDispatch } from '@/app/hook'
-import { FacebookFilled } from '@ant-design/icons'
+import Logo from '@/assets/images/bbsgl.png'
 import { Button, Col, Divider, Form, Input, notification, Row } from 'antd'
-import { NotificationPlacement } from 'antd/lib/notification'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import styles from '../RegisterPage.module.scss'
-import ImageLogo from '../../../../assets/image/bbsgl.png'
 
 const Register: React.FC = () => {
 	const { t } = useTranslation()
 
 	const [loading, setLoading] = React.useState(false)
-	const [error, setError] = React.useState<{ message: string | null; errorCode: number }>()
-	const dispatch = useAppDispatch()
 
 	const onFinish = async (values: any) => {
 		try {
@@ -56,19 +51,12 @@ const Register: React.FC = () => {
 					<Row justify="center">
 						<Col>
 							<Link to={'/'}>
-								<div>
-									<img
-									src={ImageLogo}
-									alt="???"
-									style={{width:'100%'}}
-								/>
-								</div>
-								
+								<img src={Logo} alt="Logo" style={{ width: '100%' }} />
 							</Link>
 						</Col>
 					</Row>
 					<Form.Item>
-						<p className={styles.container__antform__heading} style={{ fontSize: 20 }}>
+						<p className={styles.container__antform__heading} style={{ fontSize: 22, color: 'black' }}>
 							{t('AUTH.TITLE_REGISTER')}
 						</p>
 					</Form.Item>

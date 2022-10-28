@@ -1,13 +1,15 @@
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { Avatar, Checkbox, Modal } from 'antd'
 import { CheckboxValueType } from 'antd/lib/checkbox/Group'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './ConversationModel.module.scss'
 import './ConversationModel.scss'
 
 const ConversationModel = ({ open, onClose }: { open: boolean; onClose: any }) => {
 	const { t } = useTranslation()
+
+	const [selectUser, setSelectUser] = useState<any>([])
 
 	return (
 		<Modal
@@ -27,46 +29,30 @@ const ConversationModel = ({ open, onClose }: { open: boolean; onClose: any }) =
 					</div>
 
 					<ul className={styles.modal__content_search_seekResult}>
-						<li>
-							Giang vo{' '}
-							<span
-								onClick={() => {
-									console.log('2 3 con muwcj')
-								}}
-							>
-								<CloseCircleOutlined />
-							</span>
-						</li>
-						<li>
-							Giang vo con cak
-							<span>
-								<CloseCircleOutlined />
-							</span>
-						</li>
-						<li>
-							Giang vo{' '}
-							<span>
-								<CloseCircleOutlined />
-							</span>
-						</li>
-						<li>
-							Giang vo{' '}
-							<span>
-								<CloseCircleOutlined />
-							</span>
-						</li>
-						<li>
-							Giang vo con cak
-							<span>
-								<CloseCircleOutlined />
-							</span>
-						</li>
+						{selectUser &&
+							selectUser.map((item: any) => {
+								console.log('🚀 ~ file: index.tsx ~ line 34 ~ selectUser.map ~ item', item)
+								return (
+									<li>
+										Giang vo{' '}
+										<span
+											onClick={() => {
+												console.log('2 3 con muwcj')
+											}}
+										>
+											<CloseCircleOutlined />
+										</span>
+									</li>
+								)
+							})}
 					</ul>
 				</div>
 				<div className={styles.modal__content_result}>
 					<p>{t('SUGGESTED')}</p>
 
-					<ConversationModel.ListUser>
+					<ConversationModel.ListUser
+						onChange={(checkedValues: CheckboxValueType[]) => setSelectUser(checkedValues)}
+					>
 						{Array.from({ length: 20 }).map((item, index) => {
 							return <ConversationModel.UserItem key={index} value={'' + index} />
 						})}
@@ -95,12 +81,14 @@ ConversationModel.UserItem = ({ value }: { value: String }) => {
 	)
 }
 
-ConversationModel.ListUser = ({ children }: { children: React.ReactNode }) => {
-	const onChange = (checkedValues: CheckboxValueType[]) => {
-		console.log('checked = ', checkedValues)
-	}
+ConversationModel.ListUser = ({ children, onChange }: { children: React.ReactNode; onChange: any }) => {
 	return (
-		<Checkbox.Group onChange={onChange} style={{ width: '100%' }}>
+		<Checkbox.Group
+			onChange={(checkedValues: CheckboxValueType[]) => {
+				onChange(checkedValues)
+			}}
+			style={{ width: '100%' }}
+		>
 			{children}
 		</Checkbox.Group>
 	)

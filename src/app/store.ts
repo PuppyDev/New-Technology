@@ -1,7 +1,7 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import chatSlice from './../features/Chat/slices/ChatSlice'
 import authSlice from './../pages/auth/authSlice'
-
+import callVideoSlice from './../features/CallVideo/slices/CallVideoSlice'
 import global from './globalSlice'
 
 export const store = configureStore({
@@ -9,6 +9,7 @@ export const store = configureStore({
 		global,
 		chatSlice,
 		authSlice,
+		callVideoSlice,
 	},
 })
 

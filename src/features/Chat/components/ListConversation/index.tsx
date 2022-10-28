@@ -22,6 +22,7 @@ const ListConversation = () => {
 			try {
 				if (!roomConvesation) {
 					const response = await roomApi.getRoomConversation()
+					console.log('🚀 ~ file: index.tsx ~ line 25 ~ ; ~ response', response)
 					dispatch(setConversations({ conversations: response.data.rooms }))
 				}
 			} catch (err) {
