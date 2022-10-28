@@ -1,8 +1,10 @@
+import { friendApi } from '@/api/friendApi'
 import { userApi } from '@/api/userApi'
 import { useAppSelector } from '@/app/hook'
 import { UserInfo } from '@/models/user'
 import { Button } from 'antd'
-import { useEffect, useState } from 'react'
+import { SocketContext } from 'context/SocketContext'
+import { useEffect, useState, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import avt from './cat.jpg'
@@ -17,8 +19,7 @@ const Profile = () => {
 	const user = useAppSelector((state) => state.authSlice.user)
 	const { _id } = useParams()
 
-	// const socket =  useContext(Socket)
-
+	const socket = useContext(SocketContext)
 	const [userInfo, setUserInfo] = useState<UserInfo>()
 
 	useEffect(() => {
@@ -37,12 +38,41 @@ const Profile = () => {
 		})()
 	}, [_id])
 
+	useEffect(() => {
+		// Subcribe noti here
+	}, [])
+
 	const handleAddFriend = () => {
-		// socket.emit('user:add_friend_request', {})
+		if (!socket) return
+
+		socket.emit('user:add_friend_request', {
+			receivedUserId: userInfo?._id,
+			receiveUsername: userInfo?.username,
+		})
+
+		setUserInfo((pre) => ({ ...(pre as UserInfo), addFriendRequest: true }))
 	}
 
 	const handleUnAddFriend = () => {
 		console.log('Send add friend')
+	}
+
+	const [loadingButtonSend, setLoadingButtonSend] = useState(false)
+	const handleUndoAddFriend = async () => {
+		if (!userInfo) return
+		setLoadingButtonSend(true)
+
+		try {
+			await userApi.undoRequestFriend({
+				receivedUserId: userInfo?._id,
+				receiveUsername: userInfo?.username,
+			})
+
+			setUserInfo((pre) => ({ ...(pre as UserInfo), addFriendRequest: false }))
+		} catch (err) {
+			console.log('🚀 ~ file: index.tsx ~ line 73 ~ handleUndoAddFriend ~ err', err)
+		}
+		setLoadingButtonSend(false)
 	}
 
 	return (
@@ -61,7 +91,13 @@ const Profile = () => {
 									{user?._id !== _id &&
 										(!userInfo?.isFriend ? (
 											userInfo?.addFriendRequest ? (
-												<Button>{t('CANCEL_FRIEND')}</Button>
+												<Button
+													type="primary"
+													onClick={handleUndoAddFriend}
+													loading={loadingButtonSend}
+												>
+													{t('ADD_FRIENDED')}
+												</Button>
 											) : (
 												<Button onClick={handleAddFriend}>{t('ADD_FRIEND')}</Button>
 											)

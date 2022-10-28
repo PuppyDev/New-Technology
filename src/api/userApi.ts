@@ -14,4 +14,8 @@ export const userApi = {
 	getInfoById(idUser: string) {
 		return axiosClient().get(`${BASE_URL}/${idUser}`)
 	},
+
+	undoRequestFriend(prams: { receivedUserId: string; receiveUsername: string }) {
+		return axiosClient().post(`${BASE_URL}/friends/undo-request`, { ...prams })
+	},
 }

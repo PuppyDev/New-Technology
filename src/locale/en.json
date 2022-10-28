@@ -39,6 +39,7 @@
 	"SUGGESTED": "Suggested",
 	"SEND": "Send",
 	"ADD_FRIEND": "Add friend",
+	"ADD_FRIENDED": "Pending Friend Requests",
 	"CANCEL_FRIEND": "Cancel friend",
 	"CONVERSATION": {
 		"REPLY": "Reply to",
