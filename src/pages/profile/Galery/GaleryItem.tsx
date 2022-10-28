@@ -1,9 +1,17 @@
 import * as React from 'react'
-import { Button, Modal, Image, Row, Col, Avatar } from 'antd'
+import { Button, Modal, Image, Row, Col, Avatar, Comment, List, Tooltip } from 'antd'
 import { useState } from 'react'
-
+import { comment } from './comment'
 import styles from './Galery.module.scss'
 import avt from './cat.jpg'
+import {
+	BarsOutlined,
+	CommentOutlined,
+	FontSizeOutlined,
+	HeartOutlined,
+	SendOutlined,
+	ShareAltOutlined,
+} from '@ant-design/icons'
 
 export function GalleryItem({ imagepath, title }: { imagepath: string; title: string }) {
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -50,29 +58,29 @@ export function GalleryItem({ imagepath, title }: { imagepath: string; title: st
 									<h6 className={styles.PostIDBody}>BaoHuynh</h6>
 									<p> "Don't feel better than anybody"</p>
 								</div>
-								<p className="post__caption--time">
+								<p className={styles.postCaptionTime}>
 									<span>1</span> Ngày trước
 								</p>
 							</div>
 							<div>
-								<div className="post__group-bottom">
+								<div className={styles.postGroupBottom}>
 									{/* Group of interactive icons */}
-									<div className="post__group-bottom">
-										<div className="icons">
-											<div className="icons-left">
+									<div className={styles.postGroupBottom}>
+										<div className={styles.reactPost}>
+											<div className={styles.iconsLeft}>
 												<span>
-													<i className="bx bx-heart"></i>
+													<HeartOutlined />
 												</span>
 												<span>
-													<i className="bx bx-message-rounded"></i>
+													<CommentOutlined />
 												</span>
 												<span>
-													<i className="bx bx-paper-plane"></i>
+													<SendOutlined />
 												</span>
 											</div>
-											<div className="icons-right">
+											<div className={styles.iconsRight}>
 												<span>
-													<i className="bx bx-bookmark"></i>
+													<BarsOutlined />
 												</span>
 											</div>
 										</div>
@@ -93,6 +101,23 @@ export function GalleryItem({ imagepath, title }: { imagepath: string; title: st
 											<button className="btn btn-post-comment">Đăng</button>
 										</form>
 									</div>
+									<List
+										className="comment-list"
+										header={`${comment.length} replies`}
+										itemLayout="horizontal"
+										dataSource={comment}
+										renderItem={(item) => (
+											<li>
+												<Comment
+													actions={item.actions}
+													author={item.author}
+													avatar={item.avatar}
+													content={item.content}
+													datetime={item.datetime}
+												/>
+											</li>
+										)}
+									/>
 								</div>
 							</div>
 						</div>
