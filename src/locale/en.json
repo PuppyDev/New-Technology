@@ -4,5 +4,7 @@
 		"REGISTER": "Register"
 	},
 	"SEARCH": "Search",
-	"EDIT_PROFILE": "Edit Profile"
+	"EDIT_PROFILE": "Edit Profile",
+	"ACCOUNT": "Account",
+	"SEARCH_ACCOUNT_USERNAME_OR_EMAIL": "Search account username or email"
 }
