@@ -4,6 +4,7 @@ import { setUser } from 'pages/auth/authSlice'
 import { Suspense, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './app/hook'
+import LoadingFallBack from './components/common/LoadingFallBack'
 import Router from './routers'
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
 	}, [user?._id])
 
 	return (
-		<Suspense fallback="Loading...">
+		<Suspense fallback={<LoadingFallBack />}>
 			<Router />
 		</Suspense>
 	)
