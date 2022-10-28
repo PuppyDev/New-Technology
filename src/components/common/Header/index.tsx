@@ -1,32 +1,31 @@
 import { useAppDispatch, useAppSelector } from '@/app/hook'
+import Logo from '@/assets/images/bbsgl.png'
 import {
 	HeartOutlined,
 	HomeOutlined,
 	MessageOutlined,
 	PlusSquareOutlined,
 	SaveOutlined,
-	SearchOutlined,
 	SettingOutlined,
 	SwapOutlined,
 	UserOutlined,
 } from '@ant-design/icons'
-import { Avatar, Dropdown, Form, Menu, Modal, Space } from 'antd'
+import { Avatar, Dropdown, Menu, Modal, Space } from 'antd'
 import { logout } from 'pages/auth/authSlice'
 import React, { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import FriendRequest from '../FriendRequest'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalPost from '../Modal/ModalPost'
 import Search from '../Search'
 import styles from './Header.module.scss'
-import ImageLogo from '../../../assets/image/bbsgl.png'
-import FriendRequest from '../FriendRequest'
 
 const Header = () => {
 	return (
 		<div className={styles.header}>
 			<div className={styles.header__container}>
 				<Link to="/" className={styles.header__containerlogo}>
-					<img src={ImageLogo} alt="logo" />
+					<img src={Logo} alt="logo" />
 				</Link>
 				<div>
 					<Search />

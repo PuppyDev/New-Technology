@@ -1,6 +1,5 @@
 import { LockOutlined } from '@ant-design/icons'
-import Icon from '@ant-design/icons/lib/components/Icon'
-import { Avatar, Button, Checkbox, Col, Divider, Form, Input, Row } from 'antd'
+import { Button, Col, Divider, Form, Input, Row } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './ForgotPassPage.module.scss'

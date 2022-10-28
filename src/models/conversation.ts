@@ -17,4 +17,5 @@ export interface Conversation extends Room {}
 export interface ReplyMessage {
 	msg: String | null
 	replyFor: String | null
+	_id: String | null
 }
