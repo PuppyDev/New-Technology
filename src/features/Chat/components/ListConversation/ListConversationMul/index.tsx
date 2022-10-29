@@ -1,3 +1,4 @@
+import { Room } from '@/models/room'
 import { Avatar } from 'antd'
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
@@ -5,14 +6,7 @@ import { Link, useParams } from 'react-router-dom'
 import styles from '../ListConversationItem/ListConversationItem.module.scss'
 
 interface props {
-	conversation: {
-		id: Number
-		name: String
-		image: String
-		lastTimeActive: String
-		isActive: Boolean
-		lastMessage: String | null
-	}
+	conversation: Room
 }
 
 const ListConversationMul: React.FC<props> = ({ conversation }) => {

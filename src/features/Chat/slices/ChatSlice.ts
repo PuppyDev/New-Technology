@@ -1,10 +1,11 @@
 import { Conversation, ReplyMessage } from '@/models/conversation'
 import { Message } from '@/models/message'
+import { Room } from '@/models/room'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const KEY = 'CHAT'
 export interface ChatState {
-	conversations: Conversation[]
+	conversations: Room[] | null
 	messageObj: {
 		message: Message[]
 		page: number
@@ -13,13 +14,12 @@ export interface ChatState {
 		totalPage: number
 		loading: boolean
 	}
-	isLoading: boolean
-	conversationSelected: Conversation | null
+	conversationSelected: Room | null | undefined
 	replyMessage: ReplyMessage
 }
 
 const initialState: ChatState = {
-	conversations: [],
+	conversations: null,
 	messageObj: {
 		message: [],
 		page: 0,
@@ -28,11 +28,11 @@ const initialState: ChatState = {
 		totalPage: 0,
 		loading: false,
 	},
-	isLoading: false,
 	conversationSelected: null,
 	replyMessage: {
 		msg: null,
 		replyFor: null,
+		_id: null,
 	},
 }
 
@@ -40,17 +40,26 @@ export const chatSlice = createSlice({
 	name: 'chat',
 	initialState,
 	reducers: {
-		setConversations: (state, action: PayloadAction<{ conversations: Conversation[] }>) => {
-			// state.conversations = action.payload.conversations
+		setConversations: (state, action: PayloadAction<{ conversations: Room[] }>) => {
+			const conversations = action.payload.conversations
+			conversations.forEach((conversation) => {
+				if (!Array.isArray(conversation.users)) conversation.users = [conversation.users]
+			})
+
+			state.conversations = conversations
 		},
 
 		setReplyMessage: (state, action: PayloadAction<{ replyMessage: ReplyMessage }>) => {
 			state.replyMessage = action.payload.replyMessage
 		},
+
+		setConversationSelected: (state, action: PayloadAction<Conversation | null | undefined>) => {
+			state.conversationSelected = action.payload
+		},
 	},
 	extraReducers: (builder) => {},
 })
 
-export const { setReplyMessage } = chatSlice.actions
+export const { setReplyMessage, setConversations, setConversationSelected } = chatSlice.actions
 
 export default chatSlice.reducer

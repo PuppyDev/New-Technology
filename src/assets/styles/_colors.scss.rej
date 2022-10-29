@@ -1,0 +1,31 @@
+diff a/src/assets/styles/_colors.scss b/src/assets/styles/_colors.scss	(rejected hunks)
+@@ -1,28 +1,28 @@
+ $ig-primary-background: rgb(255, 255, 255);
+ $ig-elevated-separator: rgb(219, 219, 219);
+-
++$ig-btn-background:#385185;
+ $clay-creek-color: #84885a;
+ $carrot-orange-color: #ee892d;
+ $carrot-orange-color2: rgba(238, 137, 45, 0.5);
+ $royal-blue-color: #6e63e7;
+ $royal-blue-color-2: #6458e0;
+ $royal-blue-color-3: #584cd8;
+ $royal-blue-color2: #5d4ad8;
+ $lipstick-color: #bf047d;
+ $stratos-color: #001650;
+ $silver-color: #bababa;
+ $zircon-color: #f8faff;
+ $black-russian-color: #0f0126;
+ $silver-color-2: #c4c4c4;
+ $dark-salmon-color: #ec9c8b;
+ $white-color: #fff;
+ $silver-color: #bababa;
+ $lime-green-color: limegreen;
+ $white-smoke-color: #f3f4f6;
+ $outer-space-color: #444444;
+ $crimsom-color: #d72b2a;
+ $gainsboro-color: #dedede;
+ $flowerblue-color: #6d9cd1;
+ $ghostwhite-color: #f8faff;
+ $snow-color: #fafafa;
+ $cornflowerblue-color: #4b91ff;

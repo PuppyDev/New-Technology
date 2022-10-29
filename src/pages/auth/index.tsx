@@ -1,14 +1,8 @@
-import React from 'react';
-import LoginPage from "./login/LoginPage"
-
-// import { Container } from './styles';
+import React from 'react'
+import LoginPage from './login/LoginPage'
 
 const auth: React.FC = () => {
-  return (
-    <>
-        <LoginPage/>
-    </>
-  )
+	return <LoginPage />
 }
 
-export default auth;
+export default auth

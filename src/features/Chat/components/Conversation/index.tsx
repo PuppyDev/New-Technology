@@ -1,4 +1,3 @@
-import React from 'react'
 import { useParams } from 'react-router-dom'
 import ConversationDisplay from './ConversationDisplay'
 import ConversationEmpty from './ConversationEmpty'
@@ -15,7 +14,7 @@ const Conversation = () => {
 		)
 	return (
 		<div className={styles.conversation}>
-			<ConversationDisplay inboxId={inboxId} />
+			<ConversationDisplay />
 		</div>
 	)
 }

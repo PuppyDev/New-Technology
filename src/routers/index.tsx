@@ -1,4 +1,4 @@
-import ChatConversationPage from '@/Chat/pages'
+import ForgotPassPage from 'pages/auth/forgot/ForgotPassPage'
 import VideoCallPage from 'pages/videoCall'
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
@@ -8,7 +8,10 @@ import LoginPage from '../pages/auth/login/LoginPage'
 import RegisterPage from '../pages/auth/register/RegisterPage'
 import Admin from '@/components/common/Admin'
 
+const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
 const Profile = lazy(() => import('pages/profile'))
+const ChatConversationPage = lazy(() => import('@/Chat/pages'))
+const RegisterPage = lazy(() => import('../pages/auth/register/RegisterPage'))
 
 const mainRoutes = [
 	{
@@ -19,7 +22,7 @@ const mainRoutes = [
 	{
 		id: 2,
 		element: <Profile />,
-		pathName: '/:username',
+		pathName: '/:_id',
 	},
 	{
 		id: 3,
@@ -44,7 +47,7 @@ const mainRoutes = [
 	{
 		id: 5,
 		element: 'account edit Component',
-		pathName: '/accounts/edit/',
+		pathName: '/accounts/reset/',
 	},
 ]
 
@@ -72,6 +75,7 @@ const index = () => {
 				/>
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/register" element={<RegisterPage />} />
+				<Route path="/forgotpass" element={<ForgotPassPage />} />
 			</Routes>
 		</div>
 	)

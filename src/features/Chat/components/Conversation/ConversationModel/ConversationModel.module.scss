@@ -1,0 +1,112 @@
+.modal {
+	overflow: hidden;
+	border-radius: 12px;
+	padding: 0;
+	width: 400px;
+	max-height: 70vh;
+	height: 100%;
+
+	.modal__content {
+		@include flex-column;
+
+		&_search {
+			padding: 4px;
+			border-bottom: 1px solid $ig-elevated-separator;
+			padding: 15px 10px;
+			max-height: 15vh;
+			overflow-y: auto;
+
+			&_top {
+				@include flex-center-center;
+				gap: 16px;
+				padding-bottom: 10px;
+				span {
+					font-weight: 600;
+				}
+
+				input {
+					width: 100%;
+					flex: 1 1 0;
+					&::placeholder {
+						color: $ig-elevated-separator;
+					}
+				}
+			}
+
+			&_seekResult {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 5px;
+
+				li {
+					display: inline-block;
+					padding: 5px 10px;
+					border-radius: 10px;
+					background-color: $web-secondary-action;
+					color: $ig-primary-button;
+					user-select: none;
+					span {
+						cursor: pointer;
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+
+		&_result {
+			overflow-y: scroll;
+			padding: 10px 0;
+			height: 70vh;
+
+			& > p {
+				&:first-child {
+					margin-bottom: 20px;
+					font-weight: 600;
+					color: $ig-primary-text;
+					font-size: 14px;
+					padding: 0 10px;
+				}
+			}
+		}
+	}
+
+	.titleModal {
+		text-align: center;
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
+		font-size: 16px;
+		font-weight: 600;
+	}
+}
+
+.user__content {
+	display: flex;
+	gap: 15px;
+	padding: 10px;
+	position: relative;
+	width: 100%;
+
+	&:hover {
+		background-color: $ig-secondary-background;
+	}
+
+	&_detail {
+	}
+
+	& .username {
+		font-weight: 600;
+	}
+
+	& .fullname {
+		font-size: 12px;
+	}
+
+	.checkbox {
+		border-radius: 50%;
+		margin-left: auto;
+		@include flex-center-center;
+	}
+}

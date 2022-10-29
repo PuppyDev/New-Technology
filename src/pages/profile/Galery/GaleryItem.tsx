@@ -13,7 +13,7 @@ import {
 	ShareAltOutlined,
 } from '@ant-design/icons'
 
-export function GalleryItem({ imagepath, title }: { imagepath: any; title: string }) {
+export function GalleryItem({ imagepath, title }: { imagepath: string; title: string }) {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const showModal = () => {
 		setIsModalOpen(true)
@@ -26,7 +26,7 @@ export function GalleryItem({ imagepath, title }: { imagepath: any; title: strin
 	const handleCancel = () => {
 		setIsModalOpen(false)
 	}
-	console.log('imagePath - GalleryItem', imagepath)
+
 	return (
 		<div className={styles.Wrap}>
 			<Image preview={false} className={styles.Img} alt="gallery-post" src={imagepath} onClick={showModal} />

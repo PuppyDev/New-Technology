@@ -1,17 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const KEY = 'CALLVIDEO'
-export interface CallVideo {}
+export interface CallVideo {
+	isRecive: boolean
+}
 
-const initialState: CallVideo = {}
+const initialState: CallVideo = {
+	isRecive: false,
+}
 
-export const chatSlice = createSlice({
+export const callVideoSlice = createSlice({
 	name: 'call_video',
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {},
 })
 
-export const {} = chatSlice.actions
+export const {} = callVideoSlice.actions
 
-export default chatSlice.reducer
+export default callVideoSlice.reducer

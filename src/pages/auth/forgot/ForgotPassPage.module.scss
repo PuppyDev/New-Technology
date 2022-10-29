@@ -1,0 +1,31 @@
+.container{
+    @include grid-wide;
+	@include flex-center-between;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    .input{
+        border-radius: 5px;
+    }
+    button{
+        width: 100%;
+        border-radius: 5px;
+    }
+    .Divier{
+        font-size: 14px;
+        color: $gray-color;
+    }
+    .border_form{
+        border: 1px solid $gainsboro-color;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+    }
+    .link, .link:hover{
+        font-size: 14px;
+        font-weight: 500;
+        color: $stratos-color;
+        display: block;
+    }
+    
+}

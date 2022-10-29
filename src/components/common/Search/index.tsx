@@ -2,15 +2,17 @@ import { userApi } from '@/api/userApi'
 import AccountItem from '@/components/common/AccountItem/index'
 import { Wrapper as PopperWrapper } from '@/components/Popper/index'
 import useDebounce from '@/hooks/useDebounce'
+import { User } from '@/models/user'
 import { CloseCircleFilled, LoadingOutlined } from '@ant-design/icons'
 import HeadlessTippy from '@tippyjs/react/headless'
+import { Spin } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import styles from './Seach.module.scss'
 
 function Search() {
 	const [searchValue, setSearchValue] = useState('')
-	const [searchResult, setSearchResult] = useState([])
+	const [searchResult, setSearchResult] = useState<User[]>([])
 	const [showResult, setshowResult] = useState(true)
 	const [loading, setLoading] = useState(false)
 
@@ -27,10 +29,9 @@ function Search() {
 		const fetchApi = async () => {
 			setLoading(true)
 
-			const result = await userApi.searchUserByUserName(debounced)
-			console.log('🚀 ~ file: index.tsx ~ line 32 ~ fetchApi ~ result', result)
+			const response = await userApi.searchUserByUserName(debounced)
 
-			// setSearchResult(result)
+			setSearchResult(response?.data)
 			setLoading(false)
 		}
 
@@ -58,16 +59,22 @@ function Search() {
 	return (
 		<HeadlessTippy
 			interactive
-			visible={showResult && searchResult.length > 0}
+			visible={searchValue.length > 0}
 			render={(attrs) => (
 				<div className={styles.search_result} tabIndex={-1} {...attrs}>
-					<PopperWrapper className={undefined}>
+					<PopperWrapper>
 						<h4 className={styles.search_title}>
 							<Trans>ACCOUNT</Trans>
 						</h4>
 						{searchResult.map((result) => (
-							<AccountItem key={result} data={result} />
+							<AccountItem key={result._id} data={result} onClick={handleClear} />
 						))}
+
+						{(searchResult.length < 1 || loading) && (
+							<div className={styles.search_result_empty}>
+								{loading ? <Spin></Spin> : ' No results found.'}
+							</div>
+						)}
 					</PopperWrapper>
 				</div>
 			)}
