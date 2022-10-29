@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
 import LoginPage from '../pages/auth/login/LoginPage'
 import RegisterPage from '../pages/auth/register/RegisterPage'
+import Admin from '@/components/common/Admin'
 
 const Profile = lazy(() => import('pages/profile'))
 
@@ -29,6 +30,11 @@ const mainRoutes = [
 		id: 6,
 		element: <ChatConversationPage />,
 		pathName: '/direct/inbox/:inboxId',
+	},
+	{
+		id: 6,
+		element: <Admin />,
+		pathName: '/admin',
 	},
 	{
 		id: 4,

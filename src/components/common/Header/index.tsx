@@ -90,6 +90,15 @@ const ControlNavLink: React.FC = () => {
 					danger: true,
 					label: <div className={styles.item}>Log out</div>,
 				},
+				{
+					key: '6',
+					label: (
+						<Link to="/admin">
+							<SaveOutlined />
+							Admin DevShowonly!
+						</Link>
+					),
+				},
 			]}
 			className={styles.menu}
 		/>
