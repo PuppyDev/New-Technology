@@ -20,7 +20,6 @@ const FriendRequest: React.FC<props> = ({ avatar, username, time }) => {
 
 	return (
 		<div>
-			<span style={{ fontSize: '12px' }}>{t('FRIEND_REQUEST')}</span>
 			<Row>
 				<Col span={3}>
 					<Avatar size="default" icon={<UserOutlined />} src={avatar} />
