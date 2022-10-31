@@ -57,15 +57,30 @@
 
 .menuNotification {
 	min-width: 350px;
+	min-height: 400px;
 	max-height: 400px;
 	padding: 0px;
+
 	border-radius: 5px;
-	overflow: auto;	
-	ul{
-		margin: 0;
-		li{
-			padding: 10px;
-		}
+	overflow: auto;
+	background-color: $ig-primary-background;
+	padding: 10px 0;
+
+	@include common-box-shadow;
+
+	&__nothing {
+		width: 100%;
+		height: 100%;
+		@include flex-center-center;
 	}
-	
+}
+
+.requestItem {
+	padding: 5px 10px;
+	transition: all 0.4s;
+	border-bottom: 1px solid rgba($ig-primary-text, 0.1);
+
+	&:hover {
+		background-color: rgba($color: $ig-elevated-separator, $alpha: 0.3);
+	}
 }

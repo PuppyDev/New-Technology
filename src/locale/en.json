@@ -40,7 +40,8 @@
 	"SEND": "Send",
 	"ADD_FRIEND": "Add friend",
 	"ADD_FRIENDED": "Pending Friend Requests",
-	"CANCEL_FRIEND": "Cancel friend",
+	"CANCEL_FRIEND": " UnFriend",
+	"SEND_MESSAGE": "Send messages",
 	"CONVERSATION": {
 		"REPLY": "Reply to",
 		"MINE": "yourself",

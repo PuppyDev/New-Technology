@@ -21,8 +21,9 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 
 	useEffect(() => {
 		if (!conversationSelected) {
-			const conversation = conversations?.find((conversation) => conversation._id === inboxId)
-
+			const conversation = conversations?.find((conversation) => {
+				return conversation._id === inboxId
+			})
 			dispatch(setConversationSelected(conversation))
 		}
 	}, [conversations])
@@ -40,7 +41,7 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 						<div className={styles.ListConversation__profile}>
 							<Avatar
 								size={26}
-								src="https://joeschmoe.io/api/v1/random"
+								src={conversationSelected?.avatar || 'https://joeschmoe.io/api/v1/random'}
 								style={{ border: '1px solid rgb(219, 219, 219)' }}
 							/>
 							<div className={styles.item__content}>
@@ -51,7 +52,7 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 					</Link>
 					<aside className={styles.ListConversation__action}>
 						<>
-							<PhoneOutlined size={40} />
+							{/* <PhoneOutlined size={40} /> */}
 							<VideoCameraOutlined size={40} onClick={handleVideoCall} />
 							<InfoCircleOutlined size={40} onClick={onClick} />
 						</>
