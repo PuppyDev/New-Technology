@@ -171,6 +171,15 @@ const ControlNavLink: React.FC = () => {
 						</div>
 					),
 				},
+				{
+					key: '6',
+					label: (
+						<Link to="/admin">
+							<SaveOutlined />
+							Admin DevShowonly!
+						</Link>
+					),
+				},
 			]}
 			className={styles.menu}
 		/>

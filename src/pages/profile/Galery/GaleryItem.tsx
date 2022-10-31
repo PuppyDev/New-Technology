@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Modal, Image, Row, Col, Avatar, Comment, List, Tooltip } from 'antd'
+import { Button, Modal, Image, Row, Col, Avatar, Comment, List, Tooltip, Input } from 'antd'
 import { useState } from 'react'
 import { comment } from './comment'
 import styles from './Galery.module.scss'
@@ -69,40 +69,42 @@ export function GalleryItem({ imagepath, title }: { imagepath: string; title: st
 										<div className={styles.reactPost}>
 											<div className={styles.iconsLeft}>
 												<span>
-													<HeartOutlined />
+													<HeartOutlined style={{ fontSize: '2rem', padding: '0 10px' }} />
 												</span>
 												<span>
-													<CommentOutlined />
+													<CommentOutlined style={{ fontSize: '2rem', padding: '0 10px' }} />
 												</span>
 												<span>
-													<SendOutlined />
+													<SendOutlined style={{ fontSize: '2rem', padding: '0 10px' }} />
 												</span>
 											</div>
 											<div className={styles.iconsRight}>
 												<span>
-													<BarsOutlined />
+													<BarsOutlined style={{ fontSize: '2rem', paddingRight: '25px' }} />
 												</span>
 											</div>
 										</div>
-										<div className="post__interactive-info">
+										<div className={styles.postInteractiveInfo}>
 											<a href="/#">
 												<span>321</span> lượt thích
 											</a>
 										</div>
 									</div>
-									<div className="post__caption">{/* Time */}</div>
+									<div className={styles.postCaption}>{/* Time */}</div>
 									{/* input field for comment */}
-									<div className="post__comment">
+									<div className={styles.postComment}>
 										<form>
-											<span>
-												<i className="bx bx-smile"></i>
-											</span>
-											<input type="text" placeholder="Thêm bình luận..." />
-											<button className="btn btn-post-comment">Đăng</button>
+											<Input
+												size="large"
+												bordered={false}
+												type="text"
+												placeholder="Thêm bình luận..."
+											/>
+											<button className={styles.btnPostComment}>Đăng</button>
 										</form>
 									</div>
 									<List
-										className="comment-list"
+										className={styles.commentList}
 										header={`${comment.length} replies`}
 										itemLayout="horizontal"
 										dataSource={comment}
@@ -126,8 +128,4 @@ export function GalleryItem({ imagepath, title }: { imagepath: string; title: st
 			</Modal>
 		</div>
 	)
-}
-GalleryItem.defaultProps = {
-	imagePath: '/images/transparent.png',
-	icon: '',
 }

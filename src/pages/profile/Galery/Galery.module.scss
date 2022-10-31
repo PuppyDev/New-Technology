@@ -36,7 +36,12 @@
 	padding: 20px 0;
 	display: flex;
 	align-items: center;
+	margin-right: 25px;
 }
 .PostIDBody {
 	padding: 0 15px;
+}
+.reactPost {
+	display: flex;
+	justify-content: space-between;
 }
