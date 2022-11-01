@@ -118,6 +118,7 @@ const ConversationDisplay = () => {
 		})
 	}
 
+	// SEnd all of type file | imgae | video
 	const handleSendImage = async (e: any, type?: messageType) => {
 		const file = e.target.files[0]
 		const fileExt = file.name.split('.')[1]
@@ -383,28 +384,23 @@ ConversationDisplay.DetailsConversation = ({ isClickInfo }: { isClickInfo: boole
 				ghost
 			>
 				<Panel header="Ảnh/Video " key="1">
-					<p>Meo meo</p>
+					<Row gutter={16}>
+						<Image.PreviewGroup>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+							<Col className="gutter-row" span={6}>
+								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
+							</Col>
+						</Image.PreviewGroup>
+					</Row>
 				</Panel>
+
 				<Panel header="File" key="2">
-					<Image.PreviewGroup>
-						<Row gutter={16}>
-							<Col className="gutter-row" span={6}>
-								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
-							</Col>
-							<Col className="gutter-row" span={6}>
-								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
-							</Col>
-							<Col className="gutter-row" span={6}>
-								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
-							</Col>
-							<Col className="gutter-row" span={6}>
-								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.HR_QAr5KgVT_TmLNrnF1rgHaKx%26pid%3DApi&f=1&ipt=78ec0579f91f9aca37c0fcf5fbfeb5eadf87173f9f3d302507f86c3467280934&ipo=images" />
-							</Col>
-							<Col className="gutter-row" span={6}>
-								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.HR_QAr5KgVT_TmLNrnF1rgHaKx%26pid%3DApi&f=1&ipt=78ec0579f91f9aca37c0fcf5fbfeb5eadf87173f9f3d302507f86c3467280934&ipo=images" />
-							</Col>
-						</Row>
-					</Image.PreviewGroup>
+					<p>Meo meo</p>
 				</Panel>
 			</Collapse>
 			{/* <Collapse collapsible="header" defaultActiveKey={['1', '2']} expandIconPosition="end"></Collapse> */}

@@ -1,7 +1,8 @@
+import useDebounce from '@/hooks/useDebounce'
 import { CloseCircleOutlined } from '@ant-design/icons'
-import { Avatar, Checkbox, Modal } from 'antd'
+import { Avatar, Checkbox, Modal, Spin } from 'antd'
 import { CheckboxValueType } from 'antd/lib/checkbox/Group'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './ConversationModel.module.scss'
 import './ConversationModel.scss'
@@ -9,7 +10,30 @@ import './ConversationModel.scss'
 const ConversationModel = ({ open, onClose }: { open: boolean; onClose: any }) => {
 	const { t } = useTranslation()
 
+	const [usernameInput, setuserNameInput] = useState('')
+
+	const valueSearch = useDebounce(usernameInput, 1000)
+
 	const [selectUser, setSelectUser] = useState<any>([])
+
+	const [loading, setLoading] = useState(false)
+	const [listFriend, setListFriend] = useState([])
+	useEffect(() => {
+		setLoading(true)
+		;(async () => {
+			try {
+				// // Call API to get all friend in here
+				// const response = await setTimeout(() => {
+				// 	return Promise.resolve(12)
+				// }, 10000)
+				// console.log('🚀 ~ file: index.tsx ~ line 21 ~ ; ~ response', response)
+			} catch (err) {
+				console.log('🚀 ~ file: index.tsx ~ line 23 ~ ; ~ err', err)
+			} finally {
+				// setLoading(false)
+			}
+		})()
+	}, [valueSearch])
 
 	return (
 		<Modal
@@ -25,7 +49,11 @@ const ConversationModel = ({ open, onClose }: { open: boolean; onClose: any }) =
 				<div className={styles.modal__content_search}>
 					<div className={styles.modal__content_search_top}>
 						<span>{t('CONVERSATION.TO')} </span>
-						<input type="text" placeholder={t('SEARCH') + '...'} />
+						<input
+							type="text"
+							placeholder={t('SEARCH') + '...'}
+							onChange={(e) => setuserNameInput(e.target.value)}
+						/>
 					</div>
 
 					<ul className={styles.modal__content_search_seekResult}>
@@ -53,9 +81,20 @@ const ConversationModel = ({ open, onClose }: { open: boolean; onClose: any }) =
 					<ConversationModel.ListUser
 						onChange={(checkedValues: CheckboxValueType[]) => setSelectUser(checkedValues)}
 					>
-						{Array.from({ length: 20 }).map((item, index) => {
-							return <ConversationModel.UserItem key={index} value={'' + index} />
-						})}
+						{listFriend &&
+							listFriend.map((item, index) => (
+								<ConversationModel.UserItem key={index} value={'' + index} />
+							))}
+
+						{loading && (
+							<div className={styles.spinLoading}>
+								<Spin />
+							</div>
+						)}
+
+						{listFriend.length < 1 && !loading && (
+							<p>You don't have any friend please add friend using search</p>
+						)}
 					</ConversationModel.ListUser>
 				</div>
 			</div>
@@ -84,9 +123,7 @@ ConversationModel.UserItem = ({ value }: { value: String }) => {
 ConversationModel.ListUser = ({ children, onChange }: { children: React.ReactNode; onChange: any }) => {
 	return (
 		<Checkbox.Group
-			onChange={(checkedValues: CheckboxValueType[]) => {
-				onChange(checkedValues)
-			}}
+			onChange={(checkedValues: CheckboxValueType[]) => onChange(checkedValues)}
 			style={{ width: '100%' }}
 		>
 			{children}

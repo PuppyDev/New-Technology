@@ -1,5 +1,6 @@
 const BASE_URL = 'user'
 
+import { UserRecive, UserRequest } from '@/models/user'
 import axiosClient from './axiosClient'
 
 export const userApi = {
@@ -15,7 +16,19 @@ export const userApi = {
 		return axiosClient().get(`${BASE_URL}/${idUser}`)
 	},
 
-	undoRequestFriend(prams: { receivedUserId: string; receiveUsername: string }) {
+	undoRequestFriend(prams: UserRecive) {
 		return axiosClient().post(`${BASE_URL}/friends/undo-request`, { ...prams })
+	},
+
+	getAllNotification() {
+		return axiosClient().get(`${BASE_URL}/notifications/all`)
+	},
+
+	acceptRequestFriend(params: UserRequest) {
+		return axiosClient().post(`${BASE_URL}/friends/accept-request`, { ...params })
+	},
+
+	removeRequestFriend(params: UserRequest) {
+		return axiosClient().post(`${BASE_URL}/friends/decline-request`, { ...params })
 	},
 }

@@ -22,6 +22,7 @@ export interface Message {
 	sender: string
 	type: messageType
 	reaction: string
+	isDeleted?: boolean
 }
 
 export interface PayloadMessage {

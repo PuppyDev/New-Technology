@@ -1,14 +1,14 @@
-import { friendApi } from '@/api/friendApi'
 import { userApi } from '@/api/userApi'
 import { useAppSelector } from '@/app/hook'
 import { UserInfo } from '@/models/user'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 import { SocketContext } from 'context/SocketContext'
-import { useEffect, useState, useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import avt from './cat.jpg'
 import { Gallery } from './Galery'
+import { KeyNumbers } from './KeyNumbers/Index'
 import styles from './Profile.module.scss'
 import { Story } from './Story'
 import Tab from './Tab'
@@ -27,6 +27,7 @@ const Profile = () => {
 			try {
 				if (_id == user?._id) {
 					const response = await userApi.getMineInfo()
+					console.log('🚀 ~ file: index.tsx ~ line 31 ~ ; ~ response', response)
 					setUserInfo(response.data)
 				} else {
 					const response = await userApi.getInfoById('' + _id)
@@ -53,8 +54,8 @@ const Profile = () => {
 		setUserInfo((pre) => ({ ...(pre as UserInfo), addFriendRequest: true }))
 	}
 
-	const handleUnAddFriend = () => {
-		console.log('Send add friend')
+	const handleUnFriend = () => {
+		console.log('unfriend')
 	}
 
 	const [loadingButtonSend, setLoadingButtonSend] = useState(false)
@@ -65,7 +66,7 @@ const Profile = () => {
 		try {
 			await userApi.undoRequestFriend({
 				receivedUserId: userInfo?._id,
-				receiveUsername: userInfo?.username,
+				receivedUsername: userInfo?.username,
 			})
 
 			setUserInfo((pre) => ({ ...(pre as UserInfo), addFriendRequest: false }))
@@ -80,7 +81,7 @@ const Profile = () => {
 			<header className={styles.Header}>
 				<div className={styles.HeaderWrap}>
 					<div className={styles.ProfilePic}>
-						<img className={styles.ProfileImg} src={avt} alt="image"></img>
+						<img className={styles.ProfileImg} src={userInfo?.image || avt} alt="image"></img>
 					</div>
 					<div>
 						<div className={styles.ProfileRow}>
@@ -102,9 +103,16 @@ const Profile = () => {
 												<Button onClick={handleAddFriend}>{t('ADD_FRIEND')}</Button>
 											)
 										) : (
-											<Button>
-												<Link to={`/direct/inbox/${userInfo._id}`}> Nhắn tin </Link>
-											</Button>
+											<>
+												<Button type="primary">
+													<Link to={`/direct/inbox/${userInfo._id}`}>
+														{t('SEND_MESSAGE')}
+													</Link>
+												</Button>
+												<Button style={{ marginLeft: 5 }} onClick={handleUnFriend}>
+													{t('CANCEL_FRIEND')}
+												</Button>
+											</>
 										))}
 
 									{user?._id === _id && <Button>{t('EDIT_PROFILE')}</Button>}
@@ -112,9 +120,11 @@ const Profile = () => {
 							</div>
 						</div>
 
-						<div className={styles.ProfileRow}>{/* <KeyNumbers /> */}</div>
+						{/* <div className={styles.ProfileRow}>
+							<KeyNumbers />
+						</div> */}
 						<div className={styles.ProfileDescriptions}>
-							<h1 className={styles.ProfileDescriptionH1}>@{userInfo?.username}</h1>
+							<h2 className={styles.ProfileDescriptionH1}>@{userInfo?.username}</h2>
 							<span className={styles.ProfileDescriptionSpan}>
 								Meo meo meo meo Meo
 								<br />

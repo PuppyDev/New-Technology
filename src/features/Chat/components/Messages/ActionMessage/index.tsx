@@ -19,9 +19,10 @@ const ActionMessage = ({
 	const dispatch = useAppDispatch()
 	const msgSend = typeof msg === 'string' ? msg : 'file đính kèm'
 
-	if (!messageObj) return
+	if (!messageObj) return null
 
 	const handleRemoveMessage = () => {
+		// Call api to remove message in here
 		console.log('Remove Message')
 	}
 

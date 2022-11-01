@@ -19,3 +19,13 @@ export interface UserInfo extends User {
 	posts: any
 	addFriendRequest: boolean
 }
+
+export interface UserRecive {
+	receivedUserId: string
+	receivedUsername: string
+}
+
+export interface UserRequest {
+	requestedUserId: string
+	requestedUsername: string
+}

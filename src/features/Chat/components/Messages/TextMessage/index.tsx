@@ -1,3 +1,4 @@
+import { useAppSelector } from '@/app/hook'
 import useOpen from '@/hooks/useOpen'
 import { Message } from '@/models/index'
 import { Avatar, Spin } from 'antd'
@@ -21,9 +22,11 @@ const TextMessage = ({ children }: props) => {
 }
 
 TextMessage.ListFriendMessage = ({ children }: { children: React.ReactNode }) => {
+	const roomSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
+
 	return (
 		<div className={styles.blockMessage}>
-			<Avatar size={24} src="https://joeschmoe.io/api/v1/random" />
+			<Avatar size={24} src={roomSelected?.avatar} />
 			<div className={styles.friendMessage}>{children}</div>
 		</div>
 	)

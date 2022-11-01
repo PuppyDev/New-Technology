@@ -4,8 +4,6 @@ import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
-// import LoginPage from '../pages/auth/login/LoginPage'
-// import RegisterPage from '../pages/auth/register/RegisterPage'
 import Admin from '@/components/common/Admin'
 
 const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))

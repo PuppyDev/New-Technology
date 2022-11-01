@@ -1,0 +1,34 @@
+.LoadingContainer {
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: $ig-primary-background;
+	z-index: 99999999999999;
+	overflow: hidden;
+	@include flex-center-center;
+
+	img {
+		width: 70%;
+		animation: fallBack 1s alternate backwards infinite;
+	}
+}
+
+@keyframes fallBack {
+	0% {
+		opacity: 0.7;
+	}
+
+	50% {
+		opacity: 0.8;
+	}
+
+	80% {
+		opacity: 0.9;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
