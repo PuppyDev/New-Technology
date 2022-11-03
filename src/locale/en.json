@@ -62,7 +62,10 @@
 		"UNSEND_MESSAGE": "Unsend",
 		"FORWARD": "Forward"
 	},
-	"ERROR": {},
+	"ERROR": {
+		"MESSAGE": "Sorry, the page you visited does not exist.",
+		"BACKHOME": "Back Home"
+	},
 	"ACCOUNT": "Account",
 	"SEARCH_ACCOUNT_USERNAME_OR_EMAIL": "Search account username or email",
 	"WARINING": {

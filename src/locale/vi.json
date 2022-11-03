@@ -62,7 +62,10 @@
 		"UNSEND_MESSAGE": "Gỡ tin nhắn",
 		"FORWARD": "Chuyển tiếp"
 	},
-	"ERROR": {},
+	"ERROR": {
+		"MESSAGE": "Rất tiếc, trang này hiện không khả dụng.",
+		"BACKHOME": "Quay về trang chủ"
+	},
 	"ACCOUNT": "Tài khoản",
 	"SEARCH_ACCOUNT_USERNAME_OR_EMAIL": "Tìm kiếm username hoặc email",
 	"WARINING": {

@@ -10,6 +10,7 @@ const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
 const Profile = lazy(() => import('pages/profile'))
 const ChatConversationPage = lazy(() => import('@/Chat/pages'))
 const RegisterPage = lazy(() => import('../pages/auth/register/RegisterPage'))
+const PageNotFound = lazy(()=> import('../components/layout/PageNotFound/index'))
 
 const mainRoutes = [
 	{
@@ -61,7 +62,7 @@ const index = () => {
 							element={<PrivateRoute>{item.element}</PrivateRoute>}
 						/>
 					))}
-					<Route path="*" element={<>Error page</>} />
+					<Route path="*" element={<PageNotFound/>} />
 				</Route>
 				<Route
 					path="videoCall/:idVideoCall"
