@@ -9,12 +9,30 @@
 	.topContent {
 		height: 60px;
 		border-bottom: 1px solid $ig-elevated-separator;
+		position: relative;
 
 		@include flex-center-center;
 
 		.headerItem {
 			color: $ig-primary-text;
 			font-weight: 600;
+		}
+
+		.makeConversation {
+			position: absolute;
+			right: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			font-size: 20px;
+
+			svg {
+				transition: all 0.3s;
+				cursor: pointer;
+				user-select: none;
+				&:hover {
+					color: $ig-secondary-text;
+				}
+			}
 		}
 	}
 

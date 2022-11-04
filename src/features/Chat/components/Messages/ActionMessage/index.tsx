@@ -1,3 +1,4 @@
+import { messageApi } from '@/api/messageApi'
 import { useAppDispatch } from '@/app/hook'
 import { setReplyMessage } from '@/Chat/slices/ChatSlice'
 import { Message } from '@/models/message'
@@ -21,9 +22,13 @@ const ActionMessage = ({
 
 	if (!messageObj) return null
 
-	const handleRemoveMessage = () => {
+	const handleRemoveMessage = async () => {
 		// Call api to remove message in here
-		console.log('Remove Message')
+		try {
+			await messageApi.deleteMessage({ messageId: messageObj._id.toString(), roomId: messageObj.room.toString() })
+		} catch (error) {
+			console.log('🚀 ~ file: index.tsx ~ line 32 ~ handleRemoveMessage ~ error', error)
+		}
 	}
 
 	const handleResendMessage = () => {

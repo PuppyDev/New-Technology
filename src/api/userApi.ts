@@ -1,6 +1,6 @@
 const BASE_URL = 'user'
 
-import { UserRecive, UserRequest } from '@/models/user'
+import { FriendRequest, UserRecive, UserRequest } from '@/models/user'
 import axiosClient from './axiosClient'
 
 export const userApi = {
@@ -30,5 +30,13 @@ export const userApi = {
 
 	removeRequestFriend(params: UserRequest) {
 		return axiosClient().post(`${BASE_URL}/friends/decline-request`, { ...params })
+	},
+
+	getAllFriend() {
+		return axiosClient().get(`${BASE_URL}/friends/getAll`)
+	},
+
+	unfriend(params: FriendRequest) {
+		return axiosClient().post(`${BASE_URL}/friends/unfriend`, { ...params })
 	},
 }

@@ -222,3 +222,47 @@
 	width: 100%;
 	height: 100%;
 }
+
+.fileBlock {
+	width: 100%;
+	padding: 10px 0;
+	@include flex-start-center;
+	gap: 20px;
+	font-size: 16px;
+	position: relative;
+
+	.iconDown {
+		position: absolute;
+		font-size: 20px;
+		right: 0;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+.userItem {
+	width: 100%;
+	@include flex-start-center;
+
+	&_action {
+		opacity: 0;
+		transition: all 0.3s;
+	}
+
+	&:hover {
+		.userItem_action {
+			opacity: 1;
+		}
+	}
+
+	.ml_auto {
+		margin-left: auto;
+		@include flex-center-center;
+	}
+
+	.userInGroup {
+		@include flex-start-center;
+		gap: 20px;
+		margin-bottom: 10px;
+	}
+}

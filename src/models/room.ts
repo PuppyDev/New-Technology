@@ -9,4 +9,6 @@ export interface Room {
 	group: boolean
 	avatar: String
 	updatedAt: string
+	name?: string
+	roomMaster?: String[]
 }

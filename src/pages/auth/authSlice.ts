@@ -1,4 +1,5 @@
 import { authApi } from '@/api/authApi'
+import { store } from '@/app/store'
 import { UserProfile } from '@/models/user'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { LoginPayload } from './../../models/auth'
