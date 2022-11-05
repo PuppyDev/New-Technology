@@ -1,4 +1,4 @@
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons'
+import Icon, { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar, MenuProps } from 'antd'
 import { Breadcrumb, Layout, Menu } from 'antd'
 import Logo from '@/assets/images/bbsgl.png'
@@ -12,16 +12,18 @@ import { AgGridReact } from 'ag-grid-react' // the AG Grid React Component
 import 'ag-grid-community/styles/ag-grid.css' // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css' // Optional theme CSS
 import DataTable from './DataTable'
-
+import { Link, Outlet } from 'react-router-dom'
+const CLick1 = () => {
+	console.log(1)
+}
+const CLick2 = () => {
+	console.log(2)
+}
+const CLick3 = () => {
+	console.log(3)
+}
 const { Header, Content, Sider } = Layout
-const key = ['Users', 'Posts', 'Employees']
-const AdminController: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
-	return {
-		key: `${key[index]}`,
-		icon: React.createElement(icon),
-		label: `${key[index]}`,
-	}
-})
+
 const handleClickMenu = (e: { key: string }) => {
 	e.key === 'SignOut'
 }
@@ -47,7 +49,7 @@ const rightContent = () => {
 	)
 }
 
-const Admin: React.FC = () => (
+const AdminRouter: React.FC = () => (
 	<Layout>
 		<Header className={styles.header}>
 			<img src={Logo} alt="logo" className={styles.headerImg} />
@@ -56,13 +58,23 @@ const Admin: React.FC = () => (
 		</Header>
 		<Layout>
 			<Sider width={200} className="site-layout-background">
-				<Menu
-					mode="inline"
-					defaultSelectedKeys={['1']}
-					defaultOpenKeys={['sub1']}
-					style={{ height: '100%', borderRight: 0 }}
-					items={AdminController}
-				/>
+				<Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+					<Menu.Item key="adusers">
+						<Icon type="UserOutlined" />
+						<span>Users</span>
+						<Link to="/admin/users" />
+					</Menu.Item>
+					<Menu.Item key="adpost">
+						<Icon type="LaptopOutlined" />
+						<span>Posts</span>
+						<Link to="/admin/posts" />
+					</Menu.Item>
+					<Menu.Item key="ademployes">
+						<Icon type="NotificationOutlined" />
+						<span>Employees</span>
+						<Link to="/admin/employees" />
+					</Menu.Item>
+				</Menu>
 			</Sider>
 			<Layout style={{ padding: '0 24px 24px' }}>
 				<Content
@@ -73,11 +85,11 @@ const Admin: React.FC = () => (
 						minHeight: 280,
 					}}
 				>
-					<DataTable />
+					<Outlet />
 				</Content>
 			</Layout>
 		</Layout>
 	</Layout>
 )
 
-export default Admin
+export default AdminRouter
