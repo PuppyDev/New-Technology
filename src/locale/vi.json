@@ -67,7 +67,8 @@
 		"LEAVE_CHAT": "Rời nhóm",
 		"MAKE_ADMIN": "Thăng chức làm trưởng nhóm",
 		"REMOVE_FROM_GROUP": "Xoá khỏi group",
-		"MEMBERS_GROUP": "Thành viên nhóm"
+		"MEMBERS_GROUP": "Thành viên nhóm",
+		"REMOVE_ADMIN": "Gỡ quyền admin"
 	},
 	"ERROR": {},
 	"ACCOUNT": "Tài khoản",

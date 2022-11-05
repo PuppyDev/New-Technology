@@ -67,7 +67,8 @@
 		"LEAVE_CHAT": "Leave Chat",
 		"MAKE_ADMIN": "Make Admin",
 		"REMOVE_FROM_GROUP": "Remove From Group",
-		"MEMBERS_GROUP": "Members"
+		"MEMBERS_GROUP": "Members",
+		"REMOVE_ADMIN": "Remove Admin"
 	},
 	"ERROR": {},
 	"ACCOUNT": "Account",
