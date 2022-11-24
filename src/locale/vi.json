@@ -85,5 +85,12 @@
 		"LOGIN_AGAIN": "Vui lòng đăng nhập lại để tiếp tục sử dụng trang web"
 	},
 	"SUCCESS": {},
-	"IMAGE": "Hình ảnh"
+	"IMAGE": "Hình ảnh",
+	"HEADER": {
+		"PROFILE": "Trang cá nhân ",
+		"SAVED": "Đã lưu",
+		"SETTINGS": "Cài đặt",
+		"CHANGE_LANGUAGE": "Thay đổi ngôn ngữ",
+		"LOGGOUT": "Đăng xuất"
+	}
 }

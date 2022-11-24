@@ -1,5 +1,6 @@
 import Admin from '@/components/common/Admin'
 import ForgotPassPage from 'pages/auth/forgot/ForgotPassPage'
+import HomePage from 'pages/home'
 import VideoCallPage from 'pages/videoCall'
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
@@ -10,12 +11,12 @@ const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
 const Profile = lazy(() => import('pages/profile'))
 const ChatConversationPage = lazy(() => import('@/Chat/pages'))
 const RegisterPage = lazy(() => import('../pages/auth/register/RegisterPage'))
-const PageNotFound = lazy(()=> import('../components/layout/PageNotFound/index'))
+const PageNotFound = lazy(() => import('../components/layout/PageNotFound/index'))
 
 const mainRoutes = [
 	{
 		id: 1,
-		element: 'Main Component',
+		element: <HomePage />,
 		pathName: '/',
 	},
 	{
@@ -62,7 +63,7 @@ const index = () => {
 							element={<PrivateRoute>{item.element}</PrivateRoute>}
 						/>
 					))}
-					<Route path="*" element={<PageNotFound/>} />
+					<Route path="*" element={<PageNotFound />} />
 				</Route>
 				<Route
 					path="videoCall/:idVideoCall"

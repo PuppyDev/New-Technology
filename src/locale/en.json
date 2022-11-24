@@ -85,5 +85,12 @@
 		"LOGIN_AGAIN": "Please login again to continue using the website"
 	},
 	"SUCCESS": {},
-	"IMAGE": "Image"
+	"IMAGE": "Image",
+	"HEADER": {
+		"PROFILE": "Profile",
+		"SAVED": "Saved",
+		"SETTINGS": "Settings",
+		"CHANGE_LANGUAGE": "Change Language",
+		"LOGGOUT": "Log out"
+	}
 }
