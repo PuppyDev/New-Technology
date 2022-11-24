@@ -1,7 +1,10 @@
+import { roomApi } from '@/api/roomApi'
 import { userApi } from '@/api/userApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import Logo from '@/assets/images/bbsgl.png'
+import { addConversation, initChatSlice, setConversations } from '@/Chat/index'
 import { NotificationRequest } from '@/models/notification'
+import { User } from '@/models/user'
 import {
 	HeartOutlined,
 	HomeOutlined,
@@ -15,8 +18,7 @@ import {
 import { Avatar, Badge, Dropdown, Menu, Modal, Space } from 'antd'
 import { SocketContext } from 'context/SocketContext'
 import { logout } from 'pages/auth/authSlice'
-import React, { useContext, useState } from 'react'
-import { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import FriendRequest from '../FriendRequest'
 import ModalLogin from '../Modal/ModalLogin'
@@ -51,9 +53,14 @@ const ControlNavLink: React.FC = () => {
 	const user = useAppSelector((state) => state.authSlice.user)
 
 	const handleLogout = () => {
+		const removeAllData = () => {
+			dispatch(initChatSlice())
+		}
+
 		const timerLogout = setTimeout(() => {
 			modal.destroy()
 			dispatch(logout())
+			removeAllData()
 		}, 3000)
 
 		const modal = Modal.info({
@@ -61,6 +68,7 @@ const ControlNavLink: React.FC = () => {
 			content: 'Bạn cần phải đăng nhập lại',
 			onOk() {
 				dispatch(logout())
+				removeAllData()
 				navigate('/login')
 				clearTimeout(timerLogout)
 			},
@@ -163,8 +171,10 @@ const ControlNavLink: React.FC = () => {
 
 Header.Notification = () => {
 	const [requestItems, setRequestItems] = useState<NotificationRequest[]>([])
-
+	const [notificationed, setNotificationed] = useState<any>(null)
 	const socket = useContext(SocketContext)
+
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		;(async () => {
@@ -180,11 +190,37 @@ Header.Notification = () => {
 	useEffect(() => {
 		if (!socket) return
 
-		socket.on('home:friend_connect', (dataGot) => {
-			// Notifi right here
-			console.log('🚀 ~ file: index.tsx ~ line 179 ~ socket.on ~ dataGot', dataGot)
+		// notification when fr accept your fr request
+		socket.on('home:friend_connect', async (dataGot) => {
+			const response = await roomApi.getRoomConversation()
+			dispatch(setConversations({ conversations: response.data.room || [] }))
+			setNotificationed(dataGot)
 		})
-	}, [])
+
+		// Print notification when have request add fr
+		socket.on('user:print_notification', (dataGot: { notification: NotificationRequest }) => {
+			console.log('🚀 ~ file: index.tsx ~ line 211 ~ socket.on ~ dataGot', dataGot)
+			setRequestItems((pre) => [...(pre as NotificationRequest[]), dataGot.notification])
+		})
+	}, [socket])
+
+	useEffect(() => {
+		if (!notificationed) return
+		//render notification when user accept fr
+		const newNotification: NotificationRequest = {
+			isChecked: false,
+			requestedUserId: notificationed.userId,
+			requestUserName: notificationed.username,
+			requestAccount: notificationed.username,
+			_id: Math.random().toString(),
+			type: '',
+			updatedAt: '',
+			createdAt: '',
+			isAccept: true,
+		}
+		setRequestItems((pre) => [...(pre as NotificationRequest[]), newNotification])
+		setNotificationed(null)
+	}, [notificationed])
 
 	return (
 		<Dropdown
@@ -202,7 +238,7 @@ Header.Notification = () => {
 			trigger={['click']}
 		>
 			<Space>
-				<Badge count={requestItems.length} size={'small'} style={{}}>
+				<Badge count={requestItems.filter((request) => !request.isChecked).length} size={'small'} style={{}}>
 					<HeartOutlined />
 				</Badge>
 			</Space>

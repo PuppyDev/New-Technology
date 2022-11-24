@@ -16,6 +16,8 @@ export interface ChatState {
 	}
 	conversationSelected: Room | null | undefined
 	replyMessage: ReplyMessage
+	openCreateConversation: boolean
+	pinMessage: null
 }
 
 const initialState: ChatState = {
@@ -34,6 +36,8 @@ const initialState: ChatState = {
 		replyFor: null,
 		_id: null,
 	},
+	openCreateConversation: false,
+	pinMessage: null,
 }
 
 export const chatSlice = createSlice({
@@ -42,11 +46,17 @@ export const chatSlice = createSlice({
 	reducers: {
 		setConversations: (state, action: PayloadAction<{ conversations: Room[] }>) => {
 			const conversations = action.payload.conversations
-			conversations.forEach((conversation) => {
+
+			conversations?.forEach((conversation) => {
 				if (!Array.isArray(conversation.users)) conversation.users = [conversation.users]
 			})
 
 			state.conversations = conversations
+		},
+
+		addConversation: (state, action: PayloadAction<{ conversation: Room }>) => {
+			const conversation = action.payload.conversation
+			state.conversations?.push(conversation)
 		},
 
 		setReplyMessage: (state, action: PayloadAction<{ replyMessage: ReplyMessage }>) => {
@@ -56,10 +66,34 @@ export const chatSlice = createSlice({
 		setConversationSelected: (state, action: PayloadAction<Conversation | null | undefined>) => {
 			state.conversationSelected = action.payload
 		},
+
+		setOpenCreateConversation: (state) => {
+			state.openCreateConversation = true
+		},
+
+		setCloseCreateConversation: (state) => {
+			state.openCreateConversation = false
+		},
+
+		initChatSlice: (state) => {
+			state.conversationSelected = initialState.conversationSelected
+			state.conversations = initialState.conversations
+			state.messageObj = initialState.messageObj
+			state.openCreateConversation = initialState.openCreateConversation
+			state.replyMessage = initialState.replyMessage
+		},
 	},
 	extraReducers: (builder) => {},
 })
 
-export const { setReplyMessage, setConversations, setConversationSelected } = chatSlice.actions
+export const {
+	setReplyMessage,
+	setConversations,
+	setConversationSelected,
+	setOpenCreateConversation,
+	setCloseCreateConversation,
+	initChatSlice,
+	addConversation,
+} = chatSlice.actions
 
 export default chatSlice.reducer

@@ -28,7 +28,8 @@
 		"FULLNAME_INVALID_MESSAGE": "Vui lòng nhập tên theo đúng định dạng",
 		"USERNAME_INVALID_MESSAGE": "Vui lòng nhập username đúng định dạng",
 		"USERNAME_REQUIRED_MESSAGE": "Nhập user name",
-		"USERNAME_MIN_MESSAGE": "User name tối thiểu 6 kí tự"
+		"USERNAME_MIN_MESSAGE": "User name tối thiểu 6 kí tự",
+		"MIN_EMAIL": "Email hoặc Username phải có ít nhất 6 ký tự"
 	},
 	"CONFIRM": "Xác nhận",
 	"DELETE": "Xóa",
@@ -49,7 +50,8 @@
 		"DETAIL_ACTION": {
 			"DELETE_CHAT": "Xoá đoạn chat",
 			"BLOCK": "Chặn",
-			"REPORT": "Báo cáo"
+			"REPORT": "Báo cáo",
+			"DELETE_GROUP": "Xoá nhóm"
 		},
 		"MESSAGE": "Nhắn tin...",
 		"DETAIL": "Chi tiết",
@@ -60,7 +62,17 @@
 		"NEW_MESSAGE": "Tin nhắn mới",
 		"TO": "Tới:",
 		"UNSEND_MESSAGE": "Gỡ tin nhắn",
-		"FORWARD": "Chuyển tiếp"
+		"FORWARD": "Chuyển tiếp",
+		"ADD_MEMBER": "Thêm thành viên",
+		"ADMIN": "Trường nhóm",
+		"LEAVE_CHAT": "Rời nhóm",
+		"MAKE_ADMIN": "Thăng chức làm trưởng nhóm",
+		"REMOVE_FROM_GROUP": "Xoá khỏi group",
+		"MEMBERS_GROUP": "Thành viên nhóm",
+		"REMOVE_ADMIN": "Gỡ quyền admin",
+		"PIN_MESSAGE": "Ghim tin nhắn",
+		"UN_PIN": "Bỏ ghim tin nhắn",
+		"PINNED_MESSAGE": "Tin nhắn đã ghim"
 	},
 	"ERROR": {
 		"MESSAGE": "Rất tiếc, trang này hiện không khả dụng.",
@@ -72,5 +84,6 @@
 		"TIME_EXPIRE": "Phiên đăng nhập đã hết hạn",
 		"LOGIN_AGAIN": "Vui lòng đăng nhập lại để tiếp tục sử dụng trang web"
 	},
-	"SUCCESS": {}
+	"SUCCESS": {},
+	"IMAGE": "Hình ảnh"
 }

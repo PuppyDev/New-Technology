@@ -23,12 +23,13 @@
 		"PASSWORD_REQUIRED_MESSAGE": "Please enter your password!",
 		"PASSWORD_MIN_MESSAGE": "Password must be at least 6 characters",
 		"EMAIL_VALID_MESSAGE": "Please enter a valid email",
-		"EMAIL_REQUIRED_MESSAGE": "Please enter your email!",
+		"EMAIL_REQUIRED_MESSAGE": "Please enter your email or username!",
 		"FULLNAME_REQUIRED_MESSAGE": "Please enter your name!",
 		"FULLNAME_INVALID_MESSAGE": "Please enter a valid full name",
 		"USERNAME_INVALID_MESSAGE": "Please enter a valid username name",
 		"USERNAME_REQUIRED_MESSAGE": "Please enter username!",
-		"USERNAME_MIN_MESSAGE": "Username must be at least 6 characters"
+		"USERNAME_MIN_MESSAGE": "Username must be at least 6 characters",
+		"MIN_EMAIL": "Username must be at least 6 characters"
 	},
 	"CONFIRM": "Confirm",
 	"DELETE": "Delete",
@@ -49,7 +50,8 @@
 		"DETAIL_ACTION": {
 			"DELETE_CHAT": "Delete chat",
 			"BLOCK": "Block",
-			"REPORT": "Report"
+			"REPORT": "Report",
+			"DELETE_GROUP": "Delete Group"
 		},
 		"MESSAGE": "Message...",
 		"DETAIL": "Details",
@@ -60,7 +62,17 @@
 		"NEW_MESSAGE": "New message",
 		"TO": "To:",
 		"UNSEND_MESSAGE": "Unsend",
-		"FORWARD": "Forward"
+		"FORWARD": "Forward",
+		"ADD_MEMBER": "Add members",
+		"ADMIN": "Admin",
+		"LEAVE_CHAT": "Leave Chat",
+		"MAKE_ADMIN": "Make Admin",
+		"REMOVE_FROM_GROUP": "Remove From Group",
+		"MEMBERS_GROUP": "Members",
+		"REMOVE_ADMIN": "Remove Admin",
+		"PIN_MESSAGE": "Pin message",
+		"UN_PIN": "UnPin message",
+		"PINNED_MESSAGE": "Pinned Message"
 	},
 	"ERROR": {
 		"MESSAGE": "Sorry, the page you visited does not exist.",
@@ -72,5 +84,6 @@
 		"TIME_EXPIRE": "Login session has expired",
 		"LOGIN_AGAIN": "Please login again to continue using the website"
 	},
-	"SUCCESS": {}
+	"SUCCESS": {},
+	"IMAGE": "Image"
 }
