@@ -17,6 +17,7 @@ export interface ChatState {
 	conversationSelected: Room | null | undefined
 	replyMessage: ReplyMessage
 	openCreateConversation: boolean
+	pinMessage: null
 }
 
 const initialState: ChatState = {
@@ -36,6 +37,7 @@ const initialState: ChatState = {
 		_id: null,
 	},
 	openCreateConversation: false,
+	pinMessage: null,
 }
 
 export const chatSlice = createSlice({

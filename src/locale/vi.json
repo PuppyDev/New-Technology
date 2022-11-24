@@ -50,7 +50,8 @@
 		"DETAIL_ACTION": {
 			"DELETE_CHAT": "Xoá đoạn chat",
 			"BLOCK": "Chặn",
-			"REPORT": "Báo cáo"
+			"REPORT": "Báo cáo",
+			"DELETE_GROUP": "Xoá nhóm"
 		},
 		"MESSAGE": "Nhắn tin...",
 		"DETAIL": "Chi tiết",
@@ -68,7 +69,10 @@
 		"MAKE_ADMIN": "Thăng chức làm trưởng nhóm",
 		"REMOVE_FROM_GROUP": "Xoá khỏi group",
 		"MEMBERS_GROUP": "Thành viên nhóm",
-		"REMOVE_ADMIN": "Gỡ quyền admin"
+		"REMOVE_ADMIN": "Gỡ quyền admin",
+		"PIN_MESSAGE": "Ghim tin nhắn",
+		"UN_PIN": "Bỏ ghim tin nhắn",
+		"PINNED_MESSAGE": "Tin nhắn đã ghim"
 	},
 	"ERROR": {},
 	"ACCOUNT": "Tài khoản",
@@ -77,5 +81,6 @@
 		"TIME_EXPIRE": "Phiên đăng nhập đã hết hạn",
 		"LOGIN_AGAIN": "Vui lòng đăng nhập lại để tiếp tục sử dụng trang web"
 	},
-	"SUCCESS": {}
+	"SUCCESS": {},
+	"IMAGE": "Hình ảnh"
 }

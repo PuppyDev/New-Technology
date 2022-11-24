@@ -14,4 +14,8 @@ export const roomApi = {
 	createGroupRoom(params: any) {
 		return axiosClient().post(`${BASES_URL}/groups/add`, { ...params })
 	},
+
+	getAllPinMessages({ roomId }: { roomId: String }) {
+		return axiosClient().get(`${BASES_URL}/getAllPinMessage/${roomId}`)
+	},
 }

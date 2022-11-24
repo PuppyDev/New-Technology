@@ -4,6 +4,8 @@ import { setReplyMessage } from '@/Chat/slices/ChatSlice'
 import { Message } from '@/models/message'
 import { EllipsisOutlined, EnterOutlined, SmileOutlined } from '@ant-design/icons'
 import { Dropdown, Menu } from 'antd'
+import { SocketContext } from 'context/SocketContext'
+import { useContext } from 'react'
 import { Trans } from 'react-i18next'
 
 import styles from './ActionMessage.module.scss'
@@ -19,6 +21,8 @@ const ActionMessage = ({
 }) => {
 	const dispatch = useAppDispatch()
 	const msgSend = typeof msg === 'string' ? msg : 'file đính kèm'
+
+	const socket = useContext(SocketContext)
 
 	if (!messageObj) return null
 
@@ -47,6 +51,13 @@ const ActionMessage = ({
 		)
 	}
 
+	const handlePinMessage = () => {
+		if (socket) {
+			const { _id: messageId, room: roomId } = messageObj
+			socket.emit('chat:pin-message', { messageId, roomId })
+		}
+	}
+
 	return (
 		<ul className={`${styles.action__message} ${reverse && styles.action__reverse}`}>
 			<li>
@@ -55,6 +66,9 @@ const ActionMessage = ({
 						<div className={styles.action__mesage_overlay}>
 							<span onClick={handleRemoveMessage}>
 								<Trans>CONVERSATION.UNSEND_MESSAGE</Trans>
+							</span>
+							<span onClick={handlePinMessage}>
+								<Trans>CONVERSATION.PIN_MESSAGE</Trans>
 							</span>
 							<span onClick={handleResendMessage}>
 								<Trans>CONVERSATION.FORWARD</Trans>

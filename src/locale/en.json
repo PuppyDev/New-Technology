@@ -50,7 +50,8 @@
 		"DETAIL_ACTION": {
 			"DELETE_CHAT": "Delete chat",
 			"BLOCK": "Block",
-			"REPORT": "Report"
+			"REPORT": "Report",
+			"DELETE_GROUP": "Delete Group"
 		},
 		"MESSAGE": "Message...",
 		"DETAIL": "Details",
@@ -68,7 +69,10 @@
 		"MAKE_ADMIN": "Make Admin",
 		"REMOVE_FROM_GROUP": "Remove From Group",
 		"MEMBERS_GROUP": "Members",
-		"REMOVE_ADMIN": "Remove Admin"
+		"REMOVE_ADMIN": "Remove Admin",
+		"PIN_MESSAGE": "Pin message",
+		"UN_PIN": "UnPin message",
+		"PINNED_MESSAGE": "Pinned Message"
 	},
 	"ERROR": {},
 	"ACCOUNT": "Account",
@@ -77,5 +81,6 @@
 		"TIME_EXPIRE": "Login session has expired",
 		"LOGIN_AGAIN": "Please login again to continue using the website"
 	},
-	"SUCCESS": {}
+	"SUCCESS": {},
+	"IMAGE": "Image"
 }

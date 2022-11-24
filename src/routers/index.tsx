@@ -1,10 +1,10 @@
+import Admin from '@/components/common/Admin'
 import ForgotPassPage from 'pages/auth/forgot/ForgotPassPage'
 import VideoCallPage from 'pages/videoCall'
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
-import Admin from '@/components/common/Admin'
 
 const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
 const Profile = lazy(() => import('pages/profile'))

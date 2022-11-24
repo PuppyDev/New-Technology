@@ -166,6 +166,7 @@ const ConversationDisplay = () => {
 				<ConversationDisplay.DetailsConversation
 					isClickInfo={isClickInfo}
 					dataMessages={messagesConversation || []}
+					isGroup={conversationSelected?.group}
 				/>
 
 				<main className={`${styles.mainContent} ${isClickInfo ? styles.hidden : styles.visible} `}>
@@ -391,9 +392,11 @@ const { Panel } = Collapse
 ConversationDisplay.DetailsConversation = ({
 	isClickInfo,
 	dataMessages,
+	isGroup = false,
 }: {
 	isClickInfo: boolean
 	dataMessages: Message[]
+	isGroup?: boolean
 }) => {
 	const imageVideoList = useMemo(() => {
 		return dataMessages.filter((message) => ['IMAGE', 'VIDEO'].includes(message.type))
@@ -472,17 +475,26 @@ ConversationDisplay.DetailsConversation = ({
 
 	return (
 		<div className={`${styles.detail} ${isClickInfo ? styles.visible : styles.hidden} `}>
-			<ul className={styles.detail__action}>
-				<li onClick={() => console.log('vo')}>
-					<Trans>CONVERSATION.DETAIL_ACTION.DELETE_CHAT</Trans>
-				</li>
-				<li>
-					<Trans>CONVERSATION.DETAIL_ACTION.BLOCK</Trans>
-				</li>
-				<li>
-					<Trans>CONVERSATION.DETAIL_ACTION.REPORT</Trans>
-				</li>
-			</ul>
+			{!isGroup && (
+				<ul className={styles.detail__action}>
+					<li onClick={() => console.log('vo')}>
+						<Trans>CONVERSATION.DETAIL_ACTION.DELETE_CHAT</Trans>
+					</li>
+					<li>
+						<Trans>CONVERSATION.DETAIL_ACTION.BLOCK</Trans>
+					</li>
+					<li>
+						<Trans>CONVERSATION.DETAIL_ACTION.REPORT</Trans>
+					</li>
+				</ul>
+			)}
+			{isGroup && (
+				<ul className={styles.detail__action}>
+					<li onClick={() => console.log('vo')}>
+						<Trans>CONVERSATION.DETAIL_ACTION.DELETE_GROUP</Trans>
+					</li>
+				</ul>
+			)}
 			<Collapse
 				defaultActiveKey={['3', '2']}
 				expandIconPosition="end"
