@@ -3,26 +3,33 @@ import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { RootState } from '@/app/store'
 import { setReplyMessage } from '@/Chat/slices/ChatSlice'
+import useIconFile from '@/hooks/useIconFile'
 import useOpen from '@/hooks/useOpen'
 import { ReplyMessage } from '@/models/conversation'
 import { Message, messageType } from '@/models/message'
+import { Room } from '@/models/room'
 import { handleNameFile } from '@/utils/file'
 import {
 	CloseOutlined,
+	DashOutlined,
+	DownloadOutlined,
 	FileGifOutlined,
 	FileImageOutlined,
 	FileZipOutlined,
+	KeyOutlined,
 	LoadingOutlined,
 	PaperClipOutlined,
 } from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Col, Collapse, Dropdown, Form, Image, Input, Row, Spin } from 'antd'
+import { Avatar, Button, Col, Collapse, Dropdown, Form, Image, Input, Menu, Row, Spin } from 'antd'
 import { SocketContext } from 'context/SocketContext'
-import { Suspense, useContext, useEffect, useState } from 'react'
+import { Suspense, useContext, useEffect, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import InputEmoji from 'react-input-emoji'
+import { Link, useNavigate } from 'react-router-dom'
 import TextMessage from '../../Messages/TextMessage'
+import ConversationModel from '../ConversationModel'
 import ConversationNavigate from '../ConversationNavigate'
 import styles from './ConversationDisplay.module.scss'
 import './ConversationDisplay.scss'
@@ -51,6 +58,7 @@ const ConversationDisplay = () => {
 	// Subcriber Socket msg in here
 	useEffect(() => {
 		socket.on('chat:print_message', (dataGot) => {
+			console.log('🚀 ~ file: index.tsx ~ line 61 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)
 			setDummyMessage('')
 		})
@@ -145,7 +153,10 @@ const ConversationDisplay = () => {
 			<Suspense fallback={<ConversationNavigate.Skeleton />}>
 				<ConversationNavigate isClickInfo={isClickInfo} onClick={toggleIsClickInfo} />
 
-				<ConversationDisplay.DetailsConversation isClickInfo={isClickInfo} />
+				<ConversationDisplay.DetailsConversation
+					isClickInfo={isClickInfo}
+					dataMessages={messagesConversation || []}
+				/>
 
 				<main className={`${styles.mainContent} ${isClickInfo ? styles.hidden : styles.visible} `}>
 					{/* Render msg in here */}
@@ -186,13 +197,16 @@ const ConversationDisplay = () => {
 										break
 								}
 
+								if (messageInfo.type === 'NOTIFY')
+									return <TextMessage.TimeMessage msg={msg} key={messageInfo._id} />
+
 								if (messageInfo.sender === user?.username) {
 									return (
 										<TextMessage.OwnerMessage
 											messageObj={messageInfo}
 											msg={msg}
 											ispadding={isPadding}
-											key={index}
+											key={messageInfo._id}
 										/>
 									)
 								}
@@ -218,6 +232,7 @@ const ConversationDisplay = () => {
 								// 	tempMessage = []
 								// 	return contentMessageBlock
 								// }
+
 								return (
 									<TextMessage.ListFriendMessage key={index}>
 										<TextMessage.FriendMessage
@@ -363,7 +378,46 @@ ConversationDisplay.Skeleton = () => {
 }
 
 const { Panel } = Collapse
-ConversationDisplay.DetailsConversation = ({ isClickInfo }: { isClickInfo: boolean }) => {
+ConversationDisplay.DetailsConversation = ({
+	isClickInfo,
+	dataMessages,
+}: {
+	isClickInfo: boolean
+	dataMessages: Message[]
+}) => {
+	const imageVideoList = useMemo(() => {
+		return dataMessages.filter((message) => ['IMAGE', 'VIDEO'].includes(message.type))
+	}, [dataMessages])
+
+	const fileList = useMemo(() => {
+		return dataMessages.filter((message) => ['FILE'].includes(message.type))
+	}, [dataMessages])
+
+	const { open, handleSetClose, handleSetOpen } = useOpen()
+
+	const userInfo = useAppSelector((state) => state.authSlice.user)
+	const socket = useContext(SocketContext)
+
+	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
+
+	const navigate = useNavigate()
+
+	const handleLeaveChat = () => {
+		if (!socket) return
+		socket.emit('room:leave_group', { roomId: conversationSelected?._id, userId: userInfo?._id })
+		navigate('/direct/inbox')
+	}
+
+	const handleRemoveUserGroup = (userId: string) => {
+		if (!socket) return
+		socket.emit('handleRemoveUserGroup', {
+			roomId: conversationSelected?._id,
+			managerId: userInfo?._id,
+			userId,
+			usernameManager: userInfo?.username,
+		})
+	}
+
 	return (
 		<div className={`${styles.detail} ${isClickInfo ? styles.visible : styles.hidden} `}>
 			<ul className={styles.detail__action}>
@@ -378,32 +432,181 @@ ConversationDisplay.DetailsConversation = ({ isClickInfo }: { isClickInfo: boole
 				</li>
 			</ul>
 			<Collapse
-				defaultActiveKey={['1', '2']}
+				defaultActiveKey={['3', '2']}
 				expandIconPosition="end"
 				style={{ userSelect: 'none', paddingLeft: '5px', paddingRight: '5px' }}
 				ghost
 			>
-				<Panel header="Ảnh/Video " key="1">
-					<Row gutter={16}>
+				{conversationSelected?.group && (
+					<Panel
+						header={
+							<b>
+								<Trans>CONVERSATION.MEMBERS_GROUP</Trans>
+							</b>
+						}
+						key="3"
+					>
+						<Row align="middle" justify="center" style={{ marginBottom: '20px' }}>
+							<Button type="primary" onClick={handleSetOpen}>
+								<Trans>CONVERSATION.ADD_MEMBER</Trans>
+							</Button>
+						</Row>
+						<Row>
+							{conversationSelected.users.map((user) => (
+								<Col key={user._id} className={styles.userItem}>
+									<Link to={`/${user._id}`} className={styles.userInGroup}>
+										<Avatar
+											size={50}
+											src={conversationSelected?.avatar || 'https://joeschmoe.io/api/v1/random'}
+											style={{ border: '1px solid rgb(219, 219, 219)' }}
+										/>
+										<div className={styles.item__content}>
+											<p className={styles.item__contentName}>{user.name}</p>
+											{conversationSelected.roomMaster?.includes(user._id) && (
+												<span>
+													<KeyOutlined /> <Trans>CONVERSATION.ADMIN</Trans>
+												</span>
+											)}
+										</div>
+									</Link>
+
+									{/* Have master key  */}
+									{userInfo && conversationSelected.roomMaster?.includes(userInfo._id) && (
+										<section className={styles.ml_auto}>
+											<Dropdown
+												className={styles.userItem_action}
+												overlay={
+													<Menu
+														items={
+															!conversationSelected.roomMaster?.includes(user._id)
+																? [
+																		{
+																			key: '1',
+																			label: (
+																				<div>
+																					<Trans>
+																						CONVERSATION.MAKE_ADMIN
+																					</Trans>
+																				</div>
+																			),
+																		},
+																		{
+																			key: '2',
+																			label: (
+																				<div
+																					onClick={() =>
+																						handleRemoveUserGroup(user._id)
+																					}
+																				>
+																					<Trans>
+																						CONVERSATION.REMOVE_FROM_GROUP
+																					</Trans>
+																				</div>
+																			),
+																		},
+																  ]
+																: [
+																		{
+																			key: '1',
+																			label: (
+																				<div onClick={handleLeaveChat}>
+																					<Trans>
+																						CONVERSATION.LEAVE_CHAT
+																					</Trans>
+																				</div>
+																			),
+																		},
+																  ]
+														}
+														className={styles.menu}
+													/>
+												}
+												placement="bottomRight"
+												arrow={{ pointAtCenter: true }}
+												trigger={['click']}
+											>
+												<DashOutlined />
+											</Dropdown>
+										</section>
+									)}
+
+									{userInfo &&
+										!conversationSelected.roomMaster?.includes(userInfo._id) &&
+										user._id === userInfo._id && (
+											<section className={styles.ml_auto}>
+												<Dropdown
+													className={styles.userItem_action}
+													overlay={
+														<Menu
+															items={[
+																{
+																	key: '1',
+																	label: (
+																		<div onClick={handleLeaveChat}>
+																			<Trans>CONVERSATION.LEAVE_CHAT</Trans>
+																		</div>
+																	),
+																},
+															]}
+															className={styles.menu}
+														/>
+													}
+													placement="bottomRight"
+													arrow={{ pointAtCenter: true }}
+													trigger={['click']}
+												>
+													<DashOutlined />
+												</Dropdown>
+											</section>
+										)}
+								</Col>
+							))}
+						</Row>
+						<ConversationModel
+							open={open}
+							onClose={handleSetClose}
+							userInConversation={conversationSelected.users}
+						/>
+					</Panel>
+				)}
+
+				<Panel header={<b>Ảnh/Video</b>} key="1">
+					<Row gutter={[16, 16]}>
 						<Image.PreviewGroup>
-							<Col className="gutter-row" span={6}>
-								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
-							</Col>
-							<Col className="gutter-row" span={6}>
-								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
-							</Col>
-							<Col className="gutter-row" span={6}>
-								<Image src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.n6XggU8IoyXc8EhpP_RCWQHaJ4%26pid%3DApi&f=1&ipt=bd62ca8caccfe33cddd1290aa37fe0ca3f334fb5416bebcb9f7e4ecc76362da4&ipo=images" />
-							</Col>
+							{imageVideoList.length > 0 &&
+								imageVideoList.map((messageInfo, index) => (
+									<Col className="gutter-row gutter-coloumn" span={6} key={messageInfo._id}>
+										{messageInfo.type === 'IMAGE' ? (
+											<Image
+												src={messageInfo.message}
+												style={{ width: '100%', height: '150px', objectFit: 'cover' }}
+											/>
+										) : (
+											<video width="100%" height={150} controls>
+												<source src={messageInfo.message} type="video/mp4"></source>
+											</video>
+										)}
+									</Col>
+								))}
 						</Image.PreviewGroup>
 					</Row>
 				</Panel>
 
-				<Panel header="File" key="2">
-					<p>Meo meo</p>
+				<Panel header={<b>File</b>} key="2">
+					<Row>
+						{fileList.map((messageInfo) => {
+							return (
+								<Col span={24} key={messageInfo._id}>
+									<a href={messageInfo.message} download className={styles.fileBlock}>
+										{useIconFile(messageInfo.message)} {handleNameFile(messageInfo.message)}
+										<DownloadOutlined className={styles.iconDown} />
+									</a>
+								</Col>
+							)
+						})}
+					</Row>
 				</Panel>
 			</Collapse>
-			{/* <Collapse collapsible="header" defaultActiveKey={['1', '2']} expandIconPosition="end"></Collapse> */}
 		</div>
 	)
 }

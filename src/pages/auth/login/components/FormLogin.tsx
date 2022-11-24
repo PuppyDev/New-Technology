@@ -66,7 +66,7 @@ function Login() {
 								),
 								message: t('AUTH.USER_EMAIL_INVALID_MESSAGE'),
 							},
-							{ min: 6 },
+							{ min: 6, message: t('AUTH.MIN_EMAIL') },
 						]}
 					>
 						<Input size="large" placeholder={t('AUTH.INPUT_USER_NAME')} />

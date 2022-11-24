@@ -22,12 +22,13 @@ const Profile = () => {
 	const socket = useContext(SocketContext)
 	const [userInfo, setUserInfo] = useState<UserInfo>()
 
+	const [loadingUnFriend, setLoadingUnFriend] = useState(false)
+
 	useEffect(() => {
 		;(async () => {
 			try {
 				if (_id == user?._id) {
 					const response = await userApi.getMineInfo()
-					console.log('🚀 ~ file: index.tsx ~ line 31 ~ ; ~ response', response)
 					setUserInfo(response.data)
 				} else {
 					const response = await userApi.getInfoById('' + _id)
@@ -54,8 +55,16 @@ const Profile = () => {
 		setUserInfo((pre) => ({ ...(pre as UserInfo), addFriendRequest: true }))
 	}
 
-	const handleUnFriend = () => {
-		console.log('unfriend')
+	const handleUnFriend = async () => {
+		if (!_id) return
+		try {
+			setLoadingUnFriend(true)
+			await userApi.unfriend({ friendId: _id, friendUsername: userInfo?.username || '' })
+			setUserInfo((pre) => ({ ...(pre as UserInfo), isFriend: false }))
+		} catch (err) {
+			console.log('🚀 ~ file: index.tsx ~ line 65 ~ handleUnFriend ~ err', err)
+		}
+		setLoadingUnFriend(false)
 	}
 
 	const [loadingButtonSend, setLoadingButtonSend] = useState(false)
@@ -109,7 +118,11 @@ const Profile = () => {
 														{t('SEND_MESSAGE')}
 													</Link>
 												</Button>
-												<Button style={{ marginLeft: 5 }} onClick={handleUnFriend}>
+												<Button
+													style={{ marginLeft: 5 }}
+													loading={loadingUnFriend}
+													onClick={handleUnFriend}
+												>
 													{t('CANCEL_FRIEND')}
 												</Button>
 											</>

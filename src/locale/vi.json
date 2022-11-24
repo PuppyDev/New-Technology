@@ -28,7 +28,8 @@
 		"FULLNAME_INVALID_MESSAGE": "Vui lòng nhập tên theo đúng định dạng",
 		"USERNAME_INVALID_MESSAGE": "Vui lòng nhập username đúng định dạng",
 		"USERNAME_REQUIRED_MESSAGE": "Nhập user name",
-		"USERNAME_MIN_MESSAGE": "User name tối thiểu 6 kí tự"
+		"USERNAME_MIN_MESSAGE": "User name tối thiểu 6 kí tự",
+		"MIN_EMAIL": "Email hoặc Username phải có ít nhất 6 ký tự"
 	},
 	"CONFIRM": "Xác nhận",
 	"DELETE": "Xóa",
@@ -60,7 +61,13 @@
 		"NEW_MESSAGE": "Tin nhắn mới",
 		"TO": "Tới:",
 		"UNSEND_MESSAGE": "Gỡ tin nhắn",
-		"FORWARD": "Chuyển tiếp"
+		"FORWARD": "Chuyển tiếp",
+		"ADD_MEMBER": "Thêm thành viên",
+		"ADMIN": "Trường nhóm",
+		"LEAVE_CHAT": "Rời nhóm",
+		"MAKE_ADMIN": "Thăng chức làm trưởng nhóm",
+		"REMOVE_FROM_GROUP": "Xoá khỏi group",
+		"MEMBERS_GROUP": "Thành viên nhóm"
 	},
 	"ERROR": {},
 	"ACCOUNT": "Tài khoản",

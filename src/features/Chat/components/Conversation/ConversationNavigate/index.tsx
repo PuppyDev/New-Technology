@@ -18,6 +18,7 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 	const conversations = useAppSelector((state) => state.chatSlice.conversations)
 
 	const { inboxId } = useParams()
+	const user = useAppSelector((state) => state.authSlice.user)
 
 	useEffect(() => {
 		if (!conversationSelected) {
@@ -33,6 +34,13 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 		navigate(`/videoCall/${conversationSelected?._id}`)
 	}
 
+	const { image } =
+		(conversationSelected &&
+			(conversationSelected.users[0]._id === user?._id
+				? conversationSelected.users[1]
+				: conversationSelected.users[0])) ||
+		{}
+
 	return (
 		<header className={styles.ListConversation__topContent}>
 			{!isClickInfo && (
@@ -41,11 +49,21 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 						<div className={styles.ListConversation__profile}>
 							<Avatar
 								size={26}
-								src={conversationSelected?.avatar || 'https://joeschmoe.io/api/v1/random'}
+								src={
+									conversationSelected?.group
+										? conversationSelected?.avatar
+										: image || 'https://joeschmoe.io/api/v1/random'
+								}
 								style={{ border: '1px solid rgb(219, 219, 219)' }}
 							/>
 							<div className={styles.item__content}>
-								<p className={styles.item__contentName}>{conversationSelected?.users[0].name}</p>
+								<p className={styles.item__contentName}>
+									{conversationSelected?.group
+										? conversationSelected?.name
+										: conversationSelected?.users[0]._id === user?._id
+										? conversationSelected?.users[1]?.name
+										: conversationSelected?.users[0]?.name}
+								</p>
 								{conversationSelected?.active && <p>Active now</p>}
 							</div>
 						</div>
