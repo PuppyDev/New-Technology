@@ -171,7 +171,7 @@ const ControlNavLink: React.FC = () => {
 			<li>
 				<Dropdown overlay={menu} placement="bottomRight" arrow={{ pointAtCenter: true }} trigger={['click']}>
 					<Space>
-						<Avatar icon={<UserOutlined />} size={26}></Avatar>
+						<Avatar src={user?.image} icon={<UserOutlined />} size={26}></Avatar>
 					</Space>
 				</Dropdown>
 				<ModalLogin open={open} setOpen={setOpen} />
@@ -187,7 +187,7 @@ Header.Notification = () => {
 	const socket = useContext(SocketContext)
 
 	const dispatch = useAppDispatch()
-
+	const { t } = useTranslation()
 	useEffect(() => {
 		;(async () => {
 			try {
@@ -242,7 +242,9 @@ Header.Notification = () => {
 						requestItems.map((request) => <FriendRequest notification={request} key={request._id} />)}
 
 					{/* No data  */}
-					{requestItems.length < 1 && <div className={styles.menuNotification__nothing}>Nothing in here</div>}
+					{requestItems.length < 1 && (
+						<div className={styles.menuNotification__nothing}>{t('HEADER.USER_NOT_FOUND')}</div>
+					)}
 				</div>
 			}
 			placement="bottomRight"

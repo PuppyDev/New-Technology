@@ -22,7 +22,7 @@ function Login() {
 		try {
 			setLoading(true)
 
-			const { data } = await authApi.login(values)
+			const { data } = await authApi.login({ username: values.email, ...values })
 			localStorage.setItem('loginData', JSON.stringify(data))
 			dispatch(setUser({ ...data.user, accessToken: data.accessToken, refreshToken: data.refreshToken }))
 			dispatch(setLogin(true))

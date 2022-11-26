@@ -8,4 +8,5 @@ export interface RegisterPayLoad {
 export interface LoginPayload {
 	email: string
 	password: string
+	username?: string
 }

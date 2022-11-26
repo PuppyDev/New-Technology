@@ -32,6 +32,7 @@ import ConversationModel from '../ConversationModel'
 import ConversationNavigate from '../ConversationNavigate'
 import styles from './ConversationDisplay.module.scss'
 import './ConversationDisplay.scss'
+import { useRef } from 'react'
 
 let tempMessage: Message[] = []
 
@@ -45,6 +46,8 @@ const ConversationDisplay = () => {
 	const user = useAppSelector((state) => state.authSlice.user)
 	// Display details
 	const { open: isClickInfo, handleToggleOpen: toggleIsClickInfo } = useOpen()
+	const isClick = useRef(false)
+	isClick.current = false
 	const [messageSender, setMessageSender] = useState<string>('')
 	const [isLoadingMessages, setIsLoadingMessages] = useState(true)
 	// Display reply message
@@ -56,14 +59,17 @@ const ConversationDisplay = () => {
 	// Subcriber Socket msg in here
 	useEffect(() => {
 		socket.on('chat:print_message', (dataGot) => {
-			console.log('🚀 ~ file: index.tsx ~ line 61 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)
 			setDummyMessage('')
 		})
 
+		socket.on('delete-message', ({ messageId }) => {
+			setMessageConversation((pre) => pre?.filter((message) => message._id !== messageId))
+		})
+
 		socket.on('delete-group', async (dataGot) => {
 			Modal.warning({
-				title: 'You had kick out of group',
+				title: t('CONVERSATION.YOURE_KICKED'),
 				onOk() {
 					navigate('/direct/inbox')
 				},
@@ -73,9 +79,8 @@ const ConversationDisplay = () => {
 	}, [])
 
 	useEffect(() => {
-		if (messageRecive.roomId === conversationSelected?._id && messagesConversation) {
+		if (messageRecive.roomId === conversationSelected?._id && messagesConversation)
 			setMessageConversation((pre) => [...(pre as Message[]), messageRecive.message])
-		}
 	}, [messageRecive])
 
 	// Get Message using api
@@ -243,11 +248,10 @@ const ConversationDisplay = () => {
 								// }
 
 								return (
-									<TextMessage.ListFriendMessage key={index}>
+									<TextMessage.ListFriendMessage key={index} messageObj={messageInfo}>
 										<TextMessage.FriendMessage
 											messageObj={messageInfo}
 											msg={msg}
-											key={messageInfo._id}
 											ispadding={isPadding}
 										/>
 									</TextMessage.ListFriendMessage>

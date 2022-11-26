@@ -72,7 +72,7 @@ function Search() {
 
 						{(searchResult.length < 1 || loading) && (
 							<div className={styles.search_result_empty}>
-								{loading ? <Spin></Spin> : ' No results found.'}
+								{loading ? <Spin></Spin> : <Trans>NO_RESULTS_FOUND</Trans>}
 							</div>
 						)}
 					</PopperWrapper>

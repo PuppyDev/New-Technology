@@ -5,12 +5,11 @@ import { TeamOutlined } from '@ant-design/icons'
 import { Skeleton } from 'antd'
 import { SocketContext } from 'context/SocketContext'
 import { useContext, useEffect } from 'react'
-import { setCloseCreateConversation, setConversations, setConversationSelected, setOpenCreateConversation } from '../..'
+import { setCloseCreateConversation, setConversations, setOpenCreateConversation } from '../..'
 import ConversationModel from '../Conversation/ConversationModel'
 import styles from './ListConversation.module.scss'
 import ListConversationItem from './ListConversationItem'
 import ListConversationMul from './ListConversationMul'
-import { useLocation } from 'react-router-dom'
 
 const ListConversation = () => {
 	const dispatch = useAppDispatch()
@@ -47,6 +46,7 @@ const ListConversation = () => {
 			try {
 				if (!roomConvesation) {
 					const response = await roomApi.getRoomConversation()
+					console.log('🚀 ~ file: index.tsx ~ line 50 ~ ; ~ response', response)
 					dispatch(setConversations({ conversations: response.data.room || [] }))
 				}
 			} catch (err) {
