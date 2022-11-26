@@ -29,3 +29,8 @@ export interface UserRequest {
 	requestedUserId: string
 	requestedUsername: string
 }
+
+export interface FriendRequest {
+	friendId: string
+	friendUsername: string
+}

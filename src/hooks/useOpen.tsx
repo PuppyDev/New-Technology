@@ -1,7 +1,7 @@
 import React from 'react'
 
-const useOpen = () => {
-	const [open, setOpen] = React.useState<boolean>(false)
+const useOpen = (initOpen?: boolean) => {
+	const [open, setOpen] = React.useState<boolean>(initOpen || false)
 
 	const handleToggleOpen = () => {
 		setOpen((pre) => !pre)

@@ -1,9 +1,9 @@
-import { useAppDispatch } from '@/app/hook'
+import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { setConversationSelected } from '@/Chat/slices/ChatSlice'
 import { Room } from '@/models/room'
 import { Avatar } from 'antd'
 import React from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import styles from './ListConversationItem.module.scss'
 
@@ -16,23 +16,28 @@ const ListConversationItem: React.FC<props> = ({ conversation }) => {
 
 	if (!conversation) return null
 
+	const user = useAppSelector((state) => state.authSlice.user)
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 
 	const contentRender = (isActive = false, isRead = false) => {
-		const { name } = conversation.users[0]
+		const userInfo = conversation.users[0]._id === user?._id ? conversation.users[1] : conversation.users[0]
 		const lastMessage = conversation.messages[conversation.messages.length - 1]
 		const messageDisplay: any = (lastMessage?.type === 'TEXT' ? lastMessage?.message : lastMessage?.type) || ''
 		return (
 			<li className={`${styles.item} ${!isRead ? styles.notRead : ''} ${isActive ? styles.active : ''}`}>
 				<Avatar
 					size={56}
-					src={conversation.avatar || 'https://joeschmoe.io/api/v1/random'}
+					src={
+						conversation.group
+							? conversation.avatar
+							: userInfo?.image || 'https://joeschmoe.io/api/v1/random'
+					}
 					style={{ border: '1px solid rgb(219, 219, 219)', userSelect: 'none' }}
 				/>
 
 				<div className={styles.item__content}>
-					<p className={styles.item__contentName}>{name}</p>
+					<p className={styles.item__contentName}>{userInfo?.name}</p>
 					{messageDisplay && <p>{messageDisplay}</p>}
 				</div>
 

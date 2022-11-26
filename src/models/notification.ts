@@ -10,4 +10,6 @@ export interface NotificationRequest {
 	requestAccount: string
 	_id: string
 	image?: string
+	isAccept?: boolean
+	accepted?: boolean
 }
