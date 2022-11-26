@@ -1,6 +1,5 @@
-import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
-import { setConversationSelected, setPinMessage } from '@/Chat/slices/ChatSlice'
+import { setConversationSelected } from '@/Chat/slices/ChatSlice'
 import { Conversation } from '@/models/conversation'
 import { DataPinUpdate, pinMessage } from '@/models/message'
 import { InfoCircleFilled, InfoCircleOutlined, PushpinFilled, VideoCameraOutlined } from '@ant-design/icons'

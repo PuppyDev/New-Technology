@@ -430,7 +430,7 @@ ConversationDisplay.DetailsConversation = ({
 			socket.emit('room:delete_member', {
 				roomId: conversationSelected?._id,
 				managerId: userInfo?._id,
-				userId: userInfo?._id,
+				userId,
 				usernameManager: userInfo?.username,
 			})
 			const users = conversationSelected?.users.filter((user: User) => user._id !== userId)
