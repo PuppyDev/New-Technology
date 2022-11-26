@@ -95,5 +95,8 @@
 		"LOGGOUT": "Đăng xuất",
 		"USER_NOT_FOUND": "Không có thông báo nào"
 	},
-	"NO_RESULTS_FOUND": "Không có kết quả."
+	"NO_RESULTS_FOUND": "Không có kết quả.",
+	"CONGRATULATIONS":"XIN CHÚC MỪNG",
+	"VERIFY_SUCCESS_INFORM":"Tài khoản của bạn đã được xác thực thành công",
+	"GOHOME":"Về trang đăng nhập"
 }
