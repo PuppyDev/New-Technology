@@ -72,7 +72,8 @@
 		"REMOVE_ADMIN": "Gỡ quyền admin",
 		"PIN_MESSAGE": "Ghim tin nhắn",
 		"UN_PIN": "Bỏ ghim tin nhắn",
-		"PINNED_MESSAGE": "Tin nhắn đã ghim"
+		"PINNED_MESSAGE": "Tin nhắn đã ghim",
+		"YOURE_KICKED": "Bạn đã bị đuổi ra khỏi nhóm"
 	},
 	"ERROR": {
 		"MESSAGE": "Rất tiếc, trang này hiện không khả dụng.",
@@ -85,5 +86,14 @@
 		"LOGIN_AGAIN": "Vui lòng đăng nhập lại để tiếp tục sử dụng trang web"
 	},
 	"SUCCESS": {},
-	"IMAGE": "Hình ảnh"
+	"IMAGE": "Hình ảnh",
+	"HEADER": {
+		"PROFILE": "Trang cá nhân ",
+		"SAVED": "Đã lưu",
+		"SETTINGS": "Cài đặt",
+		"CHANGE_LANGUAGE": "Thay đổi ngôn ngữ",
+		"LOGGOUT": "Đăng xuất",
+		"USER_NOT_FOUND": "Không có thông báo nào"
+	},
+	"NO_RESULTS_FOUND": "Không có kết quả."
 }

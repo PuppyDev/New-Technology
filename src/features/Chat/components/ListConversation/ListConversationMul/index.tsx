@@ -1,5 +1,6 @@
+import { roomApi } from '@/api/roomApi'
 import { useAppDispatch } from '@/app/hook'
-import { setConversationSelected } from '@/Chat/slices/ChatSlice'
+import { setConversationSelected, setPinMessage } from '@/Chat/slices/ChatSlice'
 import { Room } from '@/models/room'
 import { Avatar } from 'antd'
 import React from 'react'
@@ -15,6 +16,18 @@ const ListConversationMul: React.FC<props> = ({ conversation }) => {
 	let { inboxId } = useParams()
 
 	if (!conversation) return null
+
+	const fetchAllPinMessages = async () => {
+		try {
+			const response = await roomApi.getAllPinMessages({ roomId: conversation._id })
+			const pinMessage = response.data.pinMessage.pinMessage
+			dispatch(setPinMessage(pinMessage))
+			// setAllPinMessages(pinMessage)
+		} catch (err) {
+			dispatch(setPinMessage([]))
+			console.log('🚀 ~ file: index.tsx ~ line 152 ~ fetchAllPinMessages ~ err', err)
+		}
+	}
 
 	const contentRender = (isActive = false, isRead = false) => (
 		<li className={`${styles.item} ${!isRead ? styles.notRead : ''} ${isActive ? styles.active : ''}`}>
@@ -38,6 +51,7 @@ const ListConversationMul: React.FC<props> = ({ conversation }) => {
 
 	const handleSelectConversation = () => {
 		dispatch(setConversationSelected(conversation))
+		fetchAllPinMessages()
 		navigate(`/direct/inbox/${conversation._id}`)
 	}
 

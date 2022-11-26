@@ -1,5 +1,5 @@
 import { Conversation, ReplyMessage } from '@/models/conversation'
-import { Message } from '@/models/message'
+import { Message, pinMessage } from '@/models/message'
 import { Room } from '@/models/room'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
@@ -17,7 +17,7 @@ export interface ChatState {
 	conversationSelected: Room | null | undefined
 	replyMessage: ReplyMessage
 	openCreateConversation: boolean
-	pinMessage: null
+	pinMessage: pinMessage[]
 }
 
 const initialState: ChatState = {
@@ -37,7 +37,7 @@ const initialState: ChatState = {
 		_id: null,
 	},
 	openCreateConversation: false,
-	pinMessage: null,
+	pinMessage: [],
 }
 
 export const chatSlice = createSlice({
@@ -82,6 +82,10 @@ export const chatSlice = createSlice({
 			state.openCreateConversation = initialState.openCreateConversation
 			state.replyMessage = initialState.replyMessage
 		},
+
+		setPinMessage(state, action) {
+			state.pinMessage = action.payload
+		},
 	},
 	extraReducers: (builder) => {},
 })
@@ -94,6 +98,7 @@ export const {
 	setCloseCreateConversation,
 	initChatSlice,
 	addConversation,
+	setPinMessage,
 } = chatSlice.actions
 
 export default chatSlice.reducer

@@ -30,3 +30,15 @@ export interface PayloadMessage {
 	nMessage: number
 	userId: string
 }
+
+export interface pinMessage {
+	message: string
+	room: string //Id of Room,
+	_id: string //Id of Pin Message
+	type: string
+}
+
+export interface DataPinUpdate {
+	messagePin: pinMessage
+	type: 'DELETE' | 'ADD'
+}

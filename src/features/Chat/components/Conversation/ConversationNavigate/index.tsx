@@ -1,6 +1,7 @@
-import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { setConversationSelected } from '@/Chat/slices/ChatSlice'
+import { Conversation } from '@/models/conversation'
+import { DataPinUpdate, pinMessage } from '@/models/message'
 import { InfoCircleFilled, InfoCircleOutlined, PushpinFilled, VideoCameraOutlined } from '@ant-design/icons'
 import { Avatar, Carousel, Tooltip } from 'antd'
 import { SocketContext } from 'context/SocketContext'
@@ -16,27 +17,26 @@ interface props {
 const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
-	const conversations = useAppSelector((state) => state.chatSlice.conversations)
+	const { conversationSelected, conversations } = useAppSelector((state) => state.chatSlice)
 
 	const { inboxId } = useParams()
 	const user = useAppSelector((state) => state.authSlice.user)
 
 	useEffect(() => {
-		if (!conversationSelected) {
-			const conversation = conversations?.find((conversation) => {
+		if (!conversationSelected && conversations) {
+			const conversation = conversations.find((conversation: Conversation) => {
 				return conversation._id === inboxId
 			})
 			dispatch(setConversationSelected(conversation))
 		}
-	}, [conversations])
+	}, [conversationSelected?._id])
 
 	const handleVideoCall = () => {
 		// CallVideoID redirect here
 		navigate(`/videoCall/${conversationSelected?._id}`)
 	}
 
-	const { image } =
+	const { image, _id } =
 		(conversationSelected &&
 			(conversationSelected.users[0]._id === user?._id
 				? conversationSelected.users[1]
@@ -48,7 +48,7 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 			<header className={styles.ListConversation__topContent}>
 				{!isClickInfo && (
 					<>
-						<Link to={`/${conversationSelected?.users[0]._id}`}>
+						<Link to={`/${_id}`}>
 							<div className={styles.ListConversation__profile}>
 								<Avatar
 									size={26}
@@ -99,36 +99,23 @@ const ConversationNavigate = ({ isClickInfo, onClick }: props) => {
 	)
 }
 
-interface pinMessage {
-	message: string
-	room: string //Id of Room,
-	_id: string //Id of Pin Message
-	type: string
-}
-
-interface DataPinUpdate {
-	messagePin: pinMessage
-	type: 'DELETE' | 'ADD'
-}
-
 ConversationNavigate.PinMessage = () => {
 	const socket = useContext(SocketContext)
 	if (!socket) return null
-	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
+	const { conversationSelected, pinMessage } = useAppSelector((state) => state.chatSlice)
 	const { t } = useTranslation()
 	const [allPinMessages, setAllPinMessages] = useState<pinMessage[]>([])
-
 	const [updatePin, setUpdatePin] = useState<DataPinUpdate | null>(null)
-
-	useEffect(() => {
-		fetchAllPinMessages()
-	}, [conversationSelected])
 
 	useEffect(() => {
 		socket.on('chat:update-pin-message', (dataGot) => {
 			setUpdatePin(dataGot)
 		})
 	}, [])
+
+	useEffect(() => {
+		setAllPinMessages(pinMessage)
+	}, [pinMessage])
 
 	useEffect(() => {
 		if (!updatePin) return
@@ -140,14 +127,6 @@ ConversationNavigate.PinMessage = () => {
 		setUpdatePin(null)
 	}, [updatePin])
 
-	const fetchAllPinMessages = async () => {
-		if (conversationSelected) {
-			const response = await roomApi.getAllPinMessages({ roomId: conversationSelected._id })
-			const pinMessage = response.data.pinMessage.pinMessage
-			setAllPinMessages(pinMessage)
-		}
-	}
-
 	if (!allPinMessages || allPinMessages.length < 1) return null
 
 	const handleUnpinMessage = (messageId: string, roomId: string) => {
@@ -156,35 +135,36 @@ ConversationNavigate.PinMessage = () => {
 
 	return (
 		<Carousel className={styles.pinMessage} dotPosition="right" effect="fade" autoplay>
-			{allPinMessages.map((pinMessage) => (
-				<div key={pinMessage._id}>
-					<div className={styles.pinMessageItem}>
-						{pinMessage.type === 'IMAGE' ? (
-							<div className={styles.ImagePin}>
-								<img src={pinMessage.message} height="50px" />
-								<div>
-									<p className={styles.titlePin}>{t('CONVERSATION.PINNED_MESSAGE')} :</p>
-									<span>Image</span>
+			{allPinMessages &&
+				allPinMessages.map((pinMessage) => (
+					<div key={pinMessage._id}>
+						<div className={styles.pinMessageItem}>
+							{['IMAGE', 'GIF'].includes(pinMessage.type) ? (
+								<div className={styles.ImagePin}>
+									<img src={pinMessage.message} height="50px" />
+									<div>
+										<p className={styles.titlePin}>{t('CONVERSATION.PINNED_MESSAGE')} :</p>
+										<span>{t('IMAGE')}</span>
+									</div>
 								</div>
-							</div>
-						) : (
-							<div style={{ paddingTop: '10px' }}>
-								<p className={styles.titlePin}>{t('CONVERSATION.PINNED_MESSAGE')} :</p>
-								<span>{pinMessage.message}</span>
-							</div>
-						)}
+							) : (
+								<div style={{ paddingTop: '10px' }}>
+									<p className={styles.titlePin}>{t('CONVERSATION.PINNED_MESSAGE')} :</p>
+									<span>{pinMessage.message}</span>
+								</div>
+							)}
 
-						<span
-							onClick={() => handleUnpinMessage(pinMessage._id, pinMessage.room)}
-							className={styles.unPinIcon}
-						>
-							<Tooltip title={'UnPin Message'}>
-								<PushpinFilled style={{ fontSize: 16 }} />
-							</Tooltip>
-						</span>
+							<span
+								onClick={() => handleUnpinMessage(pinMessage._id, pinMessage.room)}
+								className={styles.unPinIcon}
+							>
+								<Tooltip title={t('CONVERSATION.UN_PIN')}>
+									<PushpinFilled style={{ fontSize: 16 }} />
+								</Tooltip>
+							</span>
+						</div>
 					</div>
-				</div>
-			))}
+				))}
 		</Carousel>
 	)
 }

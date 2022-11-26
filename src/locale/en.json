@@ -72,7 +72,8 @@
 		"REMOVE_ADMIN": "Remove Admin",
 		"PIN_MESSAGE": "Pin message",
 		"UN_PIN": "UnPin message",
-		"PINNED_MESSAGE": "Pinned Message"
+		"PINNED_MESSAGE": "Pinned Message",
+		"YOURE_KICKED": "You have been kicked out of the group"
 	},
 	"ERROR": {
 		"MESSAGE": "Sorry, the page you visited does not exist.",
@@ -85,5 +86,14 @@
 		"LOGIN_AGAIN": "Please login again to continue using the website"
 	},
 	"SUCCESS": {},
-	"IMAGE": "Image"
+	"IMAGE": "Image",
+	"HEADER": {
+		"PROFILE": "Profile",
+		"SAVED": "Saved",
+		"SETTINGS": "Settings",
+		"CHANGE_LANGUAGE": "Change Language",
+		"LOGGOUT": "Log out",
+		"USER_NOT_FOUND": "No notification!"
+	},
+	"NO_RESULTS_FOUND": "No results found."
 }

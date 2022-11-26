@@ -1,8 +1,9 @@
+import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
-import { setConversationSelected } from '@/Chat/slices/ChatSlice'
+import { setConversationSelected, setPinMessage } from '@/Chat/slices/ChatSlice'
 import { Room } from '@/models/room'
 import { Avatar } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import styles from './ListConversationItem.module.scss'
@@ -13,8 +14,19 @@ interface props {
 
 const ListConversationItem: React.FC<props> = ({ conversation }) => {
 	let { inboxId } = useParams()
-
 	if (!conversation) return null
+
+	const fetchAllPinMessages = async () => {
+		try {
+			const response = await roomApi.getAllPinMessages({ roomId: conversation._id })
+			const pinMessage = response.data.pinMessage.pinMessage
+			dispatch(setPinMessage(pinMessage))
+			// setAllPinMessages(pinMessage)
+		} catch (err) {
+			dispatch(setPinMessage([]))
+			console.log('🚀 ~ file: index.tsx ~ line 152 ~ fetchAllPinMessages ~ err', err)
+		}
+	}
 
 	const user = useAppSelector((state) => state.authSlice.user)
 	const navigate = useNavigate()
@@ -48,6 +60,7 @@ const ListConversationItem: React.FC<props> = ({ conversation }) => {
 
 	const handleSelectConversation = () => {
 		dispatch(setConversationSelected(conversation))
+		fetchAllPinMessages()
 		navigate(`/direct/inbox/${conversation._id}`)
 	}
 

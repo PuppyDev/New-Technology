@@ -2,9 +2,8 @@ import { roomApi } from '@/api/roomApi'
 import { userApi } from '@/api/userApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import Logo from '@/assets/images/bbsgl.png'
-import { addConversation, initChatSlice, setConversations } from '@/Chat/index'
+import { initChatSlice, setConversations } from '@/Chat/index'
 import { NotificationRequest } from '@/models/notification'
-import { User } from '@/models/user'
 import {
 	HeartOutlined,
 	HomeOutlined,
@@ -13,12 +12,14 @@ import {
 	SaveOutlined,
 	SettingOutlined,
 	SwapOutlined,
+	TranslationOutlined,
 	UserOutlined,
 } from '@ant-design/icons'
-import { Avatar, Badge, Dropdown, Menu, Modal, Space } from 'antd'
+import { Avatar, Badge, Button, Dropdown, Menu, Modal, Space } from 'antd'
 import { SocketContext } from 'context/SocketContext'
 import { logout } from 'pages/auth/authSlice'
 import React, { useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import FriendRequest from '../FriendRequest'
 import ModalLogin from '../Modal/ModalLogin'
@@ -76,6 +77,12 @@ const ControlNavLink: React.FC = () => {
 		})
 	}
 
+	const { t, i18n } = useTranslation()
+
+	const changeLanguageHandler = () => {
+		i18n.changeLanguage(i18n.language === 'en' ? 'vi' : 'en')
+	}
+
 	const menu = (
 		<Menu
 			items={[
@@ -84,7 +91,7 @@ const ControlNavLink: React.FC = () => {
 					label: (
 						<Link to={`/${user?._id}`}>
 							<UserOutlined />
-							Profile
+							{t('HEADER.PROFILE')}
 						</Link>
 					),
 				},
@@ -93,7 +100,7 @@ const ControlNavLink: React.FC = () => {
 					label: (
 						<Link to="/">
 							<SaveOutlined />
-							Saved
+							{t('HEADER.SAVED')}
 						</Link>
 					),
 				},
@@ -102,16 +109,21 @@ const ControlNavLink: React.FC = () => {
 					label: (
 						<Link to="/accounts/edit/">
 							<SettingOutlined />
-							Settings
+							{t('HEADER.SETTINGS')}
 						</Link>
 					),
 				},
 				{
 					key: '4',
 					label: (
-						<a onClick={() => setOpen(true)}>
-							<SwapOutlined />
-							Switch accounts
+						// <a onClick={() => setOpen(true)}>
+						// 	<SwapOutlined />
+						// 	Switch accounts
+						// </a>
+						<a className={styles.item} onClick={changeLanguageHandler}>
+							<TranslationOutlined />
+							{t('HEADER.CHANGE_LANGUAGE')} {'  '}
+							{i18n.language === 'en' ? 'To Vietnamese' : 'Tiếng Anh'}
 						</a>
 					),
 				},
@@ -120,7 +132,7 @@ const ControlNavLink: React.FC = () => {
 					danger: true,
 					label: (
 						<div className={styles.item} onClick={handleLogout}>
-							Log out
+							{t('HEADER.LOGGOUT')}
 						</div>
 					),
 				},
@@ -159,7 +171,7 @@ const ControlNavLink: React.FC = () => {
 			<li>
 				<Dropdown overlay={menu} placement="bottomRight" arrow={{ pointAtCenter: true }} trigger={['click']}>
 					<Space>
-						<Avatar icon={<UserOutlined />} size={26}></Avatar>
+						<Avatar src={user?.image} icon={<UserOutlined />} size={26}></Avatar>
 					</Space>
 				</Dropdown>
 				<ModalLogin open={open} setOpen={setOpen} />
@@ -175,7 +187,7 @@ Header.Notification = () => {
 	const socket = useContext(SocketContext)
 
 	const dispatch = useAppDispatch()
-
+	const { t } = useTranslation()
 	useEffect(() => {
 		;(async () => {
 			try {
@@ -230,7 +242,9 @@ Header.Notification = () => {
 						requestItems.map((request) => <FriendRequest notification={request} key={request._id} />)}
 
 					{/* No data  */}
-					{requestItems.length < 1 && <div className={styles.menuNotification__nothing}>Nothing in here</div>}
+					{requestItems.length < 1 && (
+						<div className={styles.menuNotification__nothing}>{t('HEADER.USER_NOT_FOUND')}</div>
+					)}
 				</div>
 			}
 			placement="bottomRight"

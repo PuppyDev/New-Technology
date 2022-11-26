@@ -2,13 +2,11 @@ import { messageApi } from '@/api/messageApi'
 import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { RootState } from '@/app/store'
-import { setConversations, setConversationSelected, setReplyMessage } from '@/Chat/slices/ChatSlice'
-import { openNotificationWithIcon } from '@/components/common/ToastMessage'
+import { setConversationSelected, setReplyMessage } from '@/Chat/slices/ChatSlice'
 import useIconFile from '@/hooks/useIconFile'
 import useOpen from '@/hooks/useOpen'
 import { Conversation, ReplyMessage } from '@/models/conversation'
 import { Message, messageType } from '@/models/message'
-import { Room } from '@/models/room'
 import { handleNameFile } from '@/utils/file'
 import {
 	CloseOutlined,
@@ -23,7 +21,7 @@ import {
 } from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Avatar, Button, Col, Collapse, Dropdown, Form, Image, Input, Menu, Modal, notification, Row, Spin } from 'antd'
+import { Avatar, Button, Col, Collapse, Dropdown, Form, Image, Input, Menu, Modal, Row, Spin } from 'antd'
 import { SocketContext } from 'context/SocketContext'
 import { Suspense, useContext, useEffect, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -34,6 +32,8 @@ import ConversationModel from '../ConversationModel'
 import ConversationNavigate from '../ConversationNavigate'
 import styles from './ConversationDisplay.module.scss'
 import './ConversationDisplay.scss'
+import { useRef } from 'react'
+import { User } from '@/models/user'
 
 let tempMessage: Message[] = []
 
@@ -47,6 +47,8 @@ const ConversationDisplay = () => {
 	const user = useAppSelector((state) => state.authSlice.user)
 	// Display details
 	const { open: isClickInfo, handleToggleOpen: toggleIsClickInfo } = useOpen()
+	const isClick = useRef(false)
+	isClick.current = false
 	const [messageSender, setMessageSender] = useState<string>('')
 	const [isLoadingMessages, setIsLoadingMessages] = useState(true)
 	// Display reply message
@@ -58,14 +60,17 @@ const ConversationDisplay = () => {
 	// Subcriber Socket msg in here
 	useEffect(() => {
 		socket.on('chat:print_message', (dataGot) => {
-			console.log('🚀 ~ file: index.tsx ~ line 61 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)
 			setDummyMessage('')
 		})
 
+		socket.on('delete-message', ({ messageId }) => {
+			setMessageConversation((pre) => pre?.filter((message) => message._id !== messageId))
+		})
+
 		socket.on('delete-group', async (dataGot) => {
 			Modal.warning({
-				title: 'You had kick out of group',
+				title: t('CONVERSATION.YOURE_KICKED'),
 				onOk() {
 					navigate('/direct/inbox')
 				},
@@ -75,9 +80,8 @@ const ConversationDisplay = () => {
 	}, [])
 
 	useEffect(() => {
-		if (messageRecive.roomId === conversationSelected?._id && messagesConversation) {
+		if (messageRecive.roomId === conversationSelected?._id && messagesConversation)
 			setMessageConversation((pre) => [...(pre as Message[]), messageRecive.message])
-		}
 	}, [messageRecive])
 
 	// Get Message using api
@@ -245,11 +249,10 @@ const ConversationDisplay = () => {
 								// }
 
 								return (
-									<TextMessage.ListFriendMessage key={index}>
+									<TextMessage.ListFriendMessage key={index} messageObj={messageInfo}>
 										<TextMessage.FriendMessage
 											messageObj={messageInfo}
 											msg={msg}
-											key={messageInfo._id}
 											ispadding={isPadding}
 										/>
 									</TextMessage.ListFriendMessage>
@@ -427,10 +430,10 @@ ConversationDisplay.DetailsConversation = ({
 			socket.emit('room:delete_member', {
 				roomId: conversationSelected?._id,
 				managerId: userInfo?._id,
-				userId: userInfo?._id,
+				userId,
 				usernameManager: userInfo?.username,
 			})
-			const users = conversationSelected?.users.filter((user) => user._id !== userId)
+			const users = conversationSelected?.users.filter((user: User) => user._id !== userId)
 			const newConverSelected = { ...conversationSelected, users } || null
 
 			dispatch(setConversationSelected(newConverSelected as Conversation))
@@ -516,12 +519,12 @@ ConversationDisplay.DetailsConversation = ({
 							</Button>
 						</Row>
 						<Row>
-							{conversationSelected.users.map((user) => (
+							{conversationSelected.users.map((user: User) => (
 								<Col key={user._id} className={styles.userItem}>
 									<Link to={`/${user._id}`} className={styles.userInGroup}>
 										<Avatar
 											size={50}
-											src={conversationSelected?.avatar || 'https://joeschmoe.io/api/v1/random'}
+											src={user.image || 'https://joeschmoe.io/api/v1/random'}
 											style={{ border: '1px solid rgb(219, 219, 219)' }}
 										/>
 										<div className={styles.item__content}>

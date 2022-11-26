@@ -21,12 +21,16 @@ const TextMessage = ({ children }: props) => {
 	return <div>{children}</div>
 }
 
-TextMessage.ListFriendMessage = ({ children }: { children: React.ReactNode }) => {
-	const roomSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
+TextMessage.ListFriendMessage = ({ children, messageObj }: { children: React.ReactNode; messageObj: Message }) => {
+	const { conversationSelected: roomSelected } = useAppSelector((state) => state.chatSlice)
+
+	if (!roomSelected) return null
+
+	const avt = roomSelected.users.find((user) => user.username === messageObj.sender)
 
 	return (
 		<div className={styles.blockMessage}>
-			<Avatar size={24} src={roomSelected?.avatar} />
+			<Avatar size={24} src={avt?.image || 'https://joeschmoe.io/api/v1/random'} />
 			<div className={styles.friendMessage}>{children}</div>
 		</div>
 	)
@@ -51,7 +55,7 @@ TextMessage.OwnerMessage = ({ messageObj, msg, loading = false, ispadding = true
 	return (
 		<div className={styles.ownerMessage} onMouseEnter={handleSetOpen} onMouseLeave={handleSetClose}>
 			<div className={`${styles.hidden_content} ${showOption && styles.show_content}`}>
-				<ActionMessage msg={msg} messageObj={messageObj} />
+				<ActionMessage msg={msg} messageObj={messageObj} isDelete />
 			</div>
 			<div className={`${styles.messageContent} ${ispadding && styles.padding}`}>{msg}</div>
 			{loading && <Spin size="small" style={{ marginTop: 'auto' }} />}

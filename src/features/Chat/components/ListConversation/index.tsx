@@ -1,21 +1,19 @@
 import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { openNotificationWithIcon } from '@/components/common/ToastMessage'
+import { Conversation } from '@/models/conversation'
 import { TeamOutlined } from '@ant-design/icons'
 import { Skeleton } from 'antd'
 import { SocketContext } from 'context/SocketContext'
 import { useContext, useEffect } from 'react'
-import { setCloseCreateConversation, setConversations, setConversationSelected, setOpenCreateConversation } from '../..'
+import { setCloseCreateConversation, setConversations, setOpenCreateConversation } from '../..'
 import ConversationModel from '../Conversation/ConversationModel'
 import styles from './ListConversation.module.scss'
 import ListConversationItem from './ListConversationItem'
 import ListConversationMul from './ListConversationMul'
-import { useLocation } from 'react-router-dom'
 
 const ListConversation = () => {
 	const dispatch = useAppDispatch()
-
-	// const {pathname} = useLocation()
 
 	const roomConvesation = useAppSelector((state) => state.chatSlice.conversations)
 
@@ -47,6 +45,7 @@ const ListConversation = () => {
 			try {
 				if (!roomConvesation) {
 					const response = await roomApi.getRoomConversation()
+					console.log('🚀 ~ file: index.tsx ~ line 50 ~ ; ~ response', response)
 					dispatch(setConversations({ conversations: response.data.room || [] }))
 				}
 			} catch (err) {
@@ -71,7 +70,7 @@ const ListConversation = () => {
 			</div>
 			<ul className={styles.bottomContent}>
 				{roomConvesation &&
-					roomConvesation.map((item) => {
+					roomConvesation.map((item: Conversation) => {
 						return item?.group ? (
 							<ListConversationMul key={item._id} conversation={item} />
 						) : (
