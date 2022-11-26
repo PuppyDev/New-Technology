@@ -33,6 +33,7 @@ import ConversationNavigate from '../ConversationNavigate'
 import styles from './ConversationDisplay.module.scss'
 import './ConversationDisplay.scss'
 import { useRef } from 'react'
+import { User } from '@/models/user'
 
 let tempMessage: Message[] = []
 
@@ -432,7 +433,7 @@ ConversationDisplay.DetailsConversation = ({
 				userId: userInfo?._id,
 				usernameManager: userInfo?.username,
 			})
-			const users = conversationSelected?.users.filter((user) => user._id !== userId)
+			const users = conversationSelected?.users.filter((user: User) => user._id !== userId)
 			const newConverSelected = { ...conversationSelected, users } || null
 
 			dispatch(setConversationSelected(newConverSelected as Conversation))
@@ -518,12 +519,12 @@ ConversationDisplay.DetailsConversation = ({
 							</Button>
 						</Row>
 						<Row>
-							{conversationSelected.users.map((user) => (
+							{conversationSelected.users.map((user: User) => (
 								<Col key={user._id} className={styles.userItem}>
 									<Link to={`/${user._id}`} className={styles.userInGroup}>
 										<Avatar
 											size={50}
-											src={conversationSelected?.avatar || 'https://joeschmoe.io/api/v1/random'}
+											src={user.image || 'https://joeschmoe.io/api/v1/random'}
 											style={{ border: '1px solid rgb(219, 219, 219)' }}
 										/>
 										<div className={styles.item__content}>

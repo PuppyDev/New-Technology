@@ -1,6 +1,7 @@
 import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { openNotificationWithIcon } from '@/components/common/ToastMessage'
+import { Conversation } from '@/models/conversation'
 import { TeamOutlined } from '@ant-design/icons'
 import { Skeleton } from 'antd'
 import { SocketContext } from 'context/SocketContext'
@@ -13,8 +14,6 @@ import ListConversationMul from './ListConversationMul'
 
 const ListConversation = () => {
 	const dispatch = useAppDispatch()
-
-	// const {pathname} = useLocation()
 
 	const roomConvesation = useAppSelector((state) => state.chatSlice.conversations)
 
@@ -71,7 +70,7 @@ const ListConversation = () => {
 			</div>
 			<ul className={styles.bottomContent}>
 				{roomConvesation &&
-					roomConvesation.map((item) => {
+					roomConvesation.map((item: Conversation) => {
 						return item?.group ? (
 							<ListConversationMul key={item._id} conversation={item} />
 						) : (
