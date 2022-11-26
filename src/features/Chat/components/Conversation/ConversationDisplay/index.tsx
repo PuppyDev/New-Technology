@@ -2,10 +2,11 @@ import { messageApi } from '@/api/messageApi'
 import { roomApi } from '@/api/roomApi'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import { RootState } from '@/app/store'
-import { setReplyMessage } from '@/Chat/slices/ChatSlice'
+import { setConversations, setConversationSelected, setReplyMessage } from '@/Chat/slices/ChatSlice'
+import { openNotificationWithIcon } from '@/components/common/ToastMessage'
 import useIconFile from '@/hooks/useIconFile'
 import useOpen from '@/hooks/useOpen'
-import { ReplyMessage } from '@/models/conversation'
+import { Conversation, ReplyMessage } from '@/models/conversation'
 import { Message, messageType } from '@/models/message'
 import { Room } from '@/models/room'
 import { handleNameFile } from '@/utils/file'
@@ -22,7 +23,7 @@ import {
 } from '@ant-design/icons'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 import { Grid } from '@giphy/react-components'
-import { Avatar, Button, Col, Collapse, Dropdown, Form, Image, Input, Menu, Row, Spin } from 'antd'
+import { Avatar, Button, Col, Collapse, Dropdown, Form, Image, Input, Menu, Modal, notification, Row, Spin } from 'antd'
 import { SocketContext } from 'context/SocketContext'
 import { Suspense, useContext, useEffect, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -41,7 +42,7 @@ const ConversationDisplay = () => {
 	const socket = useContext(SocketContext)
 
 	if (!socket) return
-
+	const navigate = useNavigate()
 	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
 	const user = useAppSelector((state) => state.authSlice.user)
 	// Display details
@@ -52,7 +53,6 @@ const ConversationDisplay = () => {
 	const replyMessage = useAppSelector((state: RootState) => state.chatSlice.replyMessage)
 
 	const [dummyMessage, setDummyMessage] = useState<String>('')
-
 	const [messagesConversation, setMessageConversation] = useState<Message[]>()
 	const [messageRecive, setMessageRecive] = useState<any>('')
 	// Subcriber Socket msg in here
@@ -61,6 +61,16 @@ const ConversationDisplay = () => {
 			console.log('🚀 ~ file: index.tsx ~ line 61 ~ socket.on ~ dataGot', dataGot)
 			setMessageRecive(dataGot)
 			setDummyMessage('')
+		})
+
+		socket.on('delete-group', async (dataGot) => {
+			Modal.warning({
+				title: 'You had kick out of group',
+				onOk() {
+					navigate('/direct/inbox')
+				},
+				centered: true,
+			})
 		})
 	}, [])
 
@@ -156,6 +166,7 @@ const ConversationDisplay = () => {
 				<ConversationDisplay.DetailsConversation
 					isClickInfo={isClickInfo}
 					dataMessages={messagesConversation || []}
+					isGroup={conversationSelected?.group}
 				/>
 
 				<main className={`${styles.mainContent} ${isClickInfo ? styles.hidden : styles.visible} `}>
@@ -381,9 +392,11 @@ const { Panel } = Collapse
 ConversationDisplay.DetailsConversation = ({
 	isClickInfo,
 	dataMessages,
+	isGroup = false,
 }: {
 	isClickInfo: boolean
 	dataMessages: Message[]
+	isGroup?: boolean
 }) => {
 	const imageVideoList = useMemo(() => {
 		return dataMessages.filter((message) => ['IMAGE', 'VIDEO'].includes(message.type))
@@ -399,7 +412,7 @@ ConversationDisplay.DetailsConversation = ({
 	const socket = useContext(SocketContext)
 
 	const conversationSelected = useAppSelector((state) => state.chatSlice.conversationSelected)
-
+	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
 	const handleLeaveChat = () => {
@@ -410,27 +423,78 @@ ConversationDisplay.DetailsConversation = ({
 
 	const handleRemoveUserGroup = (userId: string) => {
 		if (!socket) return
-		socket.emit('handleRemoveUserGroup', {
-			roomId: conversationSelected?._id,
-			managerId: userInfo?._id,
-			userId,
-			usernameManager: userInfo?.username,
-		})
+		try {
+			socket.emit('room:delete_member', {
+				roomId: conversationSelected?._id,
+				managerId: userInfo?._id,
+				userId: userInfo?._id,
+				usernameManager: userInfo?.username,
+			})
+			const users = conversationSelected?.users.filter((user) => user._id !== userId)
+			const newConverSelected = { ...conversationSelected, users } || null
+
+			dispatch(setConversationSelected(newConverSelected as Conversation))
+		} catch (err) {
+			console.log('🚀 ~ file: index.tsx ~ line 426 ~ handleRemoveUserGroup ~ err', err)
+		}
+	}
+
+	const handleMakeAdmin = (userId: string) => {
+		if (!socket) return
+		try {
+			socket.emit('room:add_master_group', {
+				roomId: conversationSelected?._id,
+				userId: userInfo?._id,
+				newMasterId: userId,
+			})
+			const roomMaster = [...(conversationSelected?.roomMaster as string[])]
+			roomMaster.push(userId)
+			const newConverSelected = { ...conversationSelected, roomMaster } || null
+			dispatch(setConversationSelected(newConverSelected as Conversation))
+		} catch (err) {
+			console.log('🚀 ~ file: index.tsx ~ line 426 ~ handleRemoveUserGroup ~ err', err)
+		}
+	}
+
+	// Remove role admin
+	const handleRemoveAdmin = (userId: string) => {
+		if (!socket) return
+		try {
+			socket.emit('room:delete_master_group', {
+				roomId: conversationSelected?._id,
+				userId,
+				delMasterId: userId,
+			})
+			const roomMaster = [...(conversationSelected?.roomMaster as string[])].filter((key) => key !== userId)
+			const newConverSelected = { ...conversationSelected, roomMaster } || null
+			dispatch(setConversationSelected(newConverSelected as Conversation))
+		} catch (err) {
+			console.log('🚀 ~ file: index.tsx ~ line 426 ~ handleRemoveUserGroup ~ err', err)
+		}
 	}
 
 	return (
 		<div className={`${styles.detail} ${isClickInfo ? styles.visible : styles.hidden} `}>
-			<ul className={styles.detail__action}>
-				<li onClick={() => console.log('vo')}>
-					<Trans>CONVERSATION.DETAIL_ACTION.DELETE_CHAT</Trans>
-				</li>
-				<li>
-					<Trans>CONVERSATION.DETAIL_ACTION.BLOCK</Trans>
-				</li>
-				<li>
-					<Trans>CONVERSATION.DETAIL_ACTION.REPORT</Trans>
-				</li>
-			</ul>
+			{!isGroup && (
+				<ul className={styles.detail__action}>
+					<li onClick={() => console.log('vo')}>
+						<Trans>CONVERSATION.DETAIL_ACTION.DELETE_CHAT</Trans>
+					</li>
+					<li>
+						<Trans>CONVERSATION.DETAIL_ACTION.BLOCK</Trans>
+					</li>
+					<li>
+						<Trans>CONVERSATION.DETAIL_ACTION.REPORT</Trans>
+					</li>
+				</ul>
+			)}
+			{isGroup && (
+				<ul className={styles.detail__action}>
+					<li onClick={() => console.log('vo')}>
+						<Trans>CONVERSATION.DETAIL_ACTION.DELETE_GROUP</Trans>
+					</li>
+				</ul>
+			)}
 			<Collapse
 				defaultActiveKey={['3', '2']}
 				expandIconPosition="end"
@@ -483,7 +547,11 @@ ConversationDisplay.DetailsConversation = ({
 																		{
 																			key: '1',
 																			label: (
-																				<div>
+																				<div
+																					onClick={() =>
+																						handleMakeAdmin(user._id)
+																					}
+																				>
 																					<Trans>
 																						CONVERSATION.MAKE_ADMIN
 																					</Trans>
@@ -505,13 +573,30 @@ ConversationDisplay.DetailsConversation = ({
 																			),
 																		},
 																  ]
-																: [
+																: user._id === userInfo._id
+																? [
 																		{
 																			key: '1',
 																			label: (
 																				<div onClick={handleLeaveChat}>
 																					<Trans>
 																						CONVERSATION.LEAVE_CHAT
+																					</Trans>
+																				</div>
+																			),
+																		},
+																  ]
+																: [
+																		{
+																			key: '1',
+																			label: (
+																				<div
+																					onClick={() =>
+																						handleRemoveAdmin(user._id)
+																					}
+																				>
+																					<Trans>
+																						CONVERSATION.REMOVE_ADMIN
 																					</Trans>
 																				</div>
 																			),

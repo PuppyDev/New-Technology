@@ -25,7 +25,6 @@ function App() {
 	useEffect(() => {
 		if (socket && user?._id)
 			socket.on('chat:new_call', (dataGot) => {
-				console.log('🚀 ~ file: App.tsx ~ line 27 ~ socket.on ~ dataGot', dataGot)
 				if (dataGot.userId === user?._id) {
 					const modal = Modal.warning({
 						title: 'Có người gọi tới ....',

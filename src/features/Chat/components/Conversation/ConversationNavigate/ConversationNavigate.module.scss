@@ -54,3 +54,53 @@
 		}
 	}
 }
+
+.NavigateConversation {
+	position: relative;
+}
+
+.pinMessage {
+	// @include flex-start-center;
+	// width: 100%;
+
+	padding: 0px 25px;
+	padding-top: 5px;
+	background-color: rgba($color: #8e8e8e, $alpha: 0.05);
+	height: 60px;
+	overflow: hidden;
+	position: absolute;
+	z-index: 20;
+	border-bottom: 1px solid #dbdbdb;
+
+	.pinMessageItem {
+		@include flex-center-between;
+		width: 100%;
+		height: 100%;
+
+		.unPinIcon {
+			cursor: pointer;
+		}
+	}
+
+	.ImagePin {
+		@include flex-center-center;
+		gap: 10px;
+
+		img {
+			height: 45px;
+			width: 45px;
+			object-fit: cover;
+		}
+	}
+
+	.titlePin {
+		font-size: 14px;
+		color: $ig-primary-button;
+		font-weight: 600;
+		line-height: 10px;
+	}
+
+	span {
+		font-size: 12px;
+	}
+}

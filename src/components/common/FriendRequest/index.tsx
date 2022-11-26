@@ -13,7 +13,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import styles from '../Header/Header.module.scss'
 
 const FriendRequest = ({ notification }: { notification: NotificationRequest }) => {
-	console.log('🚀 ~ file: index.tsx ~ line 16 ~ FriendRequest ~ notification', notification)
+	// console.log('🚀 ~ file: index.tsx ~ line 16 ~ FriendRequest ~ notification', notification)
 	const { t } = useTranslation()
 
 	const dispatch = useAppDispatch()

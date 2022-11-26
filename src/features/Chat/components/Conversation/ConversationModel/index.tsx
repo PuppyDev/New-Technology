@@ -90,7 +90,6 @@ const ConversationModel = ({
 			setLoadingCreate(true)
 			const newUSerId: String[] =
 				selectUser.filter((user) => !userInConversation?.find((member) => member._id === user)) || []
-			console.log('🚀 ~ file: index.tsx ~ line 92 ~ handleAddUserToGroup ~ newUSerId', newUSerId)
 			socket.emit('room:add_member', {
 				roomId: conversationSelected?._id,
 				userId: user?._id,
@@ -165,6 +164,7 @@ const ConversationModel = ({
 											</li>
 										)
 								}
+								return
 							})}
 					</ul>
 				</div>
