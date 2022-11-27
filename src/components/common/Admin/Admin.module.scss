@@ -3,7 +3,6 @@
 	width: 120px;
 	height: 31px;
 	margin: 16px 24px 16px 0;
-	background: rgba(255, 255, 255, 0.3);
 }
 
 .ant-row-rtl #components-layout-demo-top-side-2 .logo {
@@ -13,4 +12,16 @@
 
 .site-layout-background {
 	background: #fff;
+}
+.header {
+	display: flex;
+	justify-content: space-between;
+	background: #fff;
+}
+.headerImg {
+	height: 64px;
+}
+
+.userTable {
+	flex: 1 1 auto;
 }

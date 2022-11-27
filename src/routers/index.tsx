@@ -1,4 +1,8 @@
 import Admin from '@/components/common/Admin'
+import AdminEmployees from '@/components/common/Admin/pages/AdminEmployee'
+import AdminHome from '@/components/common/Admin/pages/AdminHome'
+import AdminPost from '@/components/common/Admin/pages/AdminPost'
+import AdminUsers from '@/components/common/Admin/pages/AdminUser'
 import ForgotPassPage from 'pages/auth/forgot/ForgotPassPage'
 import HomePage from 'pages/home'
 import VideoCallPage from 'pages/videoCall'
@@ -8,7 +12,7 @@ import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
 
 const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
-const VerifyInform = lazy(()=>import('../pages/auth/verifyinform/VerifyInform'))
+const VerifyInform = lazy(() => import('../pages/auth/verifyinform/VerifyInform'))
 const Profile = lazy(() => import('pages/profile'))
 const ChatConversationPage = lazy(() => import('@/Chat/pages'))
 const RegisterPage = lazy(() => import('../pages/auth/register/RegisterPage'))
@@ -36,11 +40,6 @@ const mainRoutes = [
 		pathName: '/direct/inbox/:inboxId',
 	},
 	{
-		id: 6,
-		element: <Admin />,
-		pathName: '/admin',
-	},
-	{
 		id: 4,
 		element: 'Explore Component',
 		pathName: '/explore/',
@@ -51,7 +50,28 @@ const mainRoutes = [
 		pathName: '/accounts/reset/',
 	},
 ]
-
+const adminRoutes = [
+	{
+		id: 1,
+		element: <AdminHome />,
+		pathName: '/admin',
+	},
+	{
+		id: 1,
+		element: <AdminUsers />,
+		pathName: '/admin/users',
+	},
+	{
+		id: 2,
+		element: <AdminPost />,
+		pathName: '/admin/posts',
+	},
+	{
+		id: 3,
+		element: <AdminEmployees />,
+		pathName: '/admin/employees',
+	},
+]
 const index = () => {
 	return (
 		<div>
@@ -74,8 +94,17 @@ const index = () => {
 						</PrivateRoute>
 					}
 				/>
+				<Route element={<Admin />}>
+					{adminRoutes.map((item) => (
+						<Route
+							path={item.pathName}
+							key={item.id}
+							element={<PrivateRoute>{item.element}</PrivateRoute>}
+						/>
+					))}
+				</Route>
 				<Route path="/login" element={<LoginPage />} />
-				<Route path="/auth/verifyAccountSuccess" element={<VerifyInform/>}/>
+				<Route path="/auth/verifyAccountSuccess" element={<VerifyInform />} />
 				<Route path="/register" element={<RegisterPage />} />
 				<Route path="/forgotpass" element={<ForgotPassPage />} />
 			</Routes>
