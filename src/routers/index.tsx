@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
 
 const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
+const VerifyInform = lazy(()=>import('../pages/auth/verifyinform/VerifyInform'))
 const Profile = lazy(() => import('pages/profile'))
 const ChatConversationPage = lazy(() => import('@/Chat/pages'))
 const RegisterPage = lazy(() => import('../pages/auth/register/RegisterPage'))
@@ -74,6 +75,7 @@ const index = () => {
 					}
 				/>
 				<Route path="/login" element={<LoginPage />} />
+				<Route path="/auth/verifyAccountSuccess" element={<VerifyInform/>}/>
 				<Route path="/register" element={<RegisterPage />} />
 				<Route path="/forgotpass" element={<ForgotPassPage />} />
 			</Routes>
