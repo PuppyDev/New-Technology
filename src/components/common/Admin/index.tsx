@@ -65,15 +65,16 @@ const AdminRouter: React.FC = () => (
 						<Link to="/admin/users" />
 					</Menu.Item>
 					<Menu.Item key="adpost">
+						v
 						<Icon type="LaptopOutlined" />
 						<span>Posts</span>
 						<Link to="/admin/posts" />
 					</Menu.Item>
-					<Menu.Item key="ademployes">
+					{/* <Menu.Item key="ademployes">
 						<Icon type="NotificationOutlined" />
 						<span>Employees</span>
 						<Link to="/admin/employees" />
-					</Menu.Item>
+					</Menu.Item> */}
 				</Menu>
 			</Sider>
 			<Layout style={{ padding: '0 24px 24px' }}>
