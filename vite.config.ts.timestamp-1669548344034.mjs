@@ -1,0 +1,16 @@
+// vite.config.ts
+import react from "file:///E:/New-Technology/node_modules/@vitejs/plugin-react/dist/index.mjs";
+import { defineConfig } from "file:///E:/New-Technology/node_modules/vite/dist/node/index.js";
+import tsconfigPaths from "file:///E:/New-Technology/node_modules/vite-tsconfig-paths/dist/index.mjs";
+var vite_config_default = defineConfig({
+  plugins: [react(), tsconfigPaths()],
+  css: {
+    preprocessorOptions: {
+      scss: { additionalData: `@import "./src/assets/styles/index.scss";` }
+    }
+  }
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCJFOlxcXFxOZXctVGVjaG5vbG9neVwiO2NvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9maWxlbmFtZSA9IFwiRTpcXFxcTmV3LVRlY2hub2xvZ3lcXFxcdml0ZS5jb25maWcudHNcIjtjb25zdCBfX3ZpdGVfaW5qZWN0ZWRfb3JpZ2luYWxfaW1wb3J0X21ldGFfdXJsID0gXCJmaWxlOi8vL0U6L05ldy1UZWNobm9sb2d5L3ZpdGUuY29uZmlnLnRzXCI7aW1wb3J0IHJlYWN0IGZyb20gJ0B2aXRlanMvcGx1Z2luLXJlYWN0J1xyXG5pbXBvcnQgeyBkZWZpbmVDb25maWcgfSBmcm9tICd2aXRlJ1xyXG5pbXBvcnQgdHNjb25maWdQYXRocyBmcm9tICd2aXRlLXRzY29uZmlnLXBhdGhzJ1xyXG5cclxuLy8gaHR0cHM6Ly92aXRlanMuZGV2L2NvbmZpZy9cclxuZXhwb3J0IGRlZmF1bHQgZGVmaW5lQ29uZmlnKHtcclxuXHRwbHVnaW5zOiBbcmVhY3QoKSwgdHNjb25maWdQYXRocygpXSxcclxuXHRjc3M6IHtcclxuXHRcdHByZXByb2Nlc3Nvck9wdGlvbnM6IHtcclxuXHRcdFx0c2NzczogeyBhZGRpdGlvbmFsRGF0YTogYEBpbXBvcnQgXCIuL3NyYy9hc3NldHMvc3R5bGVzL2luZGV4LnNjc3NcIjtgIH0sXHJcblx0XHR9LFxyXG5cdH0sXHJcblx0Ly8gZGVmaW5lOiB7IGdsb2JhbDogJ3dpbmRvdycgfSxcclxufSlcclxuIl0sCiAgIm1hcHBpbmdzIjogIjtBQUF5TyxPQUFPLFdBQVc7QUFDM1AsU0FBUyxvQkFBb0I7QUFDN0IsT0FBTyxtQkFBbUI7QUFHMUIsSUFBTyxzQkFBUSxhQUFhO0FBQUEsRUFDM0IsU0FBUyxDQUFDLE1BQU0sR0FBRyxjQUFjLENBQUM7QUFBQSxFQUNsQyxLQUFLO0FBQUEsSUFDSixxQkFBcUI7QUFBQSxNQUNwQixNQUFNLEVBQUUsZ0JBQWdCLDRDQUE0QztBQUFBLElBQ3JFO0FBQUEsRUFDRDtBQUVELENBQUM7IiwKICAibmFtZXMiOiBbXQp9Cg==

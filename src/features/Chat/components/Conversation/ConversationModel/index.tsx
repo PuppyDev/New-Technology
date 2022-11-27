@@ -31,7 +31,7 @@ const ConversationModel = ({
 	const [usernameInput, setuserNameInput] = useState('')
 	const socket = useContext(SocketContext)
 	const valueSearch = useDebounce(usernameInput, 1000)
-
+	const [nameGroup, setNameGroup] = useState('')
 	const [selectUser, setSelectUser] = useState<String[]>([])
 
 	useEffect(() => {
@@ -65,7 +65,7 @@ const ConversationModel = ({
 		try {
 			setLoadingCreate(true)
 			const newGroup = {
-				name: 'Chat Group ',
+				name: nameGroup.length < 1 ? 'Chat Group ' : nameGroup,
 				userIds: selectUser,
 			}
 			const response = await roomApi.createGroupRoom(newGroup)
@@ -139,14 +139,16 @@ const ConversationModel = ({
 		>
 			<div className={styles.modal__content}>
 				<div className={styles.modal__content_search}>
-					<div className={styles.modal__content_search_top}>
-						<span>{t('CONVERSATION.TO')} </span>
-						<input
-							type="text"
-							placeholder={t('SEARCH') + '...'}
-							onChange={(e) => setuserNameInput(e.target.value)}
-						/>
-					</div>
+					{!userInConversation && (
+						<div className={styles.modal__content_search_top}>
+							<span>{t('CONVERSATION.NAMEGROUP')} </span>
+							<input
+								type="text"
+								placeholder={t('CONVERSATION.TYPING_NAME_GROUP') + '...'}
+								onChange={(e) => setNameGroup(e.target.value)}
+							/>
+						</div>
+					)}
 
 					<ul className={styles.modal__content_search_seekResult}>
 						{selectUser &&

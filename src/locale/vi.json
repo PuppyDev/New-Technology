@@ -60,7 +60,9 @@
 		"SUB_YOUR_MESSAGE": "Gửi ảnh và tin nhắn riêng tư cho bạn bè hoặc nhóm.",
 		"SEND_MESSAGE": "Gửi tin nhắn",
 		"NEW_MESSAGE": "Tin nhắn mới",
+		"TYPING_NAME_GROUP": "Nhập vào tên nhóm",
 		"TO": "Tới:",
+		"NAMEGROUP": "Tên Nhóm",
 		"UNSEND_MESSAGE": "Gỡ tin nhắn",
 		"FORWARD": "Chuyển tiếp",
 		"ADD_MEMBER": "Thêm thành viên",
@@ -96,7 +98,7 @@
 		"USER_NOT_FOUND": "Không có thông báo nào"
 	},
 	"NO_RESULTS_FOUND": "Không có kết quả.",
-	"CONGRATULATIONS":"XIN CHÚC MỪNG",
-	"VERIFY_SUCCESS_INFORM":"Tài khoản của bạn đã được xác thực thành công",
-	"GOHOME":"Về trang đăng nhập"
+	"CONGRATULATIONS": "XIN CHÚC MỪNG",
+	"VERIFY_SUCCESS_INFORM": "Tài khoản của bạn đã được xác thực thành công",
+	"GOHOME": "Về trang đăng nhập"
 }
