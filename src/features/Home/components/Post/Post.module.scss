@@ -29,6 +29,7 @@
 			width: 100%;
 			height: 100%;
 			max-height: 600px;
+			min-height: 498px;
 			object-fit: cover;
 		}
 	}
@@ -37,6 +38,7 @@
 		padding: 12px 12px;
 		@include flex-column-center;
 		gap: 10px;
+		user-select: none;
 
 		&__action {
 			@include flex-start-center;
@@ -58,6 +60,7 @@
 			text-decoration: none;
 			font-size: 14px;
 			font-weight: 600;
+			user-select: none;
 		}
 
 		&__timeCreate {
@@ -83,15 +86,12 @@
 				}
 			}
 		}
-
-		&__listCmt {
-		}
 	}
 }
 
 .comment {
-	@include flex-center-center;
-	gap: 5px;
+	// @include flex-start-center;
+	// gap: 5px;
 	font-size: 14px;
 
 	span {

@@ -77,6 +77,10 @@
 		"PINNED_MESSAGE": "Pinned Message",
 		"YOURE_KICKED": "You have been kicked out of the group"
 	},
+	"POST": {
+		"LIKED": "Liked",
+		"POSTCOMMENT": "Post"
+	},
 	"ERROR": {
 		"MESSAGE": "Sorry, the page you visited does not exist.",
 		"BACKHOME": "Back Home"

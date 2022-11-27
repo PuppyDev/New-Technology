@@ -77,6 +77,10 @@
 		"PINNED_MESSAGE": "Tin nhắn đã ghim",
 		"YOURE_KICKED": "Bạn đã bị đuổi ra khỏi nhóm"
 	},
+	"POST": {
+		"LIKED": "đã thích",
+		"POSTCOMMENT": "Đăng"
+	},
 	"ERROR": {
 		"MESSAGE": "Rất tiếc, trang này hiện không khả dụng.",
 		"BACKHOME": "Quay về trang chủ"
