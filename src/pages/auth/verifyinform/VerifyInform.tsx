@@ -6,17 +6,18 @@ import styles from './VerifyInform.module.scss'
 // import { Container } from './styles';
 
 const VerifyInform: React.FC = () => {
-    const { t } = useTranslation()
+	const { t } = useTranslation()
 	return (
 		<div className={styles.container}>
-			<Result style={{width:'100%'}}
+			<Result
+				style={{ width: '100%' }}
 				status="success"
 				title={t('CONGRATULATIONS')}
-				subTitle={t('Your account has been successfully verified')}
+				subTitle={t('VERIFY_SUCCESS_INFORM')}
 				extra={[
 					<div>
 						<Link to={'/login'}>{t('GOHOME')}</Link>
-					</div>
+					</div>,
 				]}
 			/>
 		</div>

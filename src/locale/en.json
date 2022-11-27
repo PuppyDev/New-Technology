@@ -96,8 +96,7 @@
 		"USER_NOT_FOUND": "No notification!"
 	},
 	"NO_RESULTS_FOUND": "No results found.",
-	"CONGRATULATIONS":"CONGRATULATIONS",
-	"VERIFY_SUCCESS_INFORM":"Your account has been successfully verified",
-	"GOHOME":"GOHOME"
-
+	"CONGRATULATIONS": "CONGRATULATIONS",
+	"VERIFY_SUCCESS_INFORM": "Your account has been successfully verified",
+	"GOHOME": "GOHOME"
 }
