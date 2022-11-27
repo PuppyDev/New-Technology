@@ -32,9 +32,13 @@ const ConversationModel = ({
 	const socket = useContext(SocketContext)
 	const valueSearch = useDebounce(usernameInput, 1000)
 
-	const [selectUser, setSelectUser] = useState<String[]>(
-		() => userInConversation?.filter((userInfo) => userInfo._id !== user?._id).map((userInfo) => userInfo._id) || []
-	)
+	const [selectUser, setSelectUser] = useState<String[]>([])
+
+	useEffect(() => {
+		const lstUserID =
+			userInConversation?.filter((userInfo) => userInfo._id !== user?._id).map((userInfo) => userInfo._id) || []
+		setSelectUser(lstUserID)
+	}, [userInConversation])
 
 	const [loading, setLoading] = useState(false)
 	const [listFriend, setListFriend] = useState<User[]>([])

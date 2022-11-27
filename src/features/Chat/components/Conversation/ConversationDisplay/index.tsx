@@ -476,6 +476,15 @@ ConversationDisplay.DetailsConversation = ({
 		}
 	}
 
+	const handleDeleteGroup = () => {
+		if (!socket) return
+		try {
+			socket.emit('room:delete_group', { roomId: conversationSelected?._id })
+		} catch (err) {
+			console.log('🚀 ~ file: index.tsx ~ line 484 ~ handleDeleteGroup ~ err', err)
+		}
+	}
+
 	return (
 		<div className={`${styles.detail} ${isClickInfo ? styles.visible : styles.hidden} `}>
 			{!isGroup && (
@@ -493,7 +502,7 @@ ConversationDisplay.DetailsConversation = ({
 			)}
 			{isGroup && (
 				<ul className={styles.detail__action}>
-					<li onClick={() => console.log('vo')}>
+					<li onClick={() => handleDeleteGroup()}>
 						<Trans>CONVERSATION.DETAIL_ACTION.DELETE_GROUP</Trans>
 					</li>
 				</ul>
