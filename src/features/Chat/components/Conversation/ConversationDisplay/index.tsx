@@ -86,7 +86,10 @@ const ConversationDisplay = () => {
 
 	// Get Message using api
 	useEffect(() => {
-		if (!conversationSelected) return
+		if (!conversationSelected) {
+			navigate('/direct/inbox')
+			return
+		}
 
 		const { _id } = conversationSelected.users[0]
 
