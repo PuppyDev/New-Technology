@@ -8,6 +8,7 @@ import Admin from '@/components/common/Admin'
 import AdminUsers from '@/components/common/Admin/pages/AdminUser'
 import AdminHome from '@/components/common/Admin/pages/AdminHome'
 import AdminPost from '@/components/common/Admin/pages/AdminPost'
+import AdminEmployees from '@/components/common/Admin/pages/AdminEmployee'
 
 const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
 const Profile = lazy(() => import('pages/profile'))
@@ -64,7 +65,7 @@ const adminRoutes = [
 	},
 	{
 		id: 3,
-		element: 'employees',
+		element: <AdminEmployees />,
 		pathName: '/admin/employees',
 	},
 ]

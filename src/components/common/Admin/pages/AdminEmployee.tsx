@@ -1,12 +1,15 @@
 import { AgGridReact } from 'ag-grid-react'
-import { useState } from 'react'
-
+import { FirstDataRenderedEvent, GridOptions } from 'ag-grid-community'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
-import styles from './Admin.module.scss'
-import { Delete, Edit } from '../ActionBtn'
 
-const AdminPosts = () => {
+import styles from './Admin.module.scss'
+import { useState } from 'react'
+import { Action } from '@remix-run/router'
+import { Delete, Edit } from '../ActionBtn'
+import { Button } from 'antd'
+
+const AdminEmployees = () => {
 	const [rowData] = useState([
 		{ userid: '123', name: 'Celica', test: 35000, state: 'public', friends: 12 },
 		{ userid: '1234', name: 'Mondeo', test: 32000, state: 'public', friends: 12 },
@@ -27,8 +30,9 @@ const AdminPosts = () => {
 	])
 
 	return (
-		<div className="container">
-			<h1>Post Manager</h1>
+		<div className="container" style={{ width: 1700 }}>
+			<h1>Employess Manager</h1>
+
 			<div className="table">
 				<div className="ag-theme-alpine" style={{ height: 600, width: '100%' }}>
 					<AgGridReact rowData={rowData} columnDefs={columnDefs}></AgGridReact>
@@ -37,4 +41,4 @@ const AdminPosts = () => {
 		</div>
 	)
 }
-export default AdminPosts
+export default AdminEmployees
