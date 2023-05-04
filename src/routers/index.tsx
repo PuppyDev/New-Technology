@@ -5,6 +5,10 @@ import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import RenderRouteHeader from './RenderRouteHeader'
 import Admin from '@/components/common/Admin'
+import AdminUsers from '@/components/common/Admin/pages/AdminUser'
+import AdminHome from '@/components/common/Admin/pages/AdminHome'
+import AdminPost from '@/components/common/Admin/pages/AdminPost'
+import AdminEmployees from '@/components/common/Admin/pages/AdminEmployee'
 
 const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'))
 const Profile = lazy(() => import('pages/profile'))
@@ -33,11 +37,6 @@ const mainRoutes = [
 		pathName: '/direct/inbox/:inboxId',
 	},
 	{
-		id: 6,
-		element: <Admin />,
-		pathName: '/admin',
-	},
-	{
 		id: 4,
 		element: 'Explore Component',
 		pathName: '/explore/',
@@ -48,7 +47,28 @@ const mainRoutes = [
 		pathName: '/accounts/reset/',
 	},
 ]
-
+const adminRoutes = [
+	{
+		id: 1,
+		element: <AdminHome />,
+		pathName: '/admin',
+	},
+	{
+		id: 1,
+		element: <AdminUsers />,
+		pathName: '/admin/users',
+	},
+	{
+		id: 2,
+		element: <AdminPost />,
+		pathName: '/admin/posts',
+	},
+	{
+		id: 3,
+		element: <AdminEmployees />,
+		pathName: '/admin/employees',
+	},
+]
 const index = () => {
 	return (
 		<div>
@@ -71,6 +91,15 @@ const index = () => {
 						</PrivateRoute>
 					}
 				/>
+				<Route element={<Admin />}>
+					{adminRoutes.map((item) => (
+						<Route
+							path={item.pathName}
+							key={item.id}
+							element={<PrivateRoute>{item.element}</PrivateRoute>}
+						/>
+					))}
+				</Route>
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/register" element={<RegisterPage />} />
 				<Route path="/forgotpass" element={<ForgotPassPage />} />
